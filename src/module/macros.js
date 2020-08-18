@@ -10,13 +10,13 @@
  * @param {number} slot     The hotbar slot to use
  * @returns {Promise}
  */
-export async function createOseMacro(data, slot) {
+export async function createAcksMacro(data, slot) {
     if ( data.type !== "Item" ) return;
     if (!( "data" in data ) ) return ui.notifications.warn("You can only create macro buttons for owned Items");
     const item = data.data;
   
     // Create the macro command
-    const command = `game.ose.rollItemMacro("${item.name}");`;
+    const command = `game.acks.rollItemMacro("${item.name}");`;
     let macro = game.macros.entities.find(m => (m.name === item.name) && (m.command === command));
     if ( !macro ) {
       macro = await Macro.create({
@@ -24,7 +24,7 @@ export async function createOseMacro(data, slot) {
         type: "script",
         img: item.img,
         command: command,
-        flags: {"ose.itemMacro": true}
+        flags: {"acks.itemMacro": true}
       });
     }
     game.user.assignHotbarMacro(macro, slot);

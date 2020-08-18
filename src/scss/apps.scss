@@ -1,11 +1,11 @@
-.ose.roll-dialog {
+.acks.roll-dialog {
   .roll-details {
     font-weight: bold;
     text-align: center;
   }
 }
 
-.ose.dialog.creator {
+.acks.dialog.creator {
   .attribute-list {
     .form-fields {
       flex: 0 0 50px;
@@ -32,7 +32,7 @@
   }
 }
 
-.ose.dialog.party-sheet {
+.acks.dialog.party-sheet {
   min-width: 250px;
   min-height: 250px;
   .window-content {
@@ -120,7 +120,7 @@
 }
 
 #sidebar #actors .directory-header .header-search {
-  .ose-party-sheet {
+  .acks-party-sheet {
     width: 32px;
     text-align: center;
     line-height: 20px;
@@ -130,7 +130,7 @@
   }
 }
 
-.ose.dialog.modifiers {
+.acks.dialog.modifiers {
   .attribute-bonuses {
     label {
       font-weight: bold;
@@ -150,7 +150,7 @@
       color: white;
       margin: 0 2px 5px 8px;
       border-radius: 8px;
-      background: url("/systems/ose/assets/treasure.png") no-repeat center;
+      background: url("/systems/acks/assets/treasure.png") no-repeat center;
       background-size: cover;
       padding: 5px 8px;
       cursor: pointer;
@@ -176,7 +176,7 @@
   }
 }
 
-#settings .ose.game-license {
+#settings .acks.game-license {
   font-size: 12px;
   .button {
     text-align: center;
@@ -187,7 +187,7 @@
   }
 }
 
-.ose.chat-block {
+.acks.chat-block {
   margin: 0;
   .chat-header {
     height: 46px;
@@ -263,7 +263,7 @@
   }
 }
 
-.ose.chat-card {
+.acks.chat-card {
   font-style: normal;
   font-size: 12px;
 

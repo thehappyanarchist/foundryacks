@@ -1,25 +1,25 @@
-import { OsePartySheet } from "./dialog/party-sheet.js";
+import { AcksPartySheet } from "./dialog/party-sheet.js";
 
 export const addControl = (object, html) => {
-    let control = `<button class='ose-party-sheet' type="button" title='${game.i18n.localize('OSE.dialog.partysheet')}'><i class='fas fa-users'></i></button>`;
+    let control = `<button class='acks-party-sheet' type="button" title='${game.i18n.localize('ACKS.dialog.partysheet')}'><i class='fas fa-users'></i></button>`;
     html.find(".fas.fa-search").replaceWith($(control))
-    html.find('.ose-party-sheet').click(ev => {
+    html.find('.acks-party-sheet').click(ev => {
         showPartySheet(object);
     })
 }
 
 export const showPartySheet = (object) => {
     event.preventDefault();
-    new OsePartySheet(object, {
+    new AcksPartySheet(object, {
       top: window.screen.height / 2 - 180,
       left:window.screen.width / 2 - 140,
     }).render(true);
 }
 
 export const update = (actor, data) => {
-    if (actor.getFlag('ose', 'party')) {
+    if (actor.getFlag('acks', 'party')) {
         Object.values(ui.windows).forEach(w => {
-            if (w instanceof OsePartySheet) {
+            if (w instanceof AcksPartySheet) {
                 w.render(true);
             }
         })

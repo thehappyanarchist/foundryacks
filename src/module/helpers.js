@@ -39,8 +39,8 @@ export const registerHelpers = async function () {
   });
 
   Handlebars.registerHelper("getTagIcon", function (tag) {
-    let idx = Object.keys(CONFIG.OSE.tags).find(k => (CONFIG.OSE.tags[k] == tag));
-    return CONFIG.OSE.tag_images[idx];
+    let idx = Object.keys(CONFIG.ACKS.tags).find(k => (CONFIG.ACKS.tags[k] == tag));
+    return CONFIG.ACKS.tag_images[idx];
   });
 
   Handlebars.registerHelper("counter", function (status, value, max) {
