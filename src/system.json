@@ -7,8 +7,8 @@
   "compatibleCoreVersion": "0.6.5",
   "templateVersion": 2,
   "author": "The Happy Anarchist",
-  "esmodules": ["ose.js"],
-  "styles": ["ose.css"],
+  "esmodules": ["acks.js"],
+  "styles": ["acks.css"],
   "packs": [],
   "languages": [
     {
