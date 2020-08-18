@@ -12,7 +12,7 @@ export class AcksCombat {
     Object.keys(groups).forEach((group) => {
       let roll = new Roll("1d6").roll();
       roll.toMessage({
-        flavor: game.i18n.format('ACKS.roll.initiative', { group: CONFIG["acks"].colors[group] }),
+        flavor: game.i18n.format('ACKS.roll.initiative', { group: CONFIG["ACKS"].colors[group] }),
       });
       groups[group].initiative = roll.total;
     });
