@@ -393,7 +393,7 @@ export class AcksActor extends Actor {
 
   rollAttack(attData, options = {}) {
     const data = this.data.data;
-    const rollParts = ["1d20"];
+    const rollParts = ["1d20x="];
     const dmgParts = [];
     let label = game.i18n.format("ACKS.roll.attacks", {
       name: this.data.name,
@@ -593,7 +593,7 @@ export class AcksActor extends Actor {
     }
     // Compute AC
     let baseAc = 9;
-    let baseAac = 10;
+    let baseAac = 0;
     let AcShield = 0;
     let AacShield = 0;
     const data = this.data.data;
