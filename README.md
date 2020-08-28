@@ -2,7 +2,7 @@
 All the features you need to play ACKS in Foundry VTT.
 
 ## License
-This Foundry VTT system requires ACKS Core Rules that you can find here.\
+This Foundry VTT system requires ACKS Core Rules that you can find at http://autarch.co/buy-now.
 This third party product is not affiliated with or approved by Autarch.
 
 ## Artwork
