@@ -667,11 +667,11 @@ export class AcksActor extends Actor {
       18: 2,
     };
     data.scores.dex.init = AcksActor._valueFromTable(
-      capped,
+      standard,
       data.scores.dex.value
     );
     data.scores.cha.npc = AcksActor._valueFromTable(
-      capped,
+      standard,
       data.scores.cha.value
     );
     data.scores.cha.retain = data.scores.cha.mod + 4;
@@ -691,9 +691,7 @@ export class AcksActor extends Actor {
     );
 
     const literacy = {
-      0: "",
       3: "ACKS.Illiterate",
-      6: "ACKS.LiteracyBasic",
       9: "ACKS.Literate",
     };
     data.languages.literacy = AcksActor._valueFromTable(
