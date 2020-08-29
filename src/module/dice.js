@@ -129,7 +129,7 @@ export class AcksDice {
     result.target = data.roll.thac0;
 
     const targetAc = data.roll.target ? data.roll.target.actor.data.data.ac.value : 9;
-    const targetAac = data.roll.target ? data.roll.target.actor.data.data.aac.value : 10;
+    const targetAac = data.roll.target ? data.roll.target.actor.data.data.aac.value : 0;
     result.victim = data.roll.target ? data.roll.target.actor.name : null;
 
     if (game.settings.get("acks", "ascendingAC")) {
