@@ -1,10 +1,10 @@
-import { OseActor } from "./entity.js";
-import { OseActorSheet } from "./actor-sheet.js";
+import { AcksActor } from "./entity.js";
+import { AcksActorSheet } from "./actor-sheet.js";
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
  */
-export class OseActorSheetMonster extends OseActorSheet {
+export class AcksActorSheetMonster extends AcksActorSheet {
   constructor(...args) {
     super(...args);
   }
@@ -17,8 +17,8 @@ export class OseActorSheetMonster extends OseActorSheet {
    */
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
-      classes: ["ose", "sheet", "monster", "actor"],
-      template: "systems/ose/templates/actors/monster-sheet.html",
+      classes: ["acks", "sheet", "monster", "actor"],
+      template: "systems/acks/templates/actors/monster-sheet.html",
       width: 450,
       height: 560,
       resizable: true,
@@ -36,20 +36,20 @@ export class OseActorSheetMonster extends OseActorSheet {
    * Monster creation helpers
    */
   async generateSave() {
-    let choices = CONFIG.OSE.monster_saves;
+    let choices = CONFIG.ACKS.monster_saves;
 
     let templateData = { choices: choices },
       dlg = await renderTemplate(
-        "/systems/ose/templates/actors/dialogs/monster-saves.html",
+        "/systems/acks/templates/actors/dialogs/monster-saves.html",
         templateData
       );
     //Create Dialog window
     new Dialog({
-      title: game.i18n.localize("OSE.dialog.generateSaves"),
+      title: game.i18n.localize("ACKS.dialog.generateSaves"),
       content: dlg,
       buttons: {
         ok: {
-          label: game.i18n.localize("OSE.Ok"),
+          label: game.i18n.localize("ACKS.Ok"),
           icon: '<i class="fas fa-check"></i>',
           callback: (html) => {
             let hd = html.find('select[name="choice"]').val();
@@ -58,7 +58,7 @@ export class OseActorSheetMonster extends OseActorSheet {
         },
         cancel: {
           icon: '<i class="fas fa-times"></i>',
-          label: game.i18n.localize("OSE.Cancel"),
+          label: game.i18n.localize("ACKS.Cancel"),
         },
       },
       default: "ok",
@@ -75,7 +75,7 @@ export class OseActorSheetMonster extends OseActorSheet {
     const data = super.getData();
 
     // Settings
-    data.config.morale = game.settings.get("ose", "morale");
+    data.config.morale = game.settings.get("acks", "morale");
     data.data.details.treasure.link = TextEditor.enrichHTML(data.data.details.treasure.table);
     data.isNew = this.actor.isNew();
     return data;
@@ -117,7 +117,7 @@ export class OseActorSheetMonster extends OseActorSheet {
         content: dlg,
         buttons: {
           ok: {
-            label: game.i18n.localize("OSE.Ok"),
+            label: game.i18n.localize("ACKS.Ok"),
             icon: '<i class="fas fa-check"></i>',
             callback: (html) => {
               resolve({
@@ -128,7 +128,7 @@ export class OseActorSheetMonster extends OseActorSheet {
           },
           cancel: {
             icon: '<i class="fas fa-times"></i>',
-            label: game.i18n.localize("OSE.Cancel"),
+            label: game.i18n.localize("ACKS.Cancel"),
           },
         },
         default: "ok",
@@ -252,7 +252,7 @@ export class OseActorSheetMonster extends OseActorSheet {
       const li = $(ev.currentTarget).parents(".item");
       const item = this.actor.getOwnedItem(li.data("itemId"));
       let currentColor = item.data.data.pattern;
-      let colors = Object.keys(CONFIG.OSE.colors);
+      let colors = Object.keys(CONFIG.ACKS.colors);
       let index = colors.indexOf(currentColor);
       if (index + 1 == colors.length) {
         index = 0;

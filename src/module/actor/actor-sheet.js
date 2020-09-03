@@ -1,7 +1,7 @@
-import { OseActor } from "./entity.js";
-import { OseEntityTweaks } from "../dialog/entity-tweaks.js";
+import { AcksActor } from "./entity.js";
+import { AcksEntityTweaks } from "../dialog/entity-tweaks.js";
 
-export class OseActorSheet extends ActorSheet {
+export class AcksActorSheet extends ActorSheet {
   constructor(...args) {
     super(...args);
   }
@@ -10,10 +10,10 @@ export class OseActorSheet extends ActorSheet {
   getData() {
     const data = super.getData();
 
-    data.config = CONFIG.OSE;
+    data.config = CONFIG.ACKS;
     // Settings
-    data.config.ascendingAC = game.settings.get("ose", "ascendingAC");
-    data.config.encumbrance = game.settings.get("ose", "encumbranceOption");
+    data.config.ascendingAC = game.settings.get("acks", "ascendingAC");
+    data.config.encumbrance = game.settings.get("acks", "encumbranceOption");
 
     // Prepare owned items
     this._prepareItems(data);
@@ -120,7 +120,8 @@ export class OseActorSheet extends ActorSheet {
 
   activateListeners(html) {
     super.activateListeners(html);
-    
+
+
     // Item summaries
     html
       .find(".item .item-name h4")
@@ -148,13 +149,18 @@ export class OseActorSheet extends ActorSheet {
             data: { counter: { value: item.data.data.counter.value - 1 } },
           });
         }
-        item.rollWeapon({ skipDialog: ev.ctrlKey });
+          item.rollWeapon({ skipDialog: ev.ctrlKey });
       } else if (item.type == "spell") {
         item.spendSpell({ skipDialog: ev.ctrlKey });
       } else {
         item.rollFormula({ skipDialog: ev.ctrlKey });
       }
     });
+
+    html
+      .find(".memorize input")
+      .click((ev) => ev.target.select())
+      .change(this._onSpellChange.bind(this));
 
     html.find(".attack a").click((ev) => {
       let actorObject = this.actor;
@@ -165,11 +171,15 @@ export class OseActorSheet extends ActorSheet {
         roll: {},
       };
       actorObject.targetAttack(rollData, attack, {
-        type: attack,
-        skipDialog: ev.ctrlKey,
-      });
+		  type: attack,
+		  skipDialog: ev.ctrlKey,
+	  });
+
+    html.find(".spells .item-reset").click((ev) => {
+      this._resetSpells(ev);
     });
-    
+    });
+
     html.find(".hit-dice .attribute-name a").click((ev) => {
       let actorObject = this.actor;
       actorObject.rollHitDice({ event: event });
@@ -227,14 +237,14 @@ export class OseActorSheet extends ActorSheet {
         let heightDelta = this.position.height - this.options.height;
         editor.style.height = `${
           heightDelta + parseInt(container.dataset.editorSize)
-          }px`;
+		  }px`;
       }
     });
   }
 
   _onConfigureActor(event) {
     event.preventDefault();
-    new OseEntityTweaks(this.actor, {
+    new AcksEntityTweaks(this.actor, {
       top: this.position.top + 40,
       left: this.position.left + (this.position.width - 400) / 2,
     }).render(true);
@@ -252,7 +262,7 @@ export class OseActorSheet extends ActorSheet {
     if (this.options.editable && canConfigure) {
       buttons = [
         {
-          label: game.i18n.localize("OSE.dialog.tweaks"),
+          label: game.i18n.localize("ACKS.dialog.tweaks"),
           class: "configure-actor",
           icon: "fas fa-code",
           onclick: (ev) => this._onConfigureActor(ev),

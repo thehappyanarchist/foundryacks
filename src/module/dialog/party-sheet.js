@@ -1,9 +1,9 @@
-export class OsePartySheet extends FormApplication {
+export class AcksPartySheet extends FormApplication {
   
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
-      classes: ["ose", "dialog", "party-sheet"],
-      template: "systems/ose/templates/apps/party-sheet.html",
+      classes: ["acks", "dialog", "party-sheet"],
+      template: "systems/acks/templates/apps/party-sheet.html",
       width: 280,
       height: 400,
       resizable: true,
@@ -17,7 +17,7 @@ export class OsePartySheet extends FormApplication {
    * @type {String}
    */
   get title() {
-    return game.i18n.localize("OSE.dialog.partysheet");
+    return game.i18n.localize("ACKS.dialog.partysheet");
   }
 
   /* -------------------------------------------- */
@@ -28,11 +28,11 @@ export class OsePartySheet extends FormApplication {
    */
   getData() {
     const settings = {
-      ascending: game.settings.get('ose', 'ascendingAC')
+      ascending: game.settings.get('acks', 'ascendingAC')
     };
     let data = {
       data: this.object,
-      config: CONFIG.OSE,
+      config: CONFIG.ACKS,
       user: game.user,
       settings: settings
     };
@@ -62,7 +62,7 @@ export class OsePartySheet extends FormApplication {
            </div>
         </form>`;
     let pcs = this.object.entities.filter((e) => {
-      return e.getFlag('ose', 'party') && e.data.type == "character";
+      return e.getFlag('acks', 'party') && e.data.type == "character";
     });
     new Dialog({
       title: "Deal Experience",
@@ -70,7 +70,7 @@ export class OsePartySheet extends FormApplication {
       buttons: {
         set: {
           icon: '<i class="fas fa-hand"></i>',
-          label: game.i18n.localize("OSE.dialog.dealXP"),
+          label: game.i18n.localize("ACKS.dialog.dealXP"),
           callback: (html) => {
             let toDeal = html.find('input[name="total"]').val();
             // calculate number of shares
@@ -90,7 +90,7 @@ export class OsePartySheet extends FormApplication {
   }
 
   async _selectActors(ev) {
-    const template = "/systems/ose/templates/apps/party-select.html";
+    const template = "/systems/acks/templates/apps/party-select.html";
     const templateData = {
       actors: this.object.entities
     }
@@ -101,12 +101,12 @@ export class OsePartySheet extends FormApplication {
       buttons: {
         set: {
           icon: '<i class="fas fa-save"></i>',
-          label: game.i18n.localize("OSE.Update"),
+          label: game.i18n.localize("ACKS.Update"),
           callback: (html) => {
             let checks = html.find("input[data-action='select-actor']");
             checks.each(async (_, c) => {
               let key = c.getAttribute('name');
-              await this.object.entities[key].setFlag('ose', 'party', c.checked);
+              await this.object.entities[key].setFlag('acks', 'party', c.checked);
             });
           },
         },
