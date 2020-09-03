@@ -1,7 +1,7 @@
 /**
  * Extend the basic ItemSheet with some very simple modifications
  */
-export class AcksItemSheet extends ItemSheet {
+export class OseItemSheet extends ItemSheet {
   constructor(...args) {
     super(...args);
 
@@ -17,7 +17,7 @@ export class AcksItemSheet extends ItemSheet {
    */
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
-      classes: ["acks", "sheet", "item"],
+      classes: ["ose", "sheet", "item"],
       width: 520,
       height: 390,
       resizable: false,
@@ -35,7 +35,7 @@ export class AcksItemSheet extends ItemSheet {
 
   /** @override */
   get template() {
-    const path = "systems/acks/templates/items/";
+    const path = "systems/ose/templates/items/";
     return `${path}/${this.item.data.type}-sheet.html`;
   }
 
@@ -45,7 +45,7 @@ export class AcksItemSheet extends ItemSheet {
    */
   getData() {
     const data = super.getData();
-    data.config = CONFIG.ACKS;
+    data.config = CONFIG.OSE;
     return data;
   }
 

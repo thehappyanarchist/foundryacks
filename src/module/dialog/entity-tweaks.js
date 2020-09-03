@@ -1,12 +1,12 @@
 // eslint-disable-next-line no-unused-vars
-import { AcksActor } from '../actor/entity.js';
+import { OseActor } from '../actor/entity.js';
 
-export class AcksEntityTweaks extends FormApplication {
+export class OseEntityTweaks extends FormApplication {
   static get defaultOptions() {
     const options = super.defaultOptions;
     options.id = 'sheet-tweaks';
     options.template =
-      'systems/acks/templates/actors/dialogs/tweaks-dialog.html';
+      'systems/ose/templates/actors/dialogs/tweaks-dialog.html';
     options.width = 380;
     return options;
   }
@@ -18,7 +18,7 @@ export class AcksEntityTweaks extends FormApplication {
    * @type {String}
    */
   get title() {
-    return `${this.object.name}: ${game.i18n.localize('ACKS.dialog.tweaks')}`;
+    return `${this.object.name}: ${game.i18n.localize('OSE.dialog.tweaks')}`;
   }
 
   /* -------------------------------------------- */
@@ -33,7 +33,7 @@ export class AcksEntityTweaks extends FormApplication {
       data.isCharacter = true;
     }
     data.user = game.user;
-    data.config = CONFIG.ACKS;
+    data.config = CONFIG.OSE;
     return data;
   }
 

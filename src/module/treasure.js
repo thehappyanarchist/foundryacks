@@ -1,15 +1,15 @@
 export const augmentTable = (table, html, data) => {
   // Treasure Toggle
   let head = html.find(".sheet-header");
-  const flag = table.object.getFlag("acks", "treasure");
+  const flag = table.object.getFlag("ose", "treasure");
   const treasure = flag
     ? "<div class='toggle-treasure active'></div>"
     : "<div class='toggle-treasure'></div>";
   head.append(treasure);
 
   html.find(".toggle-treasure").click((ev) => {
-    let isTreasure = table.object.getFlag("acks", "treasure");
-    table.object.setFlag("acks", "treasure", !isTreasure);
+    let isTreasure = table.object.getFlag("ose", "treasure");
+    table.object.setFlag("ose", "treasure", !isTreasure);
   });
 
   // Treasure table formatting
@@ -21,7 +21,7 @@ export const augmentTable = (table, html, data) => {
     html.find(".result-weight").first().text("Chance");
 
     // Replace Roll button
-    const roll = `<button class="roll-treasure" type="button"><i class="fas fa-gem"></i> ${game.i18n.localize('ACKS.table.treasure.roll')}</button>`;
+    const roll = `<button class="roll-treasure" type="button"><i class="fas fa-gem"></i> ${game.i18n.localize('OSE.table.treasure.roll')}</button>`;
     html.find(".sheet-footer .roll").replaceWith(roll);
   }
 
@@ -30,38 +30,44 @@ export const augmentTable = (table, html, data) => {
   });
 };
 
-async function rollTreasure(table, options = {}) {
-  let percent = (chance) => {
-    let roll = new Roll("1d100").roll();
+function drawTreasure(table, data) {
+  const percent = (chance) => {
+    const roll = new Roll("1d100").roll();
     return roll.total <= chance;
   };
+  data.treasure = {};
+  if (table.getFlag('ose', 'treasure')) {
+    table.results.forEach((r) => {
+      if (percent(r.weight)) {
+        const text = table._getResultChatText(r);
+        data.treasure[r._id] = ({
+          img: r.img,
+          text: TextEditor.enrichHTML(text),
+        });
+        if ((r.type === CONST.TABLE_RESULT_TYPES.ENTITY) && (r.collection === "RollTable")) {
+          const embeddedTable = game.tables.get(r.resultId);
+          drawTreasure(embeddedTable, data.treasure[r._id]);
+        }
+      }
+    });
+  } else {
+    const results = table.roll().results;
+    results.forEach((s) => { 
+      const text = TextEditor.enrichHTML(table._getResultChatText(s));
+      data.treasure[s._id] = {img: s.img, text: text}; 
+    });
+  }
+  return data;
+}
+
+async function rollTreasure(table, options = {}) {
+  // Draw treasure
+  const data = drawTreasure(table, {});
   let templateData = {
-    treasure: [],
+    treasure: data.treasure,
     table: table,
   };
-  let ids = [];
-  table.results.forEach((r) => {
-    if (percent(r.weight)) {
-      let text = "";
-      switch (r.type) {
-        case 0:
-          text = r.text;
-          break;
-        case 1:
-          text = `@${r.collection}[${r.resultId}]{${r.text}}`;
-          break;
-        case 2:
-          text = `@Compendium[${r.collection}.${r.resultId}]{${r.text}}`;
-      }
-      templateData.treasure.push({
-        id: r._id,
-        img: r.img,
-        text: TextEditor.enrichHTML(text),
-      });
-      ids.push(r._id);
-    }
-  });
-
+  
   // Animation
   if (options.event) {
     let results = $(event.currentTarget.parentElement)
@@ -69,20 +75,20 @@ async function rollTreasure(table, options = {}) {
       .find(".table-result");
     results.each((_, item) => {
       item.classList.remove("active");
-      if (ids.includes(item.dataset.resultId)) {
+      if (data.treasure[item.dataset.resultId]) {
         item.classList.add("active");
       }
     });
   }
 
   let html = await renderTemplate(
-    "systems/acks/templates/chat/roll-treasure.html",
+    "systems/ose/templates/chat/roll-treasure.html",
     templateData
   );
 
   let chatData = {
     content: html,
-    sound: "/systems/acks/assets/coins.mp3"
+    // sound: "/systems/ose/assets/coins.mp3"
   }
 
   let rollMode = game.settings.get("core", "rollMode");

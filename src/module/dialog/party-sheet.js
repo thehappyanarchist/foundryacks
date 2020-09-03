@@ -1,9 +1,9 @@
-export class AcksPartySheet extends FormApplication {
+export class OsePartySheet extends FormApplication {
   
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
-      classes: ["acks", "dialog", "party-sheet"],
-      template: "systems/acks/templates/apps/party-sheet.html",
+      classes: ["ose", "dialog", "party-sheet"],
+      template: "systems/ose/templates/apps/party-sheet.html",
       width: 280,
       height: 400,
       resizable: true,
@@ -17,7 +17,7 @@ export class AcksPartySheet extends FormApplication {
    * @type {String}
    */
   get title() {
-    return game.i18n.localize("ACKS.dialog.partysheet");
+    return game.i18n.localize("OSE.dialog.partysheet");
   }
 
   /* -------------------------------------------- */
@@ -28,11 +28,11 @@ export class AcksPartySheet extends FormApplication {
    */
   getData() {
     const settings = {
-      ascending: game.settings.get('acks', 'ascendingAC')
+      ascending: game.settings.get('ose', 'ascendingAC')
     };
     let data = {
       data: this.object,
-      config: CONFIG.ACKS,
+      config: CONFIG.OSE,
       user: game.user,
       settings: settings
     };
@@ -62,7 +62,7 @@ export class AcksPartySheet extends FormApplication {
            </div>
         </form>`;
     let pcs = this.object.entities.filter((e) => {
-      return e.getFlag('acks', 'party') && e.data.type == "character";
+      return e.getFlag('ose', 'party') && e.data.type == "character";
     });
     new Dialog({
       title: "Deal Experience",
@@ -70,7 +70,7 @@ export class AcksPartySheet extends FormApplication {
       buttons: {
         set: {
           icon: '<i class="fas fa-hand"></i>',
-          label: game.i18n.localize("ACKS.dialog.dealXP"),
+          label: game.i18n.localize("OSE.dialog.dealXP"),
           callback: (html) => {
             let toDeal = html.find('input[name="total"]').val();
             // calculate number of shares
@@ -90,7 +90,7 @@ export class AcksPartySheet extends FormApplication {
   }
 
   async _selectActors(ev) {
-    const template = "/systems/acks/templates/apps/party-select.html";
+    const template = "/systems/ose/templates/apps/party-select.html";
     const templateData = {
       actors: this.object.entities
     }
@@ -101,12 +101,12 @@ export class AcksPartySheet extends FormApplication {
       buttons: {
         set: {
           icon: '<i class="fas fa-save"></i>',
-          label: game.i18n.localize("ACKS.Update"),
+          label: game.i18n.localize("OSE.Update"),
           callback: (html) => {
             let checks = html.find("input[data-action='select-actor']");
             checks.each(async (_, c) => {
               let key = c.getAttribute('name');
-              await this.object.entities[key].setFlag('acks', 'party', c.checked);
+              await this.object.entities[key].setFlag('ose', 'party', c.checked);
             });
           },
         },

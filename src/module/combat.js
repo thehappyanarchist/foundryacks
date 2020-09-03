@@ -1,10 +1,10 @@
-export class AcksCombat {
+export class OseCombat {
   static rollInitiative(combat, data) {
     // Check groups
     data.combatants = [];
     let groups = {};
     combat.data.combatants.forEach((cbt) => {
-      groups[cbt.flags.acks.group] = { present: true };
+      groups[cbt.flags.ose.group] = { present: true };
       data.combatants.push(cbt);
     });
 
@@ -12,7 +12,7 @@ export class AcksCombat {
     Object.keys(groups).forEach((group) => {
       let roll = new Roll("1d6").roll();
       roll.toMessage({
-        flavor: game.i18n.format('ACKS.roll.initiative', { group: CONFIG["ACKS"].colors[group] }),
+        flavor: game.i18n.format('OSE.roll.initiative', { group: CONFIG["OSE"].colors[group] }),
       });
       groups[group].initiative = roll.total;
     });
@@ -26,17 +26,18 @@ export class AcksCombat {
         data.combatants[i].initiative = -789;
       } else {
         data.combatants[i].initiative =
-          groups[data.combatants[i].flags.acks.group].initiative;
+          groups[data.combatants[i].flags.ose.group].initiative;
       }
     }
+    combat.setupTurns();
   }
 
   static async resetInitiative(combat, data) {
-    let updates = [];
-    combat.data.combatants.forEach((c, i) => {
-      updates.push({_id: c._id, initiative: ""});
-    });
-    await combat.updateEmbeddedEntity("Combatant", updates);
+    let reroll = game.settings.get("ose", "rerollInitiative");
+    if (!["reset", "reroll"].includes(reroll)) {
+      return;
+    }
+    combat.resetAll();
   }
 
   static async individualInitiative(combat, data) {
@@ -65,7 +66,7 @@ export class AcksCombat {
           token: c.token._id,
           alias: c.token.name
         },
-        flavor: game.i18n.format('ACKS.roll.individualInit', { name: c.token.name })
+        flavor: game.i18n.format('OSE.roll.individualInit', { name: c.token.name })
       }, {});
       const chatData = roll.toMessage(messageData, { rollMode, create: false });
 
@@ -88,7 +89,7 @@ export class AcksCombat {
           ? '<i class="fas fa-dizzy"></i>'
           : span.innerHTML;
     });
-    let init = game.settings.get("acks", "initiative") == "group";
+    let init = game.settings.get("ose", "initiative") == "group";
     if (!init) {
       return;
     }
@@ -108,19 +109,19 @@ export class AcksCombat {
 
       // Get group color
       let cmbtant = object.combat.getCombatant(ct.dataset.combatantId);
-      let color = cmbtant.flags.acks.group;
+      let color = cmbtant.flags.ose.group;
 
       // Append colored flag
       let controls = $(ct).find(".combatant-controls");
       controls.prepend(
-        `<a class='combatant-control flag' style='color:${color}' title="${CONFIG.ACKS.colors[color]}"><i class='fas fa-flag'></i></a>`
+        `<a class='combatant-control flag' style='color:${color}' title="${CONFIG.OSE.colors[color]}"><i class='fas fa-flag'></i></a>`
       );
     });
-    AcksCombat.addListeners(html);
+    OseCombat.addListeners(html);
   }
 
   static updateCombatant(combat, combatant, data) {
-    let init = game.settings.get("acks", "initiative");
+    let init = game.settings.get("ose", "initiative");
     // Why do you reroll ?
     if (combatant.actor.data.data.isSlow) {
       data.initiative = -789;
@@ -134,7 +135,7 @@ export class AcksCombat {
           ct.initiative &&
           ct.initiative != "-789.00" &&
           ct._id != data._id &&
-          ct.flags.acks.group == combatant.flags.acks.group
+          ct.flags.ose.group == combatant.flags.ose.group
         ) {
           groupInit = ct.initiative;
           // Set init
@@ -151,7 +152,7 @@ export class AcksCombat {
         return;
       }
       let currentColor = ev.currentTarget.style.color;
-      let colors = Object.keys(CONFIG.ACKS.colors);
+      let colors = Object.keys(CONFIG.OSE.colors);
       let index = colors.indexOf(currentColor);
       if (index + 1 == colors.length) {
         index = 0;
@@ -161,7 +162,7 @@ export class AcksCombat {
       let id = $(ev.currentTarget).closest(".combatant")[0].dataset.combatantId;
       game.combat.updateCombatant({
         _id: id,
-        flags: { acks: { group: colors[index] } },
+        flags: { ose: { group: colors[index] } },
       });
     });
 
@@ -170,8 +171,10 @@ export class AcksCombat {
         return;
       }
       let data = {};
-      AcksCombat.rollInitiative(game.combat, data);
-      game.combat.update({ data: data });
+      OseCombat.rollInitiative(game.combat, data);
+      game.combat.update({ data: data }).then(() => {
+        game.combat.setupTurns();
+      });
     });
   }
 
@@ -190,7 +193,7 @@ export class AcksCombat {
         break;
     }
     data.flags = {
-      acks: {
+      ose: {
         group: color,
       },
     };

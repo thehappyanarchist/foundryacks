@@ -1,10 +1,10 @@
-import { AcksActor } from "./entity.js";
-import { AcksActorSheet } from "./actor-sheet.js";
+import { OseActor } from "./entity.js";
+import { OseActorSheet } from "./actor-sheet.js";
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
  */
-export class AcksActorSheetMonster extends AcksActorSheet {
+export class OseActorSheetMonster extends OseActorSheet {
   constructor(...args) {
     super(...args);
   }
@@ -17,8 +17,8 @@ export class AcksActorSheetMonster extends AcksActorSheet {
    */
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
-      classes: ["acks", "sheet", "monster", "actor"],
-      template: "systems/acks/templates/actors/monster-sheet.html",
+      classes: ["ose", "sheet", "monster", "actor"],
+      template: "systems/ose/templates/actors/monster-sheet.html",
       width: 450,
       height: 560,
       resizable: true,
@@ -36,20 +36,20 @@ export class AcksActorSheetMonster extends AcksActorSheet {
    * Monster creation helpers
    */
   async generateSave() {
-    let choices = CONFIG.ACKS.monster_saves;
+    let choices = CONFIG.OSE.monster_saves;
 
     let templateData = { choices: choices },
       dlg = await renderTemplate(
-        "/systems/acks/templates/actors/dialogs/monster-saves.html",
+        "/systems/ose/templates/actors/dialogs/monster-saves.html",
         templateData
       );
     //Create Dialog window
     new Dialog({
-      title: game.i18n.localize("ACKS.dialog.generateSaves"),
+      title: game.i18n.localize("OSE.dialog.generateSaves"),
       content: dlg,
       buttons: {
         ok: {
-          label: game.i18n.localize("ACKS.Ok"),
+          label: game.i18n.localize("OSE.Ok"),
           icon: '<i class="fas fa-check"></i>',
           callback: (html) => {
             let hd = html.find('select[name="choice"]').val();
@@ -58,7 +58,7 @@ export class AcksActorSheetMonster extends AcksActorSheet {
         },
         cancel: {
           icon: '<i class="fas fa-times"></i>',
-          label: game.i18n.localize("ACKS.Cancel"),
+          label: game.i18n.localize("OSE.Cancel"),
         },
       },
       default: "ok",
@@ -75,7 +75,7 @@ export class AcksActorSheetMonster extends AcksActorSheet {
     const data = super.getData();
 
     // Settings
-    data.config.morale = game.settings.get("acks", "morale");
+    data.config.morale = game.settings.get("ose", "morale");
     data.data.details.treasure.link = TextEditor.enrichHTML(data.data.details.treasure.table);
     data.isNew = this.actor.isNew();
     return data;
@@ -117,7 +117,7 @@ export class AcksActorSheetMonster extends AcksActorSheet {
         content: dlg,
         buttons: {
           ok: {
-            label: game.i18n.localize("ACKS.Ok"),
+            label: game.i18n.localize("OSE.Ok"),
             icon: '<i class="fas fa-check"></i>',
             callback: (html) => {
               resolve({
@@ -128,7 +128,7 @@ export class AcksActorSheetMonster extends AcksActorSheet {
           },
           cancel: {
             icon: '<i class="fas fa-times"></i>',
-            label: game.i18n.localize("ACKS.Cancel"),
+            label: game.i18n.localize("OSE.Cancel"),
           },
         },
         default: "ok",
@@ -170,6 +170,24 @@ export class AcksActorSheetMonster extends AcksActorSheet {
    * @param html {HTML}   The prepared HTML object ready to be rendered into the DOM
    */
   activateListeners(html) {
+    super.activateListeners(html);
+
+    html.find(".morale-check a").click((ev) => {
+      let actorObject = this.actor;
+      actorObject.rollMorale({ event: event });
+    });
+
+    html.find(".reaction-check a").click((ev) => {
+      let actorObject = this.actor;
+      actorObject.rollReaction({ event: event });
+    });
+
+    html.find(".appearing-check a").click((ev) => {
+      let actorObject = this.actor;
+      let check = $(ev.currentTarget).closest('.check-field').data('check');
+      actorObject.rollAppearing({ event: event, check: check });
+    });
+    
     // Everything below here is only needed if the sheet is editable
     if (!this.options.editable) return;
 
@@ -220,22 +238,6 @@ export class AcksActorSheetMonster extends AcksActorSheet {
       this._resetCounters(ev);
     });
 
-    html.find(".morale-check a").click((ev) => {
-      let actorObject = this.actor;
-      actorObject.rollMorale({ event: event });
-    });
-
-    html.find(".reaction-check a").click((ev) => {
-      let actorObject = this.actor;
-      actorObject.rollReaction({ event: event });
-    });
-
-    html.find(".appearing-check a").click((ev) => {
-      let actorObject = this.actor;
-      let check = $(ev.currentTarget).closest('.check-field').data('check');
-      actorObject.rollAppearing({ event: event, check: check });
-    });
-
     html
       .find(".counter input")
       .click((ev) => ev.target.select())
@@ -250,7 +252,7 @@ export class AcksActorSheetMonster extends AcksActorSheet {
       const li = $(ev.currentTarget).parents(".item");
       const item = this.actor.getOwnedItem(li.data("itemId"));
       let currentColor = item.data.data.pattern;
-      let colors = Object.keys(CONFIG.ACKS.colors);
+      let colors = Object.keys(CONFIG.OSE.colors);
       let index = colors.indexOf(currentColor);
       if (index + 1 == colors.length) {
         index = 0;
@@ -263,7 +265,5 @@ export class AcksActorSheetMonster extends AcksActorSheet {
     });
 
     html.find('button[data-action="generate-saves"]').click(() => this.generateSave());
-    // Handle default listeners last so system listeners are triggered first
-    super.activateListeners(html);
   }
 }

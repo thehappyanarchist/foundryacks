@@ -1,6 +1,6 @@
-import { AcksDice } from "../dice.js";
+import { OseDice } from "../dice.js";
 
-export class AcksActor extends Actor {
+export class OseActor extends Actor {
   /**
    * Extends data from base Actor class
    */
@@ -17,7 +17,7 @@ export class AcksActor extends Actor {
     this.computeTreasure();
 
     // Determine Initiative
-    if (game.settings.get("acks", "initiative") != "group") {
+    if (game.settings.get("ose", "initiative") != "group") {
       data.initiative.value = data.initiative.mod;
       if (this.data.type == "character") {
         data.initiative.value += data.scores.dex.mod;
@@ -42,7 +42,7 @@ export class AcksActor extends Actor {
     }).then(() => {
       const speaker = ChatMessage.getSpeaker({ actor: this });
       ChatMessage.create({
-        content: game.i18n.format("ACKS.messages.GetExperience", {
+        content: game.i18n.format("OSE.messages.GetExperience", {
           name: this.name,
           value: modified,
         }),
@@ -71,7 +71,7 @@ export class AcksActor extends Actor {
   generateSave(hd) {
     let saves = {};
     for (let i = 0; i <= hd; i++) {
-      let tmp = CONFIG.ACKS.monster_saves[i];
+      let tmp = CONFIG.OSE.monster_saves[i];
       if (tmp) {
         saves = tmp;
       }
@@ -115,7 +115,7 @@ export class AcksActor extends Actor {
   }
 
   rollSave(save, options = {}) {
-    const label = game.i18n.localize(`ACKS.saves.${save}.long`);
+    const label = game.i18n.localize(`OSE.saves.${save}.long`);
     const rollParts = ["1d20"];
 
     const data = {
@@ -123,21 +123,24 @@ export class AcksActor extends Actor {
       roll: {
         type: "above",
         target: this.data.data.saves[save].value,
+        magic: this.data.data.scores.wis.mod
       },
-      details: game.i18n.format("ACKS.roll.details.save", { save: label }),
+      details: game.i18n.format("OSE.roll.details.save", { save: label }),
     };
 
     let skip = options.event && options.event.ctrlKey;
 
+    const rollMethod = this.data.type == "character" ? OseDice.RollSave : OseDice.Roll;
+
     // Roll and return
-    return AcksDice.Roll({
+    return rollMethod({
       event: options.event,
       parts: rollParts,
       data: data,
       skipDialog: skip,
       speaker: ChatMessage.getSpeaker({ actor: this }),
-      flavor: game.i18n.format("ACKS.roll.save", { save: label }),
-      title: game.i18n.format("ACKS.roll.save", { save: label }),
+      flavor: game.i18n.format("OSE.roll.save", { save: label }),
+      title: game.i18n.format("OSE.roll.save", { save: label }),
     });
   }
 
@@ -153,19 +156,19 @@ export class AcksActor extends Actor {
     };
 
     // Roll and return
-    return AcksDice.Roll({
+    return OseDice.Roll({
       event: options.event,
       parts: rollParts,
       data: data,
       skipDialog: true,
       speaker: ChatMessage.getSpeaker({ actor: this }),
-      flavor: game.i18n.localize("ACKS.roll.morale"),
-      title: game.i18n.localize("ACKS.roll.morale"),
+      flavor: game.i18n.localize("OSE.roll.morale"),
+      title: game.i18n.localize("OSE.roll.morale"),
     });
   }
 
   rollLoyalty(options = {}) {
-    const label = game.i18n.localize(`ACKS.roll.loyalty`);
+    const label = game.i18n.localize(`OSE.roll.loyalty`);
     const rollParts = ["2d6"];
 
     const data = {
@@ -177,7 +180,7 @@ export class AcksActor extends Actor {
     };
 
     // Roll and return
-    return AcksDice.Roll({
+    return OseDice.Roll({
       event: options.event,
       parts: rollParts,
       data: data,
@@ -196,19 +199,19 @@ export class AcksActor extends Actor {
       roll: {
         type: "table",
         table: {
-          2: game.i18n.format("ACKS.reaction.Hostile", {
+          2: game.i18n.format("OSE.reaction.Hostile", {
             name: this.data.name,
           }),
-          3: game.i18n.format("ACKS.reaction.Unfriendly", {
+          3: game.i18n.format("OSE.reaction.Unfriendly", {
             name: this.data.name,
           }),
-          6: game.i18n.format("ACKS.reaction.Neutral", {
+          6: game.i18n.format("OSE.reaction.Neutral", {
             name: this.data.name,
           }),
-          9: game.i18n.format("ACKS.reaction.Indifferent", {
+          9: game.i18n.format("OSE.reaction.Indifferent", {
             name: this.data.name,
           }),
-          12: game.i18n.format("ACKS.reaction.Friendly", {
+          12: game.i18n.format("OSE.reaction.Friendly", {
             name: this.data.name,
           }),
         },
@@ -218,19 +221,19 @@ export class AcksActor extends Actor {
     let skip = options.event && options.event.ctrlKey;
 
     // Roll and return
-    return AcksDice.Roll({
+    return OseDice.Roll({
       event: options.event,
       parts: rollParts,
       data: data,
       skipDialog: skip,
       speaker: ChatMessage.getSpeaker({ actor: this }),
-      flavor: game.i18n.localize("ACKS.reaction.check"),
-      title: game.i18n.localize("ACKS.reaction.check"),
+      flavor: game.i18n.localize("OSE.reaction.check"),
+      title: game.i18n.localize("OSE.reaction.check"),
     });
   }
 
   rollCheck(score, options = {}) {
-    const label = game.i18n.localize(`ACKS.scores.${score}.long`);
+    const label = game.i18n.localize(`OSE.scores.${score}.long`);
     const rollParts = ["1d20"];
 
     const data = {
@@ -240,7 +243,7 @@ export class AcksActor extends Actor {
         target: this.data.data.scores[score].value,
       },
 
-      details: game.i18n.format("ACKS.roll.details.attribute", {
+      details: game.i18n.format("OSE.roll.details.attribute", {
         score: label,
       }),
     };
@@ -248,19 +251,19 @@ export class AcksActor extends Actor {
     let skip = options.event && options.event.ctrlKey;
 
     // Roll and return
-    return AcksDice.Roll({
+    return OseDice.Roll({
       event: options.event,
       parts: rollParts,
       data: data,
       skipDialog: skip,
       speaker: ChatMessage.getSpeaker({ actor: this }),
-      flavor: game.i18n.format("ACKS.roll.attribute", { attribute: label }),
-      title: game.i18n.format("ACKS.roll.attribute", { attribute: label }),
+      flavor: game.i18n.format("OSE.roll.attribute", { attribute: label }),
+      title: game.i18n.format("OSE.roll.attribute", { attribute: label }),
     });
   }
 
   rollHitDice(options = {}) {
-    const label = game.i18n.localize(`ACKS.roll.hd`);
+    const label = game.i18n.localize(`OSE.roll.hd`);
     const rollParts = [this.data.data.hp.hd];
     if (this.data.type == "character") {
       rollParts.push(this.data.data.scores.con.mod);
@@ -274,7 +277,7 @@ export class AcksActor extends Actor {
     };
 
     // Roll and return
-    return AcksDice.Roll({
+    return OseDice.Roll({
       event: options.event,
       parts: rollParts,
       data: data,
@@ -305,19 +308,19 @@ export class AcksActor extends Actor {
     };
 
     // Roll and return
-    return AcksDice.Roll({
+    return OseDice.Roll({
       event: options.event,
       parts: rollParts,
       data: data,
       skipDialog: true,
       speaker: ChatMessage.getSpeaker({ actor: this }),
-      flavor: game.i18n.format("ACKS.roll.appearing", { type: label }),
-      title: game.i18n.format("ACKS.roll.appearing", { type: label }),
+      flavor: game.i18n.format("OSE.roll.appearing", { type: label }),
+      title: game.i18n.format("OSE.roll.appearing", { type: label }),
     });
   }
 
   rollExploration(expl, options = {}) {
-    const label = game.i18n.localize(`ACKS.exploration.${expl}.long`);
+    const label = game.i18n.localize(`OSE.exploration.${expl}.long`);
     const rollParts = ["1d6"];
 
     const data = {
@@ -326,7 +329,7 @@ export class AcksActor extends Actor {
         type: "below",
         target: this.data.data.exploration[expl],
       },
-      details: game.i18n.format("ACKS.roll.details.exploration", {
+      details: game.i18n.format("OSE.roll.details.exploration", {
         expl: label,
       }),
     };
@@ -334,14 +337,14 @@ export class AcksActor extends Actor {
     let skip = options.event && options.event.ctrlKey;
 
     // Roll and return
-    return AcksDice.Roll({
+    return OseDice.Roll({
       event: options.event,
       parts: rollParts,
       data: data,
       skipDialog: skip,
       speaker: ChatMessage.getSpeaker({ actor: this }),
-      flavor: game.i18n.format("ACKS.roll.exploration", { exploration: label }),
-      title: game.i18n.format("ACKS.roll.exploration", { exploration: label }),
+      flavor: game.i18n.format("OSE.roll.exploration", { exploration: label }),
+      title: game.i18n.format("OSE.roll.exploration", { exploration: label }),
     });
   }
 
@@ -369,14 +372,14 @@ export class AcksActor extends Actor {
     }
 
     // Damage roll
-    AcksDice.Roll({
+    OseDice.Roll({
       event: options.event,
       parts: dmgParts,
       data: rollData,
       skipDialog: true,
       speaker: ChatMessage.getSpeaker({ actor: this }),
-      flavor: `${attData.label} - ${game.i18n.localize("ACKS.Damage")}`,
-      title: `${attData.label} - ${game.i18n.localize("ACKS.Damage")}`,
+      flavor: `${attData.label} - ${game.i18n.localize("OSE.Damage")}`,
+      title: `${attData.label} - ${game.i18n.localize("OSE.Damage")}`,
     });
   }
 
@@ -384,7 +387,10 @@ export class AcksActor extends Actor {
     if (game.user.targets.size > 0) {
       for (let t of game.user.targets.values()) {
         data.roll.target = t;
-        await this.rollAttack(data, { type: type, skipDialog: options.skipDialog });
+        await this.rollAttack(data, {
+          type: type,
+          skipDialog: options.skipDialog,
+        });
       }
     } else {
       this.rollAttack(data, { type: type, skipDialog: options.skipDialog });
@@ -393,21 +399,21 @@ export class AcksActor extends Actor {
 
   rollAttack(attData, options = {}) {
     const data = this.data.data;
-    const rollParts = ["1d20x="];
+    const rollParts = ["1d20"];
     const dmgParts = [];
-    let label = game.i18n.format("ACKS.roll.attacks", {
+    let label = game.i18n.format("OSE.roll.attacks", {
       name: this.data.name,
     });
     if (!attData.item) {
       dmgParts.push("1d6");
     } else {
-      label = game.i18n.format("ACKS.roll.attacksWith", {
+      label = game.i18n.format("OSE.roll.attacksWith", {
         name: attData.item.name,
       });
       dmgParts.push(attData.item.data.damage);
     }
 
-    let ascending = game.settings.get("acks", "ascendingAC");
+    let ascending = game.settings.get("ose", "ascendingAC");
     if (ascending) {
       rollParts.push(data.thac0.bba.toString());
     }
@@ -437,12 +443,12 @@ export class AcksActor extends Actor {
         thac0: thac0,
         dmg: dmgParts,
         save: attData.roll.save,
-        target: attData.roll.target
+        target: attData.roll.target,
       },
     };
 
     // Roll and return
-    return AcksDice.Roll({
+    return OseDice.Roll({
       event: options.event,
       parts: rollParts,
       data: rollData,
@@ -494,20 +500,25 @@ export class AcksActor extends Actor {
       return;
     }
     const data = this.data.data;
-    let option = game.settings.get("acks", "encumbranceOption");
+    let option = game.settings.get("ose", "encumbranceOption");
 
     // Compute encumbrance
     let totalWeight = 0;
     let hasItems = false;
     Object.values(this.data.items).forEach((item) => {
-      if (item.type == "item" && (['complete', 'disabled'].includes(option) || item.data.treasure)) {
-        totalWeight += item.data.quantity.value * item.data.weight;
+      if (item.type == "item" && !item.data.treasure) {
         hasItems = true;
-      } else if (option != 'basic' && ['weapon', 'armor'].includes(item.type)) {
+      }
+      if (
+        item.type == "item" &&
+        (["complete", "disabled"].includes(option) || item.data.treasure)
+      ) {
+        totalWeight += item.data.quantity.value * item.data.weight;
+      } else if (option != "basic" && ["weapon", "armor"].includes(item.type)) {
         totalWeight += item.data.weight;
       }
     });
-    if (option === 'detailed' && hasItems) totalWeight += 80;
+    if (option === "detailed" && hasItems) totalWeight += 80;
 
     data.encumbrance = {
       pct: Math.clamped(
@@ -527,7 +538,7 @@ export class AcksActor extends Actor {
 
   _calculateMovement() {
     const data = this.data.data;
-    let option = game.settings.get("acks", "encumbranceOption");
+    let option = game.settings.get("ose", "encumbranceOption");
     let weight = data.encumbrance.value;
     let delta = data.encumbrance.max - 1600;
     if (["detailed", "complete"].includes(option)) {
@@ -565,7 +576,7 @@ export class AcksActor extends Actor {
           data.movement.base = 60;
           break;
       }
-      if (weight > game.settings.get("acks", "significantTreasure")) {
+      if (weight > game.settings.get("ose", "significantTreasure")) {
         data.movement.base -= 30;
       }
     }
@@ -593,7 +604,7 @@ export class AcksActor extends Actor {
     }
     // Compute AC
     let baseAc = 9;
-    let baseAac = 0;
+    let baseAac = 10;
     let AcShield = 0;
     let AacShield = 0;
     const data = this.data.data;
@@ -631,27 +642,27 @@ export class AcksActor extends Actor {
       16: 2,
       18: 3,
     };
-    data.scores.str.mod = AcksActor._valueFromTable(
+    data.scores.str.mod = OseActor._valueFromTable(
       standard,
       data.scores.str.value
     );
-    data.scores.int.mod = AcksActor._valueFromTable(
+    data.scores.int.mod = OseActor._valueFromTable(
       standard,
       data.scores.int.value
     );
-    data.scores.dex.mod = AcksActor._valueFromTable(
+    data.scores.dex.mod = OseActor._valueFromTable(
       standard,
       data.scores.dex.value
     );
-    data.scores.cha.mod = AcksActor._valueFromTable(
+    data.scores.cha.mod = OseActor._valueFromTable(
       standard,
       data.scores.cha.value
     );
-    data.scores.wis.mod = AcksActor._valueFromTable(
+    data.scores.wis.mod = OseActor._valueFromTable(
       standard,
       data.scores.wis.value
     );
-    data.scores.con.mod = AcksActor._valueFromTable(
+    data.scores.con.mod = OseActor._valueFromTable(
       standard,
       data.scores.con.value
     );
@@ -666,12 +677,12 @@ export class AcksActor extends Actor {
       16: 1,
       18: 2,
     };
-    data.scores.dex.init = AcksActor._valueFromTable(
-      standard,
+    data.scores.dex.init = OseActor._valueFromTable(
+      capped,
       data.scores.dex.value
     );
-    data.scores.cha.npc = AcksActor._valueFromTable(
-      standard,
+    data.scores.cha.npc = OseActor._valueFromTable(
+      capped,
       data.scores.cha.value
     );
     data.scores.cha.retain = data.scores.cha.mod + 4;
@@ -685,28 +696,30 @@ export class AcksActor extends Actor {
       16: 4,
       18: 5,
     };
-    data.exploration.odMod = AcksActor._valueFromTable(
+    data.exploration.odMod = OseActor._valueFromTable(
       od,
       data.scores.str.value
     );
 
     const literacy = {
-      3: "ACKS.Illiterate",
-      9: "ACKS.Literate",
+      0: "",
+      3: "OSE.Illiterate",
+      6: "OSE.LiteracyBasic",
+      9: "OSE.Literate",
     };
-    data.languages.literacy = AcksActor._valueFromTable(
+    data.languages.literacy = OseActor._valueFromTable(
       literacy,
       data.scores.int.value
     );
 
     const spoken = {
-      0: "ACKS.NativeBroken",
-      3: "ACKS.Native",
-      13: "ACKS.NativePlus1",
-      16: "ACKS.NativePlus2",
-      18: "ACKS.NativePlus3",
+      0: "OSE.NativeBroken",
+      3: "OSE.Native",
+      13: "OSE.NativePlus1",
+      16: "OSE.NativePlus2",
+      18: "OSE.NativePlus3",
     };
-    data.languages.spoken = AcksActor._valueFromTable(
+    data.languages.spoken = OseActor._valueFromTable(
       spoken,
       data.scores.int.value
     );

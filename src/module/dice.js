@@ -1,4 +1,4 @@
-export class AcksDice {
+export class OseDice {
   static digestResult(data, roll) {
     let result = {
       isSuccess: false,
@@ -51,7 +51,7 @@ export class AcksDice {
     speaker = null,
     form = null,
   } = {}) {
-    const template = "systems/acks/templates/chat/roll-result.html";
+    const template = "systems/ose/templates/chat/roll-result.html";
 
     let chatData = {
       user: game.user._id,
@@ -88,11 +88,11 @@ export class AcksDice {
       data.roll.blindroll = true;
     }
 
-    templateData.result = AcksDice.digestResult(data, roll);
+    templateData.result = OseDice.digestResult(data, roll);
 
     return new Promise((resolve) => {
       roll.render().then((r) => {
-        templateData.rollACKS = r;
+        templateData.rollOSE = r;
         renderTemplate(template, templateData).then((content) => {
           chatData.content = content;
           // Dice So Nice
@@ -128,33 +128,39 @@ export class AcksDice {
     };
     result.target = data.roll.thac0;
 
-    const targetAc = data.roll.target ? data.roll.target.actor.data.data.ac.value : 9;
-    const targetAac = data.roll.target ? data.roll.target.actor.data.data.aac.value : 0;
-    result.victim = data.roll.target ? data.roll.target.actor.name : null;
+    const targetAc = data.roll.target
+      ? data.roll.target.actor.data.data.ac.value
+      : 9;
+    const targetAac = data.roll.target
+      ? data.roll.target.actor.data.data.aac.value
+      : 0;
+    result.victim = data.roll.target ? data.roll.target.data.name : null;
 
-    if (game.settings.get("acks", "ascendingAC")) {
-      if (roll.total < targetAac + 10) {
-        result.details = game.i18n.format("ACKS.messages.AttackAscendingFailure", {
-          result: roll.total - 10,
-          bonus: result.target,
-        });
+    if (game.settings.get("ose", "ascendingAC")) {
+      if (roll.total < targetAac) {
+        result.details = game.i18n.format(
+          "OSE.messages.AttackAscendingFailure",
+          {
+            bonus: result.target,
+          }
+        );
         return result;
       }
-      result.details = game.i18n.format("ACKS.messages.AttackAscendingSuccess", {
-        result: roll.total - 10,
+      result.details = game.i18n.format("OSE.messages.AttackAscendingSuccess", {
+        result: roll.total,
       });
       result.isSuccess = true;
     } else {
       // B/X Historic THAC0 Calculation
       if (result.target - roll.total > targetAc) {
-        result.details = game.i18n.format("ACKS.messages.AttackFailure", {
+        result.details = game.i18n.format("OSE.messages.AttackFailure", {
           bonus: result.target,
         });
         return result;
       }
       result.isSuccess = true;
       let value = Math.clamped(result.target - roll.total, -3, 9);
-      result.details = game.i18n.format("ACKS.messages.AttackSuccess", {
+      result.details = game.i18n.format("OSE.messages.AttackSuccess", {
         result: value,
         bonus: result.target,
       });
@@ -170,7 +176,7 @@ export class AcksDice {
     speaker = null,
     form = null,
   } = {}) {
-    const template = "systems/acks/templates/chat/roll-attack.html";
+    const template = "systems/ose/templates/chat/roll-attack.html";
 
     let chatData = {
       user: game.user._id,
@@ -181,7 +187,7 @@ export class AcksDice {
       title: title,
       flavor: flavor,
       data: data,
-      config: CONFIG.ACKS,
+      config: CONFIG.OSE,
     };
 
     // Optionally include a situational bonus
@@ -207,11 +213,11 @@ export class AcksDice {
       data.roll.blindroll = true;
     }
 
-    templateData.result = AcksDice.digestAttackResult(data, roll);
+    templateData.result = OseDice.digestAttackResult(data, roll);
 
     return new Promise((resolve) => {
       roll.render().then((r) => {
-        templateData.rollACKS = r;
+        templateData.rollOSE = r;
         dmgRoll.render().then((dr) => {
           templateData.rollDamage = dr;
           renderTemplate(template, templateData).then((content) => {
@@ -257,6 +263,77 @@ export class AcksDice {
     });
   }
 
+  static async RollSave({
+    parts = [],
+    data = {},
+    skipDialog = false,
+    speaker = null,
+    flavor = null,
+    title = null,
+  } = {}) {
+    let rolled = false;
+    const template = "systems/ose/templates/chat/roll-dialog.html";
+    let dialogData = {
+      formula: parts.join(" "),
+      data: data,
+      rollMode: game.settings.get("core", "rollMode"),
+      rollModes: CONFIG.Dice.rollModes,
+    };
+
+    let rollData = {
+      parts: parts,
+      data: data,
+      title: title,
+      flavor: flavor,
+      speaker: speaker,
+    };
+    if (skipDialog) { OseDice.sendRoll(rollData); }
+
+    let buttons = {
+      ok: {
+        label: game.i18n.localize("OSE.Roll"),
+        icon: '<i class="fas fa-dice-d20"></i>',
+        callback: (html) => {
+          rolled = true;
+          rollData.form = html[0].children[0];
+          roll = OseDice.sendRoll(rollData);
+        },
+      },
+      magic: {
+        label: game.i18n.localize("OSE.saves.magic.short"),
+        icon: '<i class="fas fa-magic"></i>',
+        callback: (html) => {
+          rolled = true;
+          rollData.form = html[0].children[0];
+          rollData.data.roll.target = parseInt(rollData.data.roll.target) + parseInt(rollData.data.roll.magic);
+          rollData.title += ` ${game.i18n.localize("OSE.saves.magic.short")} (${rollData.data.roll.magic})`;
+          roll = OseDice.sendRoll(rollData);
+        },
+      },
+      cancel: {
+        icon: '<i class="fas fa-times"></i>',
+        label: game.i18n.localize("OSE.Cancel"),
+        callback: (html) => { },
+      },
+    };
+
+    const html = await renderTemplate(template, dialogData);
+    let roll;
+
+    //Create Dialog window
+    return new Promise((resolve) => {
+      new Dialog({
+        title: title,
+        content: html,
+        buttons: buttons,
+        default: "ok",
+        close: () => {
+          resolve(rolled ? roll : false);
+        },
+      }).render(true);
+    });
+  }
+
   static async Roll({
     parts = [],
     data = {},
@@ -266,7 +343,7 @@ export class AcksDice {
     title = null,
   } = {}) {
     let rolled = false;
-    const template = "systems/acks/templates/chat/roll-dialog.html";
+    const template = "systems/ose/templates/chat/roll-dialog.html";
     let dialogData = {
       formula: parts.join(" "),
       data: data,
@@ -283,26 +360,26 @@ export class AcksDice {
     };
     if (skipDialog) {
       return ["melee", "missile", "attack"].includes(data.roll.type)
-        ? AcksDice.sendAttackRoll(rollData)
-        : AcksDice.sendRoll(rollData);
+        ? OseDice.sendAttackRoll(rollData)
+        : OseDice.sendRoll(rollData);
     }
 
     let buttons = {
       ok: {
-        label: game.i18n.localize("ACKS.Roll"),
+        label: game.i18n.localize("OSE.Roll"),
         icon: '<i class="fas fa-dice-d20"></i>',
         callback: (html) => {
           rolled = true;
           rollData.form = html[0].children[0];
           roll = ["melee", "missile", "attack"].includes(data.roll.type)
-            ? AcksDice.sendAttackRoll(rollData)
-            : AcksDice.sendRoll(rollData);
+            ? OseDice.sendAttackRoll(rollData)
+            : OseDice.sendRoll(rollData);
         },
       },
       cancel: {
         icon: '<i class="fas fa-times"></i>',
-        label: game.i18n.localize("ACKS.Cancel"),
-        callback: (html) => {},
+        label: game.i18n.localize("OSE.Cancel"),
+        callback: (html) => { },
       },
     };
 

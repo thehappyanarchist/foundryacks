@@ -1,12 +1,12 @@
-import { AcksActor } from "./entity.js";
-import { AcksActorSheet } from "./actor-sheet.js";
-import { AcksCharacterModifiers } from "../dialog/character-modifiers.js";
-import { AcksCharacterCreator } from "../dialog/character-creation.js";
+import { OseActor } from "./entity.js";
+import { OseActorSheet } from "./actor-sheet.js";
+import { OseCharacterModifiers } from "../dialog/character-modifiers.js";
+import { OseCharacterCreator } from "../dialog/character-creation.js";
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
  */
-export class AcksActorSheetCharacter extends AcksActorSheet {
+export class OseActorSheetCharacter extends OseActorSheet {
   constructor(...args) {
     super(...args);
   }
@@ -19,14 +19,14 @@ export class AcksActorSheetCharacter extends AcksActorSheet {
    */
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
-      classes: ["acks", "sheet", "actor", "character"],
-      template: "systems/acks/templates/actors/character-sheet.html",
+      classes: ["ose", "sheet", "actor", "character"],
+      template: "systems/ose/templates/actors/character-sheet.html",
       width: 450,
       height: 530,
       resizable: true,
       tabs: [
         {
-          navSelector: ".tabs",
+          navSelector: ".sheet-tabs",
           contentSelector: ".sheet-body",
           initial: "attributes",
         },
@@ -35,7 +35,7 @@ export class AcksActorSheetCharacter extends AcksActorSheet {
   }
 
   generateScores() {
-    new AcksCharacterCreator(this.actor, {
+    new OseCharacterCreator(this.actor, {
       top: this.position.top + 40,
       left: this.position.left + (this.position.width - 400) / 2,
     }).render(true);
@@ -48,9 +48,9 @@ export class AcksActorSheetCharacter extends AcksActorSheet {
   getData() {
     const data = super.getData();
 
-    data.config.ascendingAC = game.settings.get("acks", "ascendingAC");
-    data.config.initiative = game.settings.get("acks", "initiative") != "group";
-    data.config.encumbrance = game.settings.get("acks", "encumbranceOption");
+    data.config.ascendingAC = game.settings.get("ose", "ascendingAC");
+    data.config.initiative = game.settings.get("ose", "initiative") != "group";
+    data.config.encumbrance = game.settings.get("ose", "encumbranceOption");
 
     data.isNew = this.actor.isNew();
     return data;
@@ -58,11 +58,11 @@ export class AcksActorSheetCharacter extends AcksActorSheet {
 
 
   async _chooseLang() {
-    let choices = CONFIG.ACKS.languages;
+    let choices = CONFIG.OSE.languages;
 
     let templateData = { choices: choices },
       dlg = await renderTemplate(
-        "/systems/acks/templates/actors/dialogs/lang-create.html",
+        "/systems/ose/templates/actors/dialogs/lang-create.html",
         templateData
       );
     //Create Dialog window
@@ -72,7 +72,7 @@ export class AcksActorSheetCharacter extends AcksActorSheet {
         content: dlg,
         buttons: {
           ok: {
-            label: game.i18n.localize("ACKS.Ok"),
+            label: game.i18n.localize("OSE.Ok"),
             icon: '<i class="fas fa-check"></i>',
             callback: (html) => {
               resolve({
@@ -82,7 +82,7 @@ export class AcksActorSheetCharacter extends AcksActorSheet {
           },
           cancel: {
             icon: '<i class="fas fa-times"></i>',
-            label: game.i18n.localize("ACKS.Cancel"),
+            label: game.i18n.localize("OSE.Cancel"),
           },
         },
         default: "ok",
@@ -94,7 +94,7 @@ export class AcksActorSheetCharacter extends AcksActorSheet {
     const data = this.actor.data.data;
     let update = duplicate(data[table]);
     this._chooseLang().then((dialogInput) => {
-      const name = CONFIG.ACKS.languages[dialogInput.choice];
+      const name = CONFIG.OSE.languages[dialogInput.choice];
       if (update.value) {
         update.value.push(name);
       } else {
@@ -125,7 +125,7 @@ export class AcksActorSheetCharacter extends AcksActorSheet {
 
   _onShowModifiers(event) {
     event.preventDefault();
-    new AcksCharacterModifiers(this.actor, {
+    new OseCharacterModifiers(this.actor, {
       top: this.position.top + 40,
       left: this.position.left + (this.position.width - 400) / 2,
     }).render(true);
@@ -136,6 +136,50 @@ export class AcksActorSheetCharacter extends AcksActorSheet {
    * @param html {HTML}   The prepared HTML object ready to be rendered into the DOM
    */
   activateListeners(html) {
+    super.activateListeners(html);
+
+    html.find(".ability-score .attribute-name a").click((ev) => {
+      let actorObject = this.actor;
+      let element = event.currentTarget;
+      let score = element.parentElement.parentElement.dataset.score;
+      let stat = element.parentElement.parentElement.dataset.stat;
+      if (!score) {
+        if (stat == "lr") {
+          actorObject.rollLoyalty(score, { event: event });
+        }
+      } else {
+        actorObject.rollCheck(score, { event: event });
+      }
+    });
+
+    html.find(".exploration .attribute-name a").click((ev) => {
+      let actorObject = this.actor;
+      let element = event.currentTarget;
+      let expl = element.parentElement.parentElement.dataset.exploration;
+      actorObject.rollExploration(expl, { event: event });
+    });
+
+    html.find(".inventory .item-titles .item-caret").click((ev) => {
+      let items = $(event.currentTarget.parentElement.parentElement).children(
+        ".item-list"
+      );
+      if (items.css("display") == "none") {
+        let el = $(event.currentTarget).find(".fas.fa-caret-right");
+        el.removeClass("fa-caret-right");
+        el.addClass("fa-caret-down");
+        items.slideDown(200);
+      } else {
+        let el = $(event.currentTarget).find(".fas.fa-caret-down");
+        el.removeClass("fa-caret-down");
+        el.addClass("fa-caret-right");
+        items.slideUp(200);
+      }
+    });
+
+    html.find("a[data-action='modifiers']").click((ev) => {
+      this._onShowModifiers(ev);
+    });
+
     // Everything below here is only needed if the sheet is editable
     if (!this.options.editable) return;
 
@@ -200,53 +244,8 @@ export class AcksActorSheetCharacter extends AcksActorSheet {
       .click((ev) => ev.target.select())
       .change(this._onQtChange.bind(this));
 
-    html.find(".ability-score .attribute-name a").click((ev) => {
-      let actorObject = this.actor;
-      let element = event.currentTarget;
-      let score = element.parentElement.parentElement.dataset.score;
-      let stat = element.parentElement.parentElement.dataset.stat;
-      if (!score) {
-        if (stat == "lr") {
-          actorObject.rollLoyalty(score, { event: event });
-        }
-      } else {
-        actorObject.rollCheck(score, { event: event });
-      }
-    });
-
-    html.find(".exploration .attribute-name a").click((ev) => {
-      let actorObject = this.actor;
-      let element = event.currentTarget;
-      let expl = element.parentElement.parentElement.dataset.exploration;
-      actorObject.rollExploration(expl, { event: event });
-    });
-
-    html.find(".inventory .item-titles .item-caret").click((ev) => {
-      let items = $(event.currentTarget.parentElement.parentElement).children(
-        ".item-list"
-      );
-      if (items.css("display") == "none") {
-        let el = $(event.currentTarget).find(".fas.fa-caret-right");
-        el.removeClass("fa-caret-right");
-        el.addClass("fa-caret-down");
-        items.slideDown(200);
-      } else {
-        let el = $(event.currentTarget).find(".fas.fa-caret-down");
-        el.removeClass("fa-caret-down");
-        el.addClass("fa-caret-right");
-        items.slideUp(200);
-      }
-    });
-
-    html.find("a[data-action='modifiers']").click((ev) => {
-      this._onShowModifiers(ev);
-    });
-
     html.find("a[data-action='generate-scores']").click((ev) => {
       this.generateScores(ev);
     });
-    
-    // Handle default listeners last so system listeners are triggered first
-    super.activateListeners(html);
   }
 }

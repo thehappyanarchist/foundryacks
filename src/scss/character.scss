@@ -3,7 +3,7 @@
 /* ----------------------------------------- */
 /*  Basic Structure                          */
 /* ----------------------------------------- */
-.acks.sheet.actor.character {
+.ose.sheet.actor.character {
   min-width: 450px;
   min-height: 550px;
 
@@ -98,7 +98,7 @@
     }
     .health {
       &.armor-class {
-        background: url('/systems/acks/assets/shield.png') no-repeat center;
+        background: url('/systems/ose/assets/shield.png') no-repeat center;
         background-size: 70px;
         .shield {
           text-align: right;
@@ -130,12 +130,12 @@
           right: calc(50% + -20px);
         }
         .health-empty {
-          background: url('/systems/acks/assets/heart_empty.png') no-repeat center;
+          background: url('/systems/ose/assets/heart_empty.png') no-repeat center;
           background-size: 70px;
           background-position: top;
         }
         .health-full {
-          background: url('/systems/acks/assets/heart_full.png') no-repeat center;
+          background: url('/systems/ose/assets/heart_full.png') no-repeat center;
           background-size: 70px;
           background-position: bottom;
         }

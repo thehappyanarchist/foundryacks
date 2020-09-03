@@ -1,7 +1,7 @@
-import { AcksActor } from "./entity.js";
-import { AcksEntityTweaks } from "../dialog/entity-tweaks.js";
+import { OseActor } from "./entity.js";
+import { OseEntityTweaks } from "../dialog/entity-tweaks.js";
 
-export class AcksActorSheet extends ActorSheet {
+export class OseActorSheet extends ActorSheet {
   constructor(...args) {
     super(...args);
   }
@@ -10,11 +10,10 @@ export class AcksActorSheet extends ActorSheet {
   getData() {
     const data = super.getData();
 
-    data.config = CONFIG.ACKS;
+    data.config = CONFIG.OSE;
     // Settings
-    data.config.ascendingAC = game.settings.get("acks", "ascendingAC");
-    data.config.encumbranceBasic =
-      game.settings.get("acks", "encumbranceOption") == "basic";
+    data.config.ascendingAC = game.settings.get("ose", "ascendingAC");
+    data.config.encumbrance = game.settings.get("ose", "encumbranceOption");
 
     // Prepare owned items
     this._prepareItems(data);
@@ -120,22 +119,24 @@ export class AcksActorSheet extends ActorSheet {
   }
 
   activateListeners(html) {
+    super.activateListeners(html);
+    
     // Item summaries
     html
       .find(".item .item-name h4")
       .click((event) => this._onItemSummary(event));
+
+    html.find(".item .item-controls .item-show").click(async (ev) => {
+      const li = $(ev.currentTarget).parents(".item");
+      const item = this.actor.getOwnedItem(li.data("itemId"));
+      item.show();
+    });
 
     html.find(".saving-throw .attribute-name a").click((ev) => {
       let actorObject = this.actor;
       let element = event.currentTarget;
       let save = element.parentElement.parentElement.dataset.save;
       actorObject.rollSave(save, { event: event });
-    });
-
-    html.find(".item .item-controls .item-show").click(async (ev) => {
-      const li = $(ev.currentTarget).parents(".item");
-      const item = this.actor.getOwnedItem(li.data("itemId"));
-      item.show();
     });
 
     html.find(".item .item-rollable .item-image").click(async (ev) => {
@@ -147,7 +148,7 @@ export class AcksActorSheet extends ActorSheet {
             data: { counter: { value: item.data.data.counter.value - 1 } },
           });
         }
-          item.rollWeapon({ skipDialog: ev.ctrlKey });
+        item.rollWeapon({ skipDialog: ev.ctrlKey });
       } else if (item.type == "spell") {
         item.spendSpell({ skipDialog: ev.ctrlKey });
       } else {
@@ -155,32 +156,37 @@ export class AcksActorSheet extends ActorSheet {
       }
     });
 
-    html
-      .find(".memorize input")
-      .click((ev) => ev.target.select())
-      .change(this._onSpellChange.bind(this));
-
     html.find(".attack a").click((ev) => {
       let actorObject = this.actor;
       let element = event.currentTarget;
       let attack = element.parentElement.parentElement.dataset.attack;
       const rollData = {
         actor: this.data,
-        roll: {}
-      }
-      actorObject.targetAttack(rollData, attack, {type: attack, skipDialog: ev.ctrlKey});
+        roll: {},
+      };
+      actorObject.targetAttack(rollData, attack, {
+        type: attack,
+        skipDialog: ev.ctrlKey,
+      });
     });
-
-    html.find(".spells .item-reset").click((ev) => {
-      this._resetSpells(ev);
-    });
-
+    
     html.find(".hit-dice .attribute-name a").click((ev) => {
       let actorObject = this.actor;
       actorObject.rollHitDice({ event: event });
     });
 
-    super.activateListeners(html);
+    // Everything below here is only needed if the sheet is editable
+    if (!this.options.editable) return;
+
+    html
+      .find(".memorize input")
+      .click((ev) => ev.target.select())
+      .change(this._onSpellChange.bind(this));
+
+
+    html.find(".spells .item-reset").click((ev) => {
+      this._resetSpells(ev);
+    });
   }
 
   // Override to set resizable initial size
@@ -221,14 +227,14 @@ export class AcksActorSheet extends ActorSheet {
         let heightDelta = this.position.height - this.options.height;
         editor.style.height = `${
           heightDelta + parseInt(container.dataset.editorSize)
-        }px`;
+          }px`;
       }
     });
   }
 
   _onConfigureActor(event) {
     event.preventDefault();
-    new AcksEntityTweaks(this.actor, {
+    new OseEntityTweaks(this.actor, {
       top: this.position.top + 40,
       left: this.position.left + (this.position.width - 400) / 2,
     }).render(true);
@@ -246,7 +252,7 @@ export class AcksActorSheet extends ActorSheet {
     if (this.options.editable && canConfigure) {
       buttons = [
         {
-          label: game.i18n.localize("ACKS.dialog.tweaks"),
+          label: game.i18n.localize("OSE.dialog.tweaks"),
           class: "configure-actor",
           icon: "fas fa-code",
           onclick: (ev) => this._onConfigureActor(ev),

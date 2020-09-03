@@ -1,13 +1,13 @@
-import { AcksActor } from '../actor/entity.js';
-import { AcksDice } from "../dice.js";
+import { OseActor } from '../actor/entity.js';
+import { OseDice } from "../dice.js";
 
-export class AcksCharacterCreator extends FormApplication {
+export class OseCharacterCreator extends FormApplication {
   static get defaultOptions() {
     const options = super.defaultOptions;
-    options.classes = ["acks", "dialog", "creator"],
+    options.classes = ["ose", "dialog", "creator"],
       options.id = 'character-creator';
     options.template =
-      'systems/acks/templates/actors/dialogs/character-creation.html';
+      'systems/ose/templates/actors/dialogs/character-creation.html';
     options.width = 235;
     return options;
   }
@@ -19,7 +19,7 @@ export class AcksCharacterCreator extends FormApplication {
    * @type {String}
    */
   get title() {
-    return `${this.object.name}: ${game.i18n.localize('ACKS.dialog.generator')}`;
+    return `${this.object.name}: ${game.i18n.localize('OSE.dialog.generator')}`;
   }
 
   /* -------------------------------------------- */
@@ -31,7 +31,7 @@ export class AcksCharacterCreator extends FormApplication {
   getData() {
     let data = this.object.data;
     data.user = game.user;
-    data.config = CONFIG.ACKS;
+    data.config = CONFIG.OSE;
     data.counters = {
       str: 0,
       wis: 0,
@@ -85,7 +85,7 @@ export class AcksCharacterCreator extends FormApplication {
     // Increase counter
     this.object.data.counters[score]++;
 
-    const label = score != "gold" ? game.i18n.localize(`ACKS.scores.${score}.long`) : "Gold";
+    const label = score != "gold" ? game.i18n.localize(`OSE.scores.${score}.long`) : "Gold";
     const rollParts = ["3d6"];
     const data = {
       roll: {
@@ -93,14 +93,14 @@ export class AcksCharacterCreator extends FormApplication {
       }
     };
     // Roll and return
-    return AcksDice.Roll({
+    return OseDice.Roll({
       event: options.event,
       parts: rollParts,
       data: data,
       skipDialog: true,
       speaker: ChatMessage.getSpeaker({ actor: this }),
-      flavor: game.i18n.format('ACKS.dialog.generateScore', { score: label, count: this.object.data.counters[score] }),
-      title: game.i18n.format('ACKS.dialog.generateScore', { score: label, count: this.object.data.counters[score] }),
+      flavor: game.i18n.format('OSE.dialog.generateScore', { score: label, count: this.object.data.counters[score] }),
+      title: game.i18n.format('OSE.dialog.generateScore', { score: label, count: this.object.data.counters[score] }),
     });
   }
 
@@ -116,13 +116,13 @@ export class AcksCharacterCreator extends FormApplication {
     const gold = $(this.form.children).find('.gold-value').val();
     const speaker = ChatMessage.getSpeaker({ actor: this });
     const templateData = {
-      config: CONFIG.ACKS,
+      config: CONFIG.OSE,
       scores: scores,
-      title: game.i18n.localize("ACKS.dialog.generator"),
+      title: game.i18n.localize("OSE.dialog.generator"),
       stats: this.object.data.stats,
       gold: gold
     }
-    const content = await renderTemplate("/systems/acks/templates/chat/roll-creation.html", templateData)
+    const content = await renderTemplate("/systems/ose/templates/chat/roll-creation.html", templateData)
     ChatMessage.create({
       content: content,
       speaker,
@@ -159,7 +159,7 @@ export class AcksCharacterCreator extends FormApplication {
     const itemData = {
       name: "GP",
       type: "item",
-      img: "/systems/acks/assets/gold.png",
+      img: "/systems/ose/assets/gold.png",
       data: {
         treasure: true,
         cost: 1,

@@ -1,13 +1,13 @@
 // eslint-disable-next-line no-unused-vars
-import { AcksActor } from '../actor/entity.js';
+import { OseActor } from '../actor/entity.js';
 
-export class AcksCharacterModifiers extends FormApplication {
+export class OseCharacterModifiers extends FormApplication {
   static get defaultOptions() {
     const options = super.defaultOptions;
-    options.classes = ["acks", "dialog", "modifiers"],
+    options.classes = ["ose", "dialog", "modifiers"],
     options.id = 'sheet-modifiers';
     options.template =
-      'systems/acks/templates/actors/dialogs/modifiers-dialog.html';
+      'systems/ose/templates/actors/dialogs/modifiers-dialog.html';
     options.width = 240;
     return options;
   }
