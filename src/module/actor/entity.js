@@ -117,23 +117,35 @@ export class AcksActor extends Actor {
   rollSave(save, options = {}) {
     const label = game.i18n.localize(`ACKS.saves.${save}.long`);
     const rollParts = ["1d20"];
+      let data = {};
 
-    const data = {
-      actor: this.data,
-      roll: {
-        type: "above",
-        target: this.data.data.saves[save].value,
-        magic: this.data.data.scores.wis.mod
-      },
-      details: game.i18n.format("ACKS.roll.details.save", { save: label }),
-    };
-
+    if (this.data.type == "character") {
+      data = {
+        actor: this.data,
+        roll: {
+          type: "above",
+          target: this.data.data.saves[save].value,
+          magic: this.data.data.scores.wis.mod
+        },
+        details: game.i18n.format("ACKS.roll.details.save", { save: label }),
+      };
+    } else if (this.data.type == "monster") {
+        data = {
+          actor: this.data,
+          roll: {
+            type: "above",
+            target: this.data.data.saves[save].value,
+          },
+          details: game.i18n.format("ACKS.roll.details.save", { save: label }),
+        };
+    }
+      
     let skip = options.event && options.event.ctrlKey;
 
-    const rollMethod = this.data.type == "character" ? OseDice.RollSave : OseDice.Roll;
+    const rollMethod = this.data.type == "character" ? AcksDice.RollSave : AcksDice.Roll;
 
     // Roll and return
-    return AcksDice.Roll({
+    return rollMethod({
       event: options.event,
       parts: rollParts,
       data: data,
