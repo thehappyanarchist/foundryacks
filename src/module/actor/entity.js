@@ -338,7 +338,7 @@ export class AcksActor extends Actor {
     const data = {
       actor: this.data,
       roll: {
-        type: "check",
+        type: "above",
         target: this.data.data.exploration[expl],
       },
       details: game.i18n.format("ACKS.roll.details.exploration", {
