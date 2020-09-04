@@ -202,7 +202,7 @@
   "ACKS.items.RollType": "Type",
   "ACKS.items.Damage": "Damage",
   "ACKS.items.ArmorAC": "AC",
-  "ACKS.items.ArmorAAC": "AAC",
+  "ACKS.items.ArmorAAC": "AC",
   "ACKS.items.Bonus": "Bonus",
   "ACKS.items.AtkBonus": "Attack Bonus",
   "ACKS.items.roundAttacks": "Attacks Spent this Round",
@@ -243,9 +243,9 @@
 
   "ACKS.abilities.Requirements": "Requirements",
 
-  "ACKS.exploration.ld.long": "Listen at Door",
-  "ACKS.exploration.ld.short": "Listen Door",
-  "ACKS.exploration.ld.abrev": "LD",
+  "ACKS.exploration.ld.long": "Listen for noises",
+  "ACKS.exploration.ld.short": "Hear Noise",
+  "ACKS.exploration.ld.abrev": "HN",
   "ACKS.exploration.od.long": "Open Stuck Door",
   "ACKS.exploration.od.short": "Open Door",
   "ACKS.exploration.od.abrev": "OD",
