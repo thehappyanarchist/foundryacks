@@ -17,6 +17,20 @@ export const registerSettings = function () {
   });
 
   game.settings.register("acks", "ascendingAC", {
+    name: game.i18n.localize("ACKS.Setting.RerollInitiative"),
+    hint: game.i18n.localize("ACKS.Setting.RerollInitiativeHint"),
+    default: "reset",
+    scope: "world",
+    type: String,
+    config: true,
+    choices: {
+      keep: "ACKS.Setting.InitiativeKeep",
+      reset: "ACKS.Setting.InitiativeReset",
+      reroll: "ACKS.Setting.InitiativeReroll",
+    }
+  });
+
+  game.settings.register("acks", "ascendingAC", {
     name: game.i18n.localize("ACKS.Setting.AscendingAC"),
     hint: game.i18n.localize("ACKS.Setting.AscendingACHint"),
     default: false,

@@ -125,15 +125,22 @@ Hooks.on("renderCombatTracker", (object, html, data) => {
 
 Hooks.on("preUpdateCombat", async (combat, data, diff, id) => {
   let init = game.settings.get("acks", "initiative");
+  let reroll = game.settings.get("acks", "rerollInitiative");															
   if (!data.round) {
     return;
   }
+  if (data.round !== 1) {
+    if (reroll === "reset") {
+      OseCombat.resetInitiative(combat, data, diff, id);
+      return;
+    } else if (reroll === "keep") {
+      return;
+    }
+  }						 
   if (init === "group") {
     AcksCombat.rollInitiative(combat, data, diff, id);
-  } else if (init === "rerolled") {
+  } else if (init === "individual") {
     AcksCombat.individualInitiative(combat, data, diff, id);
-  } else if (init === "reset") {
-    AcksCombat.resetInitiative(combat, data, diff, id);
   }
 });
 

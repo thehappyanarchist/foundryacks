@@ -29,14 +29,15 @@ export class AcksCombat {
           groups[data.combatants[i].flags.acks.group].initiative;
       }
     }
+    combat.setupTurns();
   }
 
   static async resetInitiative(combat, data) {
-    let updates = [];
-    combat.data.combatants.forEach((c, i) => {
-      updates.push({_id: c._id, initiative: ""});
-    });
-    await combat.updateEmbeddedEntity("Combatant", updates);
+    let reroll = game.settings.get("acks", "rerollInitiative");
+    if (!["reset", "reroll"].includes(reroll)) {
+      return;
+    }
+    combat.resetAll();
   }
 
   static async individualInitiative(combat, data) {
@@ -171,7 +172,9 @@ export class AcksCombat {
       }
       let data = {};
       AcksCombat.rollInitiative(game.combat, data);
-      game.combat.update({ data: data });
+      game.combat.update({ data: data }).then(() => {
+        game.combat.setupTurns();
+      });
     });
   }
 

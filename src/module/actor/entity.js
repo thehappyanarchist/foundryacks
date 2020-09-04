@@ -123,11 +123,14 @@ export class AcksActor extends Actor {
       roll: {
         type: "above",
         target: this.data.data.saves[save].value,
+        magic: this.data.data.scores.wis.mod
       },
       details: game.i18n.format("ACKS.roll.details.save", { save: label }),
     };
 
     let skip = options.event && options.event.ctrlKey;
+
+    const rollMethod = this.data.type == "character" ? OseDice.RollSave : OseDice.Roll;
 
     // Roll and return
     return AcksDice.Roll({
@@ -384,7 +387,10 @@ export class AcksActor extends Actor {
     if (game.user.targets.size > 0) {
       for (let t of game.user.targets.values()) {
         data.roll.target = t;
-        await this.rollAttack(data, { type: type, skipDialog: options.skipDialog });
+        await this.rollAttack(data, {
+          type: type,
+          skipDialog: options.skipDialog,
+        });
       }
     } else {
       this.rollAttack(data, { type: type, skipDialog: options.skipDialog });
@@ -437,7 +443,7 @@ export class AcksActor extends Actor {
         thac0: thac0,
         dmg: dmgParts,
         save: attData.roll.save,
-        target: attData.roll.target
+        target: attData.roll.target,
       },
     };
 
@@ -500,14 +506,20 @@ export class AcksActor extends Actor {
     let totalWeight = 0;
     let hasItems = false;
     Object.values(this.data.items).forEach((item) => {
-      if (item.type == "item" && (['complete', 'disabled'].includes(option) || item.data.treasure)) {
-        totalWeight += item.data.quantity.value * item.data.weight;
+      if (item.type == "item" && !item.data.treasure) {
+																   
         hasItems = true;
-      } else if (option != 'basic' && ['weapon', 'armor'].includes(item.type)) {
+      }
+      if (
+        item.type == "item" &&
+        (["complete", "disabled"].includes(option) || item.data.treasure)
+      ) {
+        totalWeight += item.data.quantity.value * item.data.weight;
+      } else if (option != "basic" && ["weapon", "armor"].includes(item.type)) {
         totalWeight += item.data.weight;
       }
     });
-    if (option === 'detailed' && hasItems) totalWeight += 80;
+    if (option === "detailed" && hasItems) totalWeight += 80;
 
     data.encumbrance = {
       pct: Math.clamped(

@@ -128,16 +128,23 @@ export class AcksDice {
     };
     result.target = data.roll.thac0;
 
-    const targetAc = data.roll.target ? data.roll.target.actor.data.data.ac.value : 9;
-    const targetAac = data.roll.target ? data.roll.target.actor.data.data.aac.value : 0;
-    result.victim = data.roll.target ? data.roll.target.actor.name : null;
+    const targetAc = data.roll.target
+      ? data.roll.target.actor.data.data.ac.value
+      : 9;
+    const targetAac = data.roll.target
+      ? data.roll.target.actor.data.data.aac.value
+      : 0;
+    result.victim = data.roll.target ? data.roll.target.data.name : null;
 
     if (game.settings.get("acks", "ascendingAC")) {
       if (roll.total < targetAac + 10) {
-        result.details = game.i18n.format("ACKS.messages.AttackAscendingFailure", {
-          result: roll.total - 10,
-          bonus: result.target,
-        });
+        result.details = game.i18n.format(
+          "ACKS.messages.AttackAscendingFailure",
+          {
+            result: roll.total - 10,
+            bonus: result.target,
+          }
+        );
         return result;
       }
       result.details = game.i18n.format("ACKS.messages.AttackAscendingSuccess", {
@@ -257,6 +264,77 @@ export class AcksDice {
     });
   }
 
+  static async RollSave({
+    parts = [],
+    data = {},
+    skipDialog = false,
+    speaker = null,
+    flavor = null,
+    title = null,
+  } = {}) {
+    let rolled = false;
+    const template = "systems/acks/templates/chat/roll-dialog.html";
+    let dialogData = {
+      formula: parts.join(" "),
+      data: data,
+      rollMode: game.settings.get("core", "rollMode"),
+      rollModes: CONFIG.Dice.rollModes,
+    };
+
+    let rollData = {
+      parts: parts,
+      data: data,
+      title: title,
+      flavor: flavor,
+      speaker: speaker,
+    };
+    if (skipDialog) { AcksDice.sendRoll(rollData); }
+
+    let buttons = {
+      ok: {
+        label: game.i18n.localize("ACKS.Roll"),
+        icon: '<i class="fas fa-dice-d20"></i>',
+        callback: (html) => {
+          rolled = true;
+          rollData.form = html[0].children[0];
+          roll = AcksDice.sendRoll(rollData);
+        },
+      },
+      magic: {
+        label: game.i18n.localize("ACKS.saves.magic.short"),
+        icon: '<i class="fas fa-magic"></i>',
+        callback: (html) => {
+          rolled = true;
+          rollData.form = html[0].children[0];
+          rollData.data.roll.target = parseInt(rollData.data.roll.target) + parseInt(rollData.data.roll.magic);
+          rollData.title += ` ${game.i18n.localize("ACKS.saves.magic.short")} (${rollData.data.roll.magic})`;
+          roll = AcksDice.sendRoll(rollData);
+        },
+      },
+      cancel: {
+        icon: '<i class="fas fa-times"></i>',
+        label: game.i18n.localize("ACKS.Cancel"),
+        callback: (html) => { },
+      },
+    };
+
+    const html = await renderTemplate(template, dialogData);
+    let roll;
+
+    //Create Dialog window
+    return new Promise((resolve) => {
+      new Dialog({
+        title: title,
+        content: html,
+        buttons: buttons,
+        default: "ok",
+        close: () => {
+          resolve(rolled ? roll : false);
+        },
+      }).render(true);
+    });
+  }
+
   static async Roll({
     parts = [],
     data = {},
@@ -302,7 +380,7 @@ export class AcksDice {
       cancel: {
         icon: '<i class="fas fa-times"></i>',
         label: game.i18n.localize("ACKS.Cancel"),
-        callback: (html) => {},
+        callback: (html) => { },
       },
     };
 
