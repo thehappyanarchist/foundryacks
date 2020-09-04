@@ -38,7 +38,7 @@
   "ACKS.roll.attribute": "{attribute} check",
   "ACKS.roll.details.attribute": "Roll 1d20 <= {score} for success",
   "ACKS.roll.exploration": "{exploration} test",
-  "ACKS.roll.details.exploration": "Roll 1d6 <= {expl} for success",
+  "ACKS.roll.details.exploration": "Roll 1d20 >= {expl} for success",
   "ACKS.roll.reaction": "Reaction roll",
   "ACKS.roll.initiative": "Group {group} rolls for Initiative!",
   "ACKS.roll.individualInit": "{name} rolls for Initiative!",
@@ -68,8 +68,8 @@
   "ACKS.Retainer": "Retainer",
   "ACKS.RetainerWage": "Wage",
   "ACKS.RetainerUpkeep": "Upkeep",
-  "ACKS.Loyalty": "Loyalty Rating",
-  "ACKS.LoyaltyShort": "LR",
+  "ACKS.Loyalty": "Henchmen Morale",
+  "ACKS.LoyaltyShort": "MOR",
 
   "ACKS.scores.str.long": "Strength",
   "ACKS.scores.str.short": "STR",
@@ -95,7 +95,7 @@
   "ACKS.saves.spell.short": "S",
   "ACKS.saves.spell.long": "Spells",
   "ACKS.saves.magic.long": "Bonus vs Magic",
-  "ACKS.saves.magic.short": "vs Magic",
+  "ACKS.saves.magic.short": "vs Magic",									   
 
   "ACKS.Health": "Hit Points",
   "ACKS.HealthMax": "Maximum Hit Points",
@@ -116,11 +116,11 @@
   "ACKS.ArmorClassNaked": "Naked Armor Class",
   "ACKS.ArmorClass": "Armor Class",
   "ACKS.ArmorClassShort": "AC",
-  "ACKS.AscArmorClassShort": "AAC",
+  "ACKS.AscArmorClassShort": "AC",
   "ACKS.ArmorClassBonus": "Armor Class Bonus",
   "ACKS.Thac0": "THAC0",
-  "ACKS.ABShort": "AB",
-  "ACKS.AB": "Attack Bonus",
+  "ACKS.ABShort": "Throw",
+  "ACKS.AB": "Throw",
   "ACKS.MeleeShort": "MEL",
   "ACKS.Melee": "Melee",
   "ACKS.MeleeBonus": "Melee Bonus",
@@ -163,6 +163,8 @@
   "ACKS.Setting.Initiative": "Initiative",
   "ACKS.Setting.InitiativeHint": "Grouped or individual initiative.",
   "ACKS.Setting.InitiativeIndividual": "Individual initiative",
+																		   
+																		   
   "ACKS.Setting.InitiativeGroup": "Grouped Initiative",
   "ACKS.Setting.RerollInitiative": "Initiative persistence",
   "ACKS.Setting.RerollInitiativeHint": "Keeps, resets or rerolls initiative each round",
@@ -272,9 +274,9 @@
   "ACKS.colors.white": "White",
 
   "ACKS.reaction.check": "Reaction Check",
-  "ACKS.reaction.Hostile": "{name} is Hostile",
-  "ACKS.reaction.Unfriendly": "{name} is Unfriendly",
-  "ACKS.reaction.Neutral": "{name} is Neutral",
-  "ACKS.reaction.Indifferent": "{name} is Indifferent",
-  "ACKS.reaction.Friendly": "{name} is Friendly"
+  "ACKS.reaction.Hostile": "{name} is Hostile and attacks",
+  "ACKS.reaction.Unfriendly": "{name} is Unfriendly and may attack",
+  "ACKS.reaction.Neutral": "{name} is Neutral and uncertain",
+  "ACKS.reaction.Indifferent": "{name} is Indifferent and uninterested",
+  "ACKS.reaction.Friendly": "{name} is Friendly and helpful"
 }
