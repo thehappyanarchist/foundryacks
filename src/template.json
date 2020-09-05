@@ -10,8 +10,8 @@
         },
         "hp": {
           "hd": "1d8",
-          "value": 20,
-          "max": 20
+          "value": 4,
+          "max": 4
         },
         "ac": {
           "value": 0,
@@ -31,19 +31,19 @@
         },
         "saves": {
           "death": {
-            "value": 0
+            "value": 15
           },
           "wand": {
-            "value": 0
+            "value": 17
           },
           "paralysis": {
-            "value": 0
+            "value": 16
           },
           "breath": {
-            "value": 0
+            "value": 17
           },
           "spell": {
-            "value": 0
+            "value": 18
           }
         },
         "movement": {
@@ -98,10 +98,10 @@
         }
       },
       "exploration": {
-        "ld": 1,
-        "od": 2,
-        "sd": 1,
-        "ft": 1
+        "ld": 18,
+        "od": 18,
+        "sd": 18,
+        "ft": 18
       },
       "scores": {
         "str": {
@@ -130,7 +130,7 @@
         }
       },
       "encumbrance": {
-        "max": 1600
+        "max": 20000
       },
       "languages": {
         "value": []
@@ -140,7 +140,7 @@
       "templates": ["common", "spellcaster"],
       "details": {
         "biography": "",
-        "alignment": "",
+        "alignment": "Neutral",
         "xp": 0,
         "treasure": {
           "table": "",
@@ -150,7 +150,7 @@
           "d": 0,
           "w": 0
         },
-        "morale": 0
+        "morale": 7
       },
       "attacks": ""
     }
@@ -165,7 +165,7 @@
       },
       "treasure": false,
       "cost": 0,
-      "weight": 0
+      "weight": 166.6
     },
     "weapon": {
       "range": {
@@ -184,7 +184,7 @@
       "melee": true,
       "cost": 0,
       "equipped": false,
-      "weight": 0,
+      "weight": 167,
       "counter": {
         "value": 0,
         "max": 0
@@ -193,11 +193,11 @@
     "armor": {
       "description": "",
       "ac": 9,
-      "aac": 10,
+      "aac": 0,
       "type": "light",
       "cost": 0,
       "equipped": false,
-      "weight": 0
+      "weight": 2000
     },
     "spell": {
       "lvl": 1,

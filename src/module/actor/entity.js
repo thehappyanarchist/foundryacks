@@ -333,12 +333,12 @@ export class AcksActor extends Actor {
 
   rollExploration(expl, options = {}) {
     const label = game.i18n.localize(`ACKS.exploration.${expl}.long`);
-    const rollParts = ["1d6"];
+    const rollParts = ["1d20"];
 
     const data = {
       actor: this.data,
       roll: {
-        type: "below",
+        type: "above",
         target: this.data.data.exploration[expl],
       },
       details: game.i18n.format("ACKS.roll.details.exploration", {
@@ -519,8 +519,9 @@ export class AcksActor extends Actor {
     let hasItems = false;
     Object.values(this.data.items).forEach((item) => {
       if (item.type == "item" && !item.data.treasure) {
+        if (option === "detailed") totalWeight += 166.6;
 																   
-        hasItems = true;
+//        hasItems = true;
       }
       if (
         item.type == "item" &&
@@ -531,7 +532,7 @@ export class AcksActor extends Actor {
         totalWeight += item.data.weight;
       }
     });
-    if (option === "detailed" && hasItems) totalWeight += 80;
+//    if (option === "detailed" && hasItems) totalWeight += 166.6;
 
     data.encumbrance = {
       pct: Math.clamped(
@@ -541,7 +542,7 @@ export class AcksActor extends Actor {
       ),
       max: data.encumbrance.max,
       encumbered: totalWeight > data.encumbrance.max,
-      value: totalWeight,
+      value: Math.round(totalWeight),
     };
 
     if (data.config.movementAuto && option != "disabled") {
@@ -553,15 +554,15 @@ export class AcksActor extends Actor {
     const data = this.data.data;
     let option = game.settings.get("acks", "encumbranceOption");
     let weight = data.encumbrance.value;
-    let delta = data.encumbrance.max - 1600;
+    let delta = data.encumbrance.max - 20000;
     if (["detailed", "complete"].includes(option)) {
       if (weight > data.encumbrance.max) {
         data.movement.base = 0;
-      } else if (weight > 800 + delta) {
+      } else if (weight > 10000 + delta) {
         data.movement.base = 30;
-      } else if (weight > 600 + delta) {
+      } else if (weight > 7000 + delta) {
         data.movement.base = 60;
-      } else if (weight > 400 + delta) {
+      } else if (weight > 5000 + delta) {
         data.movement.base = 90;
       } else {
         data.movement.base = 120;
@@ -606,7 +607,7 @@ export class AcksActor extends Actor {
       (i) => i.type == "item" && i.data.treasure
     );
     treasure.forEach((item) => {
-      total += item.data.quantity.value * item.data.cost;
+      total += item.data.quantity.value * item.data.cost
     });
     data.treasure = total;
   }
@@ -703,11 +704,13 @@ export class AcksActor extends Actor {
 
     const od = {
       0: 0,
-      3: 1,
-      9: 2,
-      13: 3,
-      16: 4,
-      18: 5,
+      3: 30,
+      4: 26,
+      6: 22,        
+      9: 18,
+      13: 14,
+      16: 10,
+      18: 6,
     };
     data.exploration.odMod = AcksActor._valueFromTable(
       od,

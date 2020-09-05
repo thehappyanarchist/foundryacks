@@ -16,14 +16,14 @@ export class AcksDice {
         result.isFailure = true;
       }
     } else if (data.roll.type == "below") {
-      // MORALE, EXPLORATION
+      // MORALE
       if (roll.total <= result.target) {
         result.isSuccess = true;
       } else {
         result.isFailure = true;
       }
     } else if (data.roll.type == "check") {
-      // SCORE CHECKS (1s and 20s)
+      // SCORE CHECKS (1s and 20s), EXPLORATION
       if (die == 1 || (roll.total <= result.target && die < 20)) {
         result.isSuccess = true;
       } else {
