@@ -187,9 +187,9 @@
 
   "ACKS.items.Equip": "Equip",
   "ACKS.items.Unequip": "Unequip",
-  "ACKS.items.Misc": "Misc",
+  "ACKS.items.Misc": "Items",
   "ACKS.items.Weapons": "Weapons",
-  "ACKS.items.Treasure": "Treasure",
+  "ACKS.items.Treasure": "Heavy Items",
   "ACKS.items.Armors": "Armors",
   "ACKS.items.Weight": "Wgt.",
   "ACKS.items.Qualities": "Qualities",

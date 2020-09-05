@@ -519,8 +519,9 @@ export class AcksActor extends Actor {
     let hasItems = false;
     Object.values(this.data.items).forEach((item) => {
       if (item.type == "item" && !item.data.treasure) {
+        if (option === "detailed") totalWeight += 166.6;
 																   
-        hasItems = true;
+//        hasItems = true;
       }
       if (
         item.type == "item" &&
@@ -531,7 +532,7 @@ export class AcksActor extends Actor {
         totalWeight += item.data.weight;
       }
     });
-    if (option === "detailed" && hasItems) totalWeight += 80;
+//    if (option === "detailed" && hasItems) totalWeight += 166.6;
 
     data.encumbrance = {
       pct: Math.clamped(
@@ -541,7 +542,7 @@ export class AcksActor extends Actor {
       ),
       max: data.encumbrance.max,
       encumbered: totalWeight > data.encumbrance.max,
-      value: totalWeight,
+      value: Math.round(totalWeight),
     };
 
     if (data.config.movementAuto && option != "disabled") {
@@ -606,7 +607,7 @@ export class AcksActor extends Actor {
       (i) => i.type == "item" && i.data.treasure
     );
     treasure.forEach((item) => {
-      total += item.data.quantity.value * item.data.cost;
+      total += item.data.quantity.value * item.data.cost
     });
     data.treasure = total;
   }
