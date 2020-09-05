@@ -176,7 +176,7 @@
               </h4>
             </a>
           </div>
-          <div class="field-long">{{mult item.data.quantity.value item.data.cost}}</div>
+          <div class="field-long">{{multround item.data.quantity.value item.data.cost}}</div>
           <div class="field-short quantity">
             <input value="{{item.data.quantity.value}}" type="text"
               placeholder="0" />{{#if item.data.quantity.max}}<span>/{{item.data.quantity.max}}</span>{{/if}}

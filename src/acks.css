@@ -821,11 +821,11 @@
   line-height: 30px;
 }
 .acks.sheet.actor.character .sheet-body .exploration .attribute {
-  margin: 4px;
+  margin: 1px;
 }
 .acks.sheet.actor.character .sheet-body .exploration .attribute .attribute-name {
-  text-align: left;
-  flex: 1 0 60px;
+  text-align: center;
+  flex: 1 0 45px;
   line-height: 25px;
   font-size: 12px;
 }

@@ -33,6 +33,10 @@ export const registerHelpers = async function () {
   Handlebars.registerHelper("mult", function (lh, rh) {
     return parseFloat(lh) * parseFloat(rh);
   });
+    
+  Handlebars.registerHelper("multround", function (lh, rh) {
+    return Math.round((parseFloat(lh) * parseFloat(rh)) * 100) / 100;
+  })
 
   Handlebars.registerHelper("roundWeight", function (weight) {
     return Math.round(parseFloat(weight) / 100) / 10;
