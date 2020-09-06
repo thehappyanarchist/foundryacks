@@ -46,6 +46,12 @@
     </div>
   </div>
   <div class="form-group">
+    <label>{{localize "ACKS.MeleeDamageBonus"}}</label>
+    <div class="form-fields">
+      <input type="text" name="data.damage.mod.melee" id="meleedmg" value="{{data.damage.mod.melee}}" data-dtype="Number" />
+    </div>
+  </div>
+  <div class="form-group">
     <label>{{localize "ACKS.MissileBonus"}}</label>
     <div class="form-fields">
       <input type="text" name="data.thac0.mod.missile" id="missile" value="{{data.thac0.mod.missile}}"
@@ -53,10 +59,16 @@
     </div>
   </div>
   <div class="form-group">
+    <label>{{localize "ACKS.MissileDamageBonus"}}</label>
+    <div class="form-fields">
+      <input type="text" name="data.damage.mod.missile" id="missiledmg" value="{{data.damage.mod.missile}}" data-dtype="Number" />
+    </div>
+  </div>
+  <div class="form-group">
     <label>{{localize "ACKS.ArmorClassBonus"}}</label>
     <div class="form-fields">
-      {{#if config.ascending}}
-      <input type="text" name="data.aac.mod" id="ac" value="{{data.aac.mod}}"
+      {{#if config.ascendingAC}}
+      <input type="text" name="data.aac.mod" id="aac" value="{{data.aac.mod}}"
         data-dtype="Number" />
       {{else}}
       <input type="text" name="data.ac.mod" id="ac" value="{{data.ac.mod}}"
