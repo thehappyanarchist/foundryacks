@@ -23,7 +23,7 @@
         },
         "damage": {
             "mod": {
-                "missile": 0
+                "missile": 0,
                 "melee": 0
             }
         },
