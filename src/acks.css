@@ -861,13 +861,13 @@
   position: absolute;
 }
 .acks.sheet.actor.character .encumbrance .encumbrance-breakpoint.encumbrance-25 {
-  left: 25%;
+  left: 24.4%;
+}
+.acks.sheet.actor.character .encumbrance .encumbrance-breakpoint.encumbrance-35 {
+  left: 34.4%;
 }
 .acks.sheet.actor.character .encumbrance .encumbrance-breakpoint.encumbrance-50 {
-  left: 50%;
-}
-.acks.sheet.actor.character .encumbrance .encumbrance-breakpoint.encumbrance-75 {
-  left: 75%;
+  left: 49.4%;
 }
 .acks.sheet.actor.character .encumbrance .arrow-up {
   bottom: 0;

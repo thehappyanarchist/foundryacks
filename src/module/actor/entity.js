@@ -557,7 +557,9 @@ export class AcksActor extends Actor {
 
     data.encumbrance = {
       pct: Math.clamped(
-        (100 * parseFloat(totalWeight)) / data.encumbrance.max,
+//    To correct for percentage bar not lining up with movement rates.
+//        (100 * parseFloat(totalWeight)) / data.encumbrance.max,
+        (100 * parseFloat(totalWeight)) / 20000,
         0,
         100
       ),
