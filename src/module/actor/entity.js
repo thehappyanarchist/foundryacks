@@ -21,6 +21,9 @@ export class AcksActor extends Actor {
       data.initiative.value = data.initiative.mod;
       if (this.data.type == "character") {
         data.initiative.value += data.scores.dex.mod;
+        if (data.isSlow) {
+          data.initiative.value -= 1;
+        }
       }
     } else {
       data.initiative.value = 0;

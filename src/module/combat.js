@@ -22,12 +22,11 @@ export class AcksCombat {
       if (!data.combatants[i].actor) {
         return;
       }
+      data.combatants[i].initiative =
+      groups[data.combatants[i].flags.acks.group].initiative;
       if (data.combatants[i].actor.data.data.isSlow) {
-        data.combatants[i].initiative = -789;
-      } else {
-        data.combatants[i].initiative =
-          groups[data.combatants[i].flags.acks.group].initiative;
-      }
+        data.combatants[i].initiative -= 1;
+      }      
     }
     combat.setupTurns();
   }
@@ -123,10 +122,11 @@ export class AcksCombat {
   static updateCombatant(combat, combatant, data) {
     let init = game.settings.get("acks", "initiative");
     // Why do you reroll ?
-    if (combatant.actor.data.data.isSlow) {
-      data.initiative = -789;
-      return;
-    }
+// Legacy Slowness code from OSE
+//    if (combatant.actor.data.data.isSlow) {
+//      data.initiative = -789;
+//      return;
+//    }
     if (data.initiative && init == "group") {
       let groupInit = data.initiative;
       // Check if there are any members of the group with init
