@@ -388,6 +388,11 @@ export class AcksActor extends Actor {
       dmgParts.push(data.damage.mod.melee);
     }
 
+    // Add Missile mod to damage
+    if (attData.roll.type == "missile") {
+      dmgParts.push(data.damage.mod.missile);
+    }
+
     // Damage roll
     AcksDice.Roll({
       event: options.event,
@@ -455,6 +460,10 @@ export class AcksActor extends Actor {
     // Add Melee mod to damage
     if (options.type == "melee") {
       dmgParts.push(data.damage.mod.melee);
+    }
+    // Add Missile mod to damage
+    if (options.type == "missile") {
+      dmgParts.push(data.damage.mod.missile);
     }
     const rollData = {
       actor: this.data,
