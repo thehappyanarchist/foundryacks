@@ -1,22 +1,6 @@
 export const registerSettings = function () {
 
   game.settings.register("acks", "initiative", {
-    name: game.i18n.localize("ACKS.Setting.Initiative"),
-    hint: game.i18n.localize("ACKS.Setting.InitiativeHint"),
-    default: "group",
-    scope: "world",
-    type: String,
-    config: true,
-    choices: {
-      disabled: "ACKS.Setting.InitiativeOnce",
-      rerolled: "ACKS.Setting.InitiativeReroll",
-      reset: "ACKS.Setting.InitiativeReset",
-      group: "ACKS.Setting.InitiativeGroup",
-    },
-    onChange: _ => window.location.reload()
-  });
-
-  game.settings.register("acks", "ascendingAC", {
     name: game.i18n.localize("ACKS.Setting.RerollInitiative"),
     hint: game.i18n.localize("ACKS.Setting.RerollInitiativeHint"),
     default: "reset",

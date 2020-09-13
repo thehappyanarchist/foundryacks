@@ -71,9 +71,6 @@ Hooks.once("setup", function () {
       return obj;
     }, {});
   }
-  for (let l of CONFIG.ACKS.languages) {
-    CONFIG.ACKS.languages[l] = game.i18n.localize(CONFIG.ACKS.languages[l]);
-  }
 });
 
 Hooks.once("ready", async () => {
@@ -96,7 +93,7 @@ Hooks.on("renderSidebarTab", async (object, html) => {
     // License text
     const template = "systems/acks/templates/chat/license.html";
     const rendered = await renderTemplate(template);
-    gamesystem.append(rendered);
+    gamesystem.find(".system").append(rendered);
     
     // User guide
     let docs = html.find("button[data-action='docs']");
@@ -115,34 +112,10 @@ Hooks.on("preCreateCombatant", (combat, data, options, id) => {
   }
 });
 
-Hooks.on("preUpdateCombatant", (combat, combatant, data) => {
-  AcksCombat.updateCombatant(combat, combatant, data);
-});
-
-Hooks.on("renderCombatTracker", (object, html, data) => {
-  AcksCombat.format(object, html, data);
-});
-
-Hooks.on("preUpdateCombat", async (combat, data, diff, id) => {
-  let init = game.settings.get("acks", "initiative");
-  let reroll = game.settings.get("acks", "rerollInitiative");															
-  if (!data.round) {
-    return;
-  }
-  if (data.round !== 1) {
-    if (reroll === "reset") {
-      OseCombat.resetInitiative(combat, data, diff, id);
-      return;
-    } else if (reroll === "keep") {
-      return;
-    }
-  }						 
-  if (init === "group") {
-    AcksCombat.rollInitiative(combat, data, diff, id);
-  } else if (init === "individual") {
-    AcksCombat.individualInitiative(combat, data, diff, id);
-  }
-});
+Hooks.on("preUpdateCombatant", AcksCombat.updateCombatant);
+Hooks.on("renderCombatTracker", AcksCombat.format);
+Hooks.on("preUpdateCombat", AcksCombat.preUpdateCombat);
+Hooks.on("getCombatTrackerEntryContext", AcksCombat.addContextEntry);
 
 Hooks.on("renderChatLog", (app, html, data) => AcksItem.chatListeners(html));
 Hooks.on("getChatLogEntryContext", chat.addChatMessageContextOptions);

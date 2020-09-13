@@ -36,7 +36,7 @@ function drawTreasure(table, data) {
     return roll.total <= chance;
   };
   data.treasure = {};
-  if (table.getFlag('ose', 'treasure')) {
+  if (table.getFlag('acks', 'treasure')) {
     table.results.forEach((r) => {
       if (percent(r.weight)) {
         const text = table._getResultChatText(r);

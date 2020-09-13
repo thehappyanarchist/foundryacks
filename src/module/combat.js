@@ -32,7 +32,7 @@ export class AcksCombat {
   }
 
   static async resetInitiative(combat, data) {
-    let reroll = game.settings.get("acks", "rerollInitiative");
+    let reroll = game.settings.get("acks", "initiative");
     if (!["reset", "reroll"].includes(reroll)) {
       return;
     }
@@ -55,7 +55,7 @@ export class AcksCombat {
 
       // Determine the roll mode
       let rollMode = game.settings.get("core", "rollMode");
-        if ((c.token.hidden || c.hidden) && (rollMode === "roll")) rollMode = "gmroll";
+      if ((c.token.hidden || c.hidden) && (rollMode === "roll")) rollMode = "gmroll";
 
       // Construct chat message data
       let messageData = mergeObject({
@@ -88,7 +88,23 @@ export class AcksCombat {
           ? '<i class="fas fa-dizzy"></i>'
           : span.innerHTML;
     });
-    let init = game.settings.get("acks", "initiative") == "group";
+          
+    html.find(".combatant").each((_, ct) => {
+      // Append spellcast and retreat
+      const controls = $(ct).find(".combatant-controls .combatant-control");
+      const cmbtant = object.combat.getCombatant(ct.dataset.combatantId);
+      const moveActive = cmbtant.flags.acks && cmbtant.flags.acks.moveInCombat ? "active" : "";
+      controls.eq(1).after(
+        `<a class='combatant-control move-combat ${moveActive}'><i class='fas fa-running'></i></a>`
+      );
+      const spellActive = cmbtant.flags.acks && cmbtant.flags.acks.prepareSpell ? "active" : "";
+      controls.eq(1).after(
+        `<a class='combatant-control prepare-spell ${spellActive}'><i class='fas fa-magic'></i></a>`
+      );
+    });
+    AcksCombat.announceListener(html);
+
+    let init = game.settings.get("acks", "initiative") === "group";
     if (!init) {
       return;
     }
@@ -107,7 +123,7 @@ export class AcksCombat {
       $(ct).find(".roll").remove();
 
       // Get group color
-      let cmbtant = object.combat.getCombatant(ct.dataset.combatantId);
+      const cmbtant = object.combat.getCombatant(ct.dataset.combatantId);
       let color = cmbtant.flags.acks.group;
 
       // Append colored flag
@@ -143,6 +159,29 @@ export class AcksCombat {
         }
       });
     }
+  }
+
+  static announceListener(html) {
+    html.find(".combatant-control.prepare-spell").click((ev) => {
+      ev.preventDefault();
+      // Toggle spell announcement
+      let id = $(ev.currentTarget).closest(".combatant")[0].dataset.combatantId;
+      let isActive = ev.currentTarget.classList.contains('active');
+      game.combat.updateCombatant({
+        _id: id,
+        flags: { acks: { prepareSpell: !isActive } },
+      });
+    });
+    html.find(".combatant-control.move-combat").click((ev) => {
+      ev.preventDefault();
+      // Toggle spell announcement
+      let id = $(ev.currentTarget).closest(".combatant")[0].dataset.combatantId;
+      let isActive = ev.currentTarget.classList.contains('active');
+      game.combat.updateCombatant({
+        _id: id,
+        flags: { acks: { moveInCombat: !isActive } },
+      });
+    })
   }
 
   static addListeners(html) {
@@ -197,5 +236,38 @@ export class AcksCombat {
         group: color,
       },
     };
+  }
+  static activateCombatant(li) {
+    const turn = game.combat.turns.findIndex(turn => turn._id === li.data('combatant-id'));
+    game.combat.update({turn: turn})
+  }
+
+  static addContextEntry(html, options) {
+    options.unshift({
+      name: "Set Active",
+      icon: '<i class="fas fa-star-of-life"></i>',
+      callback: AcksCombat.activateCombatant
+    });
+  }
+
+  static async preUpdateCombat(combat, data, diff, id) {
+    let init = game.settings.get("acks", "initiative");
+    let reroll = game.settings.get("acks", "initiative");
+    if (!data.round) {
+      return;
+    }
+    if (data.round !== 1) {
+      if (reroll === "reset") {
+        AcksCombat.resetInitiative(combat, data, diff, id);
+        return;
+      } else if (reroll === "keep") {
+        return;
+      }
+    }
+    if (init === "group") {
+      AcksCombat.rollInitiative(combat, data, diff, id);
+    } else if (init === "individual") {
+      AcksCombat.individualInitiative(combat, data, diff, id);
+    }
   }
 }
