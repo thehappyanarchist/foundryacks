@@ -101,6 +101,10 @@ export class AcksCombat {
       controls.eq(1).after(
         `<a class='combatant-control prepare-spell ${spellActive}'><i class='fas fa-magic'></i></a>`
       );
+      const holdActive = cmbtant.flags.acks && cmbtant.flags.acks.holdTurn ? "active" : "";
+      controls.eq(1).after(
+        `<a class='combatant-control hold-turn ${holdActive}'><i class='fas fa-pause-circle'></i></a>`
+      );
     });
     AcksCombat.announceListener(html);
 
@@ -162,6 +166,16 @@ export class AcksCombat {
   }
 
   static announceListener(html) {
+    html.find(".combatant-control.hold-turn").click((ev) => {
+      ev.preventDefault();
+      // Toggle hold announcement
+      let id = $(ev.currentTarget).closest(".combatant")[0].dataset.combatantId;
+      let isActive = ev.currentTarget.classList.contains('active');
+      game.combat.updateCombatant({
+        _id: id,
+        flags: { acks: { holdTurn: !isActive } },
+      });
+    })
     html.find(".combatant-control.prepare-spell").click((ev) => {
       ev.preventDefault();
       // Toggle spell announcement
@@ -174,14 +188,14 @@ export class AcksCombat {
     });
     html.find(".combatant-control.move-combat").click((ev) => {
       ev.preventDefault();
-      // Toggle spell announcement
+      // Toggle retreat announcement
       let id = $(ev.currentTarget).closest(".combatant")[0].dataset.combatantId;
       let isActive = ev.currentTarget.classList.contains('active');
       game.combat.updateCombatant({
         _id: id,
         flags: { acks: { moveInCombat: !isActive } },
       });
-    })
+    });
   }
 
   static addListeners(html) {
