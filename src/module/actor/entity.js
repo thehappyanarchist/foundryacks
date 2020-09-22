@@ -16,6 +16,7 @@ export class AcksActor extends Actor {
     this.computeEncumbrance();
     this.computeTreasure();
     this.computeBHR();
+    this.computeAAB();
 
     // Determine Initiative
     if (game.settings.get("acks", "initiative") != "group") {
@@ -817,4 +818,9 @@ export class AcksActor extends Actor {
         data.hp.max
     );
    };
+  computeAAB() {
+    const data = this.data.data;
+    
+    data.thac0.bba = 10 - data.thac0.throw;
+  }
 }
