@@ -17,7 +17,7 @@ export const registerSettings = function () {
   game.settings.register("acks", "ascendingAC", {
     name: game.i18n.localize("ACKS.Setting.AscendingAC"),
     hint: game.i18n.localize("ACKS.Setting.AscendingACHint"),
-    default: false,
+    default: true,
     scope: "world",
     type: Boolean,
     config: true,
@@ -27,7 +27,7 @@ export const registerSettings = function () {
   game.settings.register("acks", "morale", {
     name: game.i18n.localize("ACKS.Setting.Morale"),
     hint: game.i18n.localize("ACKS.Setting.MoraleHint"),
-    default: false,
+    default: true,
     scope: "world",
     type: Boolean,
     config: true,
@@ -41,21 +41,21 @@ export const registerSettings = function () {
     type: String,
     config: true,
     choices: {
-      disabled: "ACKS.Setting.EncumbranceDisabled",
-      basic: "ACKS.Setting.EncumbranceBasic",
+//      disabled: "ACKS.Setting.EncumbranceDisabled",
+//      basic: "ACKS.Setting.EncumbranceBasic",
       detailed: "ACKS.Setting.EncumbranceDetailed",
       complete: "ACKS.Setting.EncumbranceComplete",
     },
     onChange: _ => window.location.reload()
   });
 
-  game.settings.register("acks", "significantTreasure", {
-    name: game.i18n.localize("ACKS.Setting.SignificantTreasure"),
-    hint: game.i18n.localize("ACKS.Setting.SignificantTreasureHint"),
-    default: 800,
-    scope: "world",
-    type: Number,
-    config: true,
-    onChange: _ => window.location.reload()
-  });
+//  game.settings.register("acks", "significantTreasure", {
+//    name: game.i18n.localize("ACKS.Setting.SignificantTreasure"),
+//    hint: game.i18n.localize("ACKS.Setting.SignificantTreasureHint"),
+//    default: 800,
+//    scope: "world",
+//    type: Number,
+//    config: true,
+//    onChange: _ => window.location.reload()
+//  });
 };
