@@ -121,7 +121,7 @@
   "ACKS.ArmorClassBonus": "Armor Class Bonus",
   "ACKS.Thac0": "THAC0",
   "ACKS.ABShort": "Throw",
-  "ACKS.AB": "Throw",
+  "ACKS.AB": "Number needed to hit AC 0",
   "ACKS.MeleeShort": "MEL",
   "ACKS.Melee": "Melee",
   "ACKS.MeleeBonus": "Melee Throw Bonus",
