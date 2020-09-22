@@ -190,7 +190,7 @@
       "melee": true,
       "cost": 0,
       "equipped": false,
-      "weight": 167,
+      "weight": 166.6,
       "counter": {
         "value": 0,
         "max": 0
