@@ -43,7 +43,7 @@
         <div class="flexrow field-row">
           <div class="field-short" title="{{localize 'ACKS.Thac0'}}">
             <i class="fas fa-crosshairs"></i>
-            {{#unless settings.ascendingAC}}
+            {{#unless @root.settings.ascending}}
             {{e.data.data.thac0.value}}
             {{else}}
             {{e.data.data.thac0.bba}}
