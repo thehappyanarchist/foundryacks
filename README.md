@@ -1,5 +1,5 @@
 # ACKS System for Foundry VTT (Unofficial)
-All the features you need to play ACKS in Foundry VTT.
+All the features you need to play ACKS in Foundry VTT. Forked off of Old School Essentials by U~Man and heavily modified.
 
 ## License
 This Foundry VTT system requires ACKS Core Rules that you can find at http://autarch.co/buy-now.
