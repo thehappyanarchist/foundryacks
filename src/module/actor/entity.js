@@ -15,6 +15,7 @@ export class AcksActor extends Actor {
     this.computeAC();
     this.computeEncumbrance();
     this.computeTreasure();
+    this.computeBHR();
 
     // Determine Initiative
     if (game.settings.get("acks", "initiative") != "group") {
@@ -291,7 +292,33 @@ export class AcksActor extends Actor {
       },
     };
 
-    // Roll and return
+// Roll and return
+    return AcksDice.Roll({
+      event: options.event,
+      parts: rollParts,
+      data: data,
+      skipDialog: true,
+      speaker: ChatMessage.getSpeaker({ actor: this }),
+      flavor: label,
+      title: label,
+    });
+  }
+
+  rollBHR(options = {}) {
+    const label = game.i18n.localize(`ACKS.roll.bhr`);
+    const rollParts = [this.data.data.hp.bhr];
+    if (this.data.type == "character") {
+      rollParts.push();
+    }
+
+    const data = {
+      actor: this.data,
+      roll: {
+        type: "Healing",
+      },
+    };
+
+// Roll and return
     return AcksDice.Roll({
       event: options.event,
       parts: rollParts,
@@ -759,5 +786,35 @@ export class AcksActor extends Actor {
       spoken,
       data.scores.int.value
     );
+
+      
   }
+   computeBHR() {
+   if (this.data.type != "character") {
+      return;
+    }
+    const data = this.data.data;
+
+    const bhrcalc = {
+        0: "1d2",
+        4: "1d3",
+        10: "1d4",
+        17: "1d6",
+        24: "1d8",
+        30: "1d10",
+        37: "2d6",
+        50: "2d8",
+        64: "2d10",
+        77: "2d12",
+        90: "3d10",
+        111: "4d10",
+        141: "5d10",
+        171: "6d10",
+        200: "7d10",
+    };
+      data.hp.bhr = AcksActor._valueFromTable(
+        bhrcalc,
+        data.hp.max
+    );
+   };
 }

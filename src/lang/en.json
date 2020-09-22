@@ -42,6 +42,7 @@
   "ACKS.roll.reaction": "Reaction roll",
   "ACKS.roll.initiative": "Group {group} rolls for Initiative!",
   "ACKS.roll.individualInit": "{name} rolls for Initiative!",
+  "ACKS.roll.bhr": "Healing roll",
 
   "ACKS.table.treasure.roll": "Roll Treasure",
 
@@ -136,6 +137,8 @@
   "ACKS.AttacksShort": "ATT",
   "ACKS.Damage": "Damage",
   "ACKS.Spellcaster": "Spellcaster",
+  "ACKS.BHR": "Base Healing Rate",
+  "ACKS.BHRShort": "BHR",
 
   "ACKS.Language": "Language",
   "ACKS.SpokenLanguages": "Spoken Languages",

@@ -108,6 +108,15 @@
                             data-dtype="String" />
                     </div>
                 </li>
+                <li class="attribute bhr">
+                    <h4 class="attribute-name box-title" title="{{ localize 'ACKS.BHR' }}">
+                        <a>{{ localize "ACKS.BHRShort" }}</a>
+                    </h4>
+                    <div class="attribute-value"
+                        title="Calculated from {{data.hp.max}} HP">
+                        {{data.hp.bhr}}
+                    </div>
+                </li>
                 {{#if config.initiative}}
                 <li class="attribute">
                     <h4 class="attribute-name box-title" title="{{ localize 'ACKS.Initiative' }}">

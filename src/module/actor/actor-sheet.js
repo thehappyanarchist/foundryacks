@@ -185,6 +185,11 @@ export class AcksActorSheet extends ActorSheet {
       actorObject.rollHitDice({ event: event });
     });
 
+    html.find(".bhr .attribute-name a").click((ev) => {
+      let actorObject = this.actor;
+      actorObject.rollBHR({ event: event });
+    });
+
     // Everything below here is only needed if the sheet is editable
     if (!this.options.editable) return;
 
