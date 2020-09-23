@@ -1,0 +1,28 @@
+This is a fork off of the original 1.0 release version of the OSE system for Foundry VTT by U~Man.
+I have kept it in sync with his newer changes through 1.0.8, incorporated several bugfixes, and instituted system changes which I will list here.
+
+v0.5.0 Initial Release
+MAJOR FEATURES:
+Defaulted to exploding 20s in combat from HFH optional rules
+Added BHR to the character sheet from HFH optional rules
+Changed Ascending Armor Class to ACKS AC
+Uncapped the dexterity and charisma bonuses
+Implemented ACKS encumbrance rules (uses coin weight instead of stone - 1000 coins to a stone)
+Changed default exploration checks (hear noise, open door, etc) to ACKS style rolls instead of 1d6 checks
+Added more tweaks to the tweak section, to allow for ACKS proficiencies modifying throws, AC, and more.
+Changed "Slow weapon" to subtract 1 from initiative instead of making the character last in the order.
+Added a HOLD TURN icon to the Combat Tracker to remind the judge that a player has held their action.
+Modified the encumbrance bar to reflect ACKS standard movement penalties while encumbered, and to show that on the bar.
+
+MINOR CHANGES:
+Renamed saving throws to be in-line with ACKS standards and order
+Changed literacy to match ACKS standards
+Added Auran languages and removed alignment tongues
+Changed LR to Morale for Henchmen (To-do: Add roll table for Morale Checks instead of OSE roll-under)
+Changed monster reaction rolls to match ACKS language
+Changed default monster saves to match ACKS numbers (actually makes monsters a bit less resistant overall)
+Removed DAC field from armor items
+
+BUG FIXES:
+Fixed a rounding error present in the OSE code
+Fixed some areas where AC was not shown correctly in OSE code
