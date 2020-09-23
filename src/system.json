@@ -1,7 +1,7 @@
 {
   "name": "acks",
   "title": "Adventurer Conqueror King System",
-  "description": "Play B/X OSR modules with ACKS on Foundry VTT",
+  "description": "Play B/X or other OSR compatible content using the ACKS system",
   "version": "0.5.0",
   "minimumCoreVersion": "0.6.2",
   "compatibleCoreVersion": "0.6.6",
