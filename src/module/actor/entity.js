@@ -110,7 +110,6 @@ export class AcksActor extends Actor {
     let roll = new Roll(this.data.data.hp.hd).roll();
     return this.update({
       data: {
-        actor: this.data,
         hp: {
           max: roll.total,
           value: roll.total,

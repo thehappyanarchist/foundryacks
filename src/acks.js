@@ -84,25 +84,6 @@ Hooks.on("renderSidebarTab", async (object, html) => {
   if (object instanceof ActorDirectory) {
     party.addControl(object, html);
   }
-  if (object instanceof Settings) {
-    let gamesystem = html.find(".game-system");
-    // SRD Link
-    let acks = gamesystem.find('h4').last();
-    acks.append(` <sub><a href="https://oldschoolessentials.necroticgnome.com/srd/index.php">SRD<a></sub>`);
-
-    // License text
-    const template = "systems/acks/templates/chat/license.html";
-    const rendered = await renderTemplate(template);
-    gamesystem.find(".system").append(rendered);
-    
-    // User guide
-    let docs = html.find("button[data-action='docs']");
-    const styling = "border:none;margin-right:2px;vertical-align:middle;margin-bottom:5px";
-    $(`<button data-action="userguide"><img src='/systems/acks/assets/dragon.png' width='16' height='16' style='${styling}'/>Old School Guide</button>`).insertAfter(docs);
-    html.find('button[data-action="userguide"]').click(ev => {
-      new FrameViewer('https://mesfoliesludiques.gitlab.io/foundryvtt-ose', {resizable: true}).render(true);
-    });
-  }
 });
 
 Hooks.on("preCreateCombatant", (combat, data, options, id) => {
