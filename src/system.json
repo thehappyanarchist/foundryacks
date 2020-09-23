@@ -41,5 +41,5 @@
   "gridUnits": "ft",
   "url": "https://github.com/thehappyanarchist/foundryacks",
   "manifest": "https://github.com/thehappyanarchist/foundryacks/raw/master/src/system.json",
-  "download": "https://github.com/thehappyanarchist/foundryacks/-/raw/master/package/ose-v1.0.0.zip"
+  "download": "https://github.com/thehappyanarchist/foundryacks/raw/master/package/acks-v0.5.0.zip"
 }
