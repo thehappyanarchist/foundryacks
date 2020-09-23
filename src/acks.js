@@ -88,7 +88,7 @@ Hooks.on("renderSidebarTab", async (object, html) => {
     let gamesystem = html.find(".game-system");
     // SRD Link
     let acks = gamesystem.find('h4').last();
-    acks.append(` <sub><a href="https://oldschoolessentials.necroticgnome.com/srd/index.php">SRD<a></sub>`);
+    acks.append(` <sub><a href="https://github.com/jhhoffmann/ACKS_SRD/blob/master/Chapter00.md">SRD<a></sub>`);
 
     // License text
     const template = "systems/acks/templates/chat/license.html";
@@ -98,9 +98,9 @@ Hooks.on("renderSidebarTab", async (object, html) => {
     // User guide
     let docs = html.find("button[data-action='docs']");
     const styling = "border:none;margin-right:2px;vertical-align:middle;margin-bottom:5px";
-    $(`<button data-action="userguide"><img src='/systems/acks/assets/dragon.png' width='16' height='16' style='${styling}'/>Old School Guide</button>`).insertAfter(docs);
+    $(`<button data-action="userguide"><img src='/systems/acks/assets/autarch.png' width='90' height='30' style='${styling}'/>Autarch on Drive-Thru RPG</button>`).insertAfter(docs);
     html.find('button[data-action="userguide"]').click(ev => {
-      new FrameViewer('https://mesfoliesludiques.gitlab.io/foundryvtt-ose', {resizable: true}).render(true);
+      new FrameViewer('https://www.drivethrurpg.com/browse/pub/4277/Autarch', {resizable: true}).render(true);
     });
   }
 });
