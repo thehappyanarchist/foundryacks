@@ -36,3 +36,7 @@ BUG FIXES:
 Monster Saves pre-fill not present when monster is new
 Negative Con mod could make HD roll negative (now floored at 1)
 Negative Str mod could make damage negative (now minimum 1)
+
+v0.5.2 Houserule: Wisdom bonus to all saves
+MINOR CHANGES:
+Added the popular wisdom bonus houserule to settings menu. Selecting it removes the prompt during rolling a save and declutters the Save vs Magic field from the sheet.
