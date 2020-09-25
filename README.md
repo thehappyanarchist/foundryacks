@@ -5,6 +5,9 @@ All the features you need to play ACKS in Foundry VTT. Forked off of Old School 
 Implemented ACKS encumbrance rules (uses coin weight instead of stone - 1000 coins to a stone)\
 Changed Ascending Armor Class to ACKS AC\
 Uncapped the dexterity and charisma bonuses\
+Changed Ascending Armor Class to ACKS AC\
+Uncapped the dexterity and charisma bonuses\
+Implemented ACKS encumbrance rules (uses coin weight instead of stone - 1000 coins to a stone)\
 Changed default exploration checks (hear noise, open door, etc) to ACKS style rolls instead of 1d6 checks\
 Added more tweaks to the tweak section, to allow for ACKS proficiencies modifying throws, AC, and more.\
 Changed "Slow weapon" to subtract 1 from initiative instead of making the character last in the order.\
