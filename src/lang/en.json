@@ -103,6 +103,8 @@
   "ACKS.HealthShort": "HP",
   "ACKS.HitDice": "Hit Dice",
   "ACKS.HitDiceShort": "HD",
+  "ACKS.BHR": "Base Healing Rate",
+  "ACKS.BHRShort": "BHR",
 
   "ACKS.movement.base": "Movement Rate",
   "ACKS.movement.short": "MV",
@@ -137,8 +139,6 @@
   "ACKS.AttacksShort": "ATT",
   "ACKS.Damage": "Damage",
   "ACKS.Spellcaster": "Spellcaster",
-  "ACKS.BHR": "Base Healing Rate",
-  "ACKS.BHRShort": "BHR",
 
   "ACKS.Language": "Language",
   "ACKS.SpokenLanguages": "Spoken Languages",
@@ -188,6 +188,10 @@
   "ACKS.Setting.MovementAuto": "Calculate Movement",
   "ACKS.Setting.SignificantTreasure": "Significant Treasure Weight",
   "ACKS.Setting.SignificantTreasureHint": "Weight at which treasure will reduce the movement, only useful for basic encumbrance",
+  "ACKS.Setting.Explode20": "HFH: Exploding attack throws",
+  "ACKS.Setting.Explode20Hint": "Heroic Fantasy Option: Attack throws explode on 20 - Critical if exceed target AC by 10",
+  "ACKS.Setting.BHR": "HFH: Base Healing Rate",
+  "ACKS.Setting.BHRHint": "Heroic Fantasy Option: Base Healing Rate per day varies by Max HP",
 
   "ACKS.items.Equip": "Equip",
   "ACKS.items.Unequip": "Unequip",

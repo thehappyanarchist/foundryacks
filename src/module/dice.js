@@ -29,6 +29,11 @@ export class AcksDice {
       } else {
         result.isFailure = true;
       }
+    } else if (data.roll.type == "hitdice") {
+      // RESULT CAN BE NO LOWER THAN 1
+      if (roll.total < 1) {
+        roll._total = 1;
+      }
     } else if (data.roll.type == "table") {
       // Reaction
       let table = data.roll.table;
@@ -197,6 +202,11 @@ export class AcksDice {
     const roll = new Roll(parts.join("+"), data).roll();
     const dmgRoll = new Roll(data.roll.dmg.join("+"), data).roll();
 
+    // Add minimal damage of 1
+    if (dmgRoll.total < 1) {
+      dmgRoll._total = 1;
+    }
+    
     // Convert the roll to a chat message and return the roll
     let rollMode = game.settings.get("core", "rollMode");
     rollMode = form ? form.rollMode.value : rollMode;

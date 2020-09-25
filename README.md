@@ -2,8 +2,9 @@
 All the features you need to play ACKS in Foundry VTT. Forked off of Old School Essentials by U~Man and heavily modified.
 
 ## Features
-Defaulted to exploding 20s in combat from HFH optional rules\
-Added BHR to the character sheet from HFH optional rules\
+Implemented ACKS encumbrance rules (uses coin weight instead of stone - 1000 coins to a stone)\
+Changed Ascending Armor Class to ACKS AC\
+Uncapped the dexterity and charisma bonuses\
 Changed Ascending Armor Class to ACKS AC\
 Uncapped the dexterity and charisma bonuses\
 Implemented ACKS encumbrance rules (uses coin weight instead of stone - 1000 coins to a stone)\
@@ -13,7 +14,10 @@ Changed "Slow weapon" to subtract 1 from initiative instead of making the charac
 Added a HOLD TURN icon to the Combat Tracker to remind the judge that a player has held their action.\
 Modified the encumbrance bar to reflect ACKS standard movement penalties while encumbered, and to show that on the bar\
 Changed default monster saves to match ACKS numbers (actually makes monsters a bit less resistant overall)\
-Added Auran languages and removed alignment tongues
+Added Auran languages and removed alignment tongues\
+### Optional
+Added exploding 20s in combat from HFH optional rules\
+Added BHR to the character sheet from HFH optional rules
 
 ## License
 This Foundry VTT system requires ACKS Core Rules that you can find at http://autarch.co/buy-now.

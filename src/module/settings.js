@@ -20,7 +20,21 @@ export const registerSettings = function () {
     default: true,
     scope: "world",
     type: Boolean,
+    config: false,
+    onChange: _ => window.location.reload()
+  });
+
+  game.settings.register("acks", "encumbranceOption", {
+    name: game.i18n.localize("ACKS.Setting.Encumbrance"),
+    hint: game.i18n.localize("ACKS.Setting.EncumbranceHint"),
+    default: "detailed",
+    scope: "world",
+    type: String,
     config: true,
+    choices: {
+      detailed: "ACKS.Setting.EncumbranceDetailed",
+      complete: "ACKS.Setting.EncumbranceComplete",
+    },
     onChange: _ => window.location.reload()
   });
 
@@ -33,29 +47,23 @@ export const registerSettings = function () {
     config: true,
   });
 
-  game.settings.register("acks", "encumbranceOption", {
-    name: game.i18n.localize("ACKS.Setting.Encumbrance"),
-    hint: game.i18n.localize("ACKS.Setting.EncumbranceHint"),
-    default: "detailed",
+  game.settings.register("acks", "exploding20s", {
+    name: game.i18n.localize("ACKS.Setting.Explode20"),
+    hint: game.i18n.localize("ACKS.Setting.Explode20Hint"),
+    default: false,
     scope: "world",
-    type: String,
+    type: Boolean,
     config: true,
-    choices: {
-//      disabled: "ACKS.Setting.EncumbranceDisabled",
-//      basic: "ACKS.Setting.EncumbranceBasic",
-      detailed: "ACKS.Setting.EncumbranceDetailed",
-      complete: "ACKS.Setting.EncumbranceComplete",
-    },
     onChange: _ => window.location.reload()
   });
 
-//  game.settings.register("acks", "significantTreasure", {
-//    name: game.i18n.localize("ACKS.Setting.SignificantTreasure"),
-//    hint: game.i18n.localize("ACKS.Setting.SignificantTreasureHint"),
-//    default: 800,
-//    scope: "world",
-//    type: Number,
-//    config: true,
-//    onChange: _ => window.location.reload()
-//  });
-};
+  game.settings.register("acks", "bhr", {
+    name: game.i18n.localize("ACKS.Setting.BHR"),
+    hint: game.i18n.localize("ACKS.Setting.BHRHint"),
+    default: false,
+    scope: "world",
+    type: Boolean,
+    config: true,
+    onChange: _ => window.location.reload()
+  });
+}
