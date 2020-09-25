@@ -141,8 +141,29 @@ export class AcksDice {
       : 0;
     result.victim = data.roll.target ? data.roll.target.data.name : null;
 
+    const hfh = game.settings.get("acks", "exploding20s")
+    const die = roll.dice[0].total
+    
     if (game.settings.get("acks", "ascendingAC")) {
-      if (roll.total < targetAac + 10) {
+      if (die == 1 && !hfh) {
+        result.details = game.i18n.format(
+          "ACKS.messages.Fumble",
+          {
+            result: roll.total,
+            bonus: result.target,
+          }
+        );
+        return result;
+      } else if (roll.total < targetAac + 10 && die < 20) {
+        result.details = game.i18n.format(
+          "ACKS.messages.AttackAscendingFailure",
+          {
+            result: roll.total - 10,
+            bonus: result.target,
+          }
+        );
+        return result;
+      } else if (roll.total < targetAac + 10 && hfh) {
         result.details = game.i18n.format(
           "ACKS.messages.AttackAscendingFailure",
           {
@@ -152,9 +173,15 @@ export class AcksDice {
         );
         return result;
       }
-      result.details = game.i18n.format("ACKS.messages.AttackAscendingSuccess", {
-        result: roll.total - 10,
-      });
+      if (!hfh && die == 20) {
+        result.details = game.i18n.format("ACKS.messages.Critical", {
+          result: roll.total,
+        });
+      } else {      
+        result.details = game.i18n.format("ACKS.messages.AttackAscendingSuccess", {
+          result: roll.total - 10,
+        });
+      }
       result.isSuccess = true;
     } else {
       // B/X Historic THAC0 Calculation
