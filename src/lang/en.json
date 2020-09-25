@@ -272,6 +272,8 @@
   "ACKS.messages.InflictsDamage": "Inflicts damage!",
   "ACKS.messages.applyDamage": "Apply Damage",
   "ACKS.messages.applyHealing": "Apply Healing",
+  "ACKS.messages.Fumble": "<b>1! Automatic Miss!</b>",
+  "ACKS.messages.Critical": "<b>20! Automatic Hit!</b>",
 
   "ACKS.colors.green": "Green",
   "ACKS.colors.red": "Red",
