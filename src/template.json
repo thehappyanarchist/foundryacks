@@ -38,19 +38,19 @@
         },
         "saves": {
           "death": {
-            "value": 15
+            "value": 0
           },
           "wand": {
-            "value": 17
+            "value": 0
           },
           "paralysis": {
-            "value": 16
+            "value": 0
           },
           "breath": {
-            "value": 17
+            "value": 0
           },
           "spell": {
-            "value": 18
+            "value": 0
           }
         },
         "movement": {
