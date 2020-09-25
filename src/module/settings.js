@@ -47,6 +47,16 @@ export const registerSettings = function () {
     config: true,
   });
 
+  game.settings.register("acks", "removeMagicBonus", {
+    name: game.i18n.localize("ACKS.Setting.RemoveMagicBonus"),
+    hint: game.i18n.localize("ACKS.Setting.RemoveMagicBonusHint"),
+    default: false,
+    scope: "world",
+    type: Boolean,
+    config: true,
+    onChange: _ => window.location.reload()
+  });
+
   game.settings.register("acks", "exploding20s", {
     name: game.i18n.localize("ACKS.Setting.Explode20"),
     hint: game.i18n.localize("ACKS.Setting.Explode20Hint"),

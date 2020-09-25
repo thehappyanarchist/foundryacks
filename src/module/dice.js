@@ -325,36 +325,55 @@ export class AcksDice {
       flavor: flavor,
       speaker: speaker,
     };
+    
+    let buttons = {}
     if (skipDialog) { AcksDice.sendRoll(rollData); }
-
-    let buttons = {
-      ok: {
-        label: game.i18n.localize("ACKS.Roll"),
-        icon: '<i class="fas fa-dice-d20"></i>',
-        callback: (html) => {
-          rolled = true;
-          rollData.form = html[0].children[0];
-          roll = AcksDice.sendRoll(rollData);
+    if (game.settings.get("acks", "removeMagicBonus") == false) {
+      buttons = {
+        ok: {
+          label: game.i18n.localize("ACKS.Roll"),
+          icon: '<i class="fas fa-dice-d20"></i>',
+          callback: (html) => {
+            rolled = true;
+            rollData.form = html[0].children[0];
+            roll = AcksDice.sendRoll(rollData);
+          },
         },
-      },
-      magic: {
-        label: game.i18n.localize("ACKS.saves.magic.short"),
-        icon: '<i class="fas fa-magic"></i>',
-        callback: (html) => {
-          rolled = true;
-          rollData.form = html[0].children[0];
-          rollData.data.roll.target = parseInt(rollData.data.roll.target) + parseInt(rollData.data.roll.magic);
-          rollData.title += ` ${game.i18n.localize("ACKS.saves.magic.short")} (${rollData.data.roll.magic})`;
-          roll = AcksDice.sendRoll(rollData);
+        magic: {
+          label: game.i18n.localize("ACKS.saves.magic.short"),
+          icon: '<i class="fas fa-magic"></i>',
+          callback: (html) => {
+            rolled = true;
+            rollData.form = html[0].children[0];
+            rollData.data.roll.target = parseInt(rollData.data.roll.target) + parseInt(rollData.data.roll.magic);
+            rollData.title += ` ${game.i18n.localize("ACKS.saves.magic.short")} (${rollData.data.roll.magic})`;
+            roll = AcksDice.sendRoll(rollData);
+          },
         },
-      },
-      cancel: {
-        icon: '<i class="fas fa-times"></i>',
-        label: game.i18n.localize("ACKS.Cancel"),
-        callback: (html) => { },
-      },
-    };
-
+        cancel: {
+          icon: '<i class="fas fa-times"></i>',
+          label: game.i18n.localize("ACKS.Cancel"),
+          callback: (html) => { },
+        },
+      };
+    } else {
+      buttons = {
+        ok: {
+          label: game.i18n.localize("ACKS.Roll"),
+          icon: '<i class="fas fa-dice-d20"></i>',
+          callback: (html) => {
+            rolled = true;
+            rollData.form = html[0].children[0];
+            roll = AcksDice.sendRoll(rollData);
+          },
+        },
+        cancel: {
+          icon: '<i class="fas fa-times"></i>',
+          label: game.i18n.localize("ACKS.Cancel"),
+          callback: (html) => { },
+        },
+      };
+    }
     const html = await renderTemplate(template, dialogData);
     let roll;
 

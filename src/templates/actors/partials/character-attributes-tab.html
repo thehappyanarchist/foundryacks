@@ -247,6 +247,7 @@
                     <input name="data.saves.spell.value" type="text" value="{{data.saves.spell.value}}"
                         placeholder="0" />
             </li>
+            {{#unless config.removeMagicBonus}}
             <li class="attribute saving-throw">
                 <h4 class="attribute-name box-title" title="{{ localize 'ACKS.saves.magic.long' }}">
                     {{ localize "ACKS.saves.magic.long"}}</h4>
@@ -254,6 +255,7 @@
                     {{mod data.scores.wis.mod}}
                 </div>
             </li>
+            {{/unless}}
         </ul>
     </div>
 </section>

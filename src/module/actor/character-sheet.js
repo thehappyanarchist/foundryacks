@@ -52,6 +52,7 @@ export class AcksActorSheetCharacter extends AcksActorSheet {
     data.config.initiative = game.settings.get("acks", "initiative") != "group";
     data.config.encumbrance = game.settings.get("acks", "encumbranceOption");
     data.config.BHR = game.settings.get("acks", "bhr");
+    data.config.removeMagicBonus = game.settings.get("acks", "removeMagicBonus");
 
     data.isNew = this.actor.isNew();
     return data;
