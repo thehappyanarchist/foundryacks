@@ -29,6 +29,11 @@ export class AcksDice {
       } else {
         result.isFailure = true;
       }
+    } else if (data.roll.type == "hitdice") {
+      // RESULT CAN BE NO LOWER THAN 1
+      if (roll.total < 1) {
+        roll._total = 1;
+      }
     } else if (data.roll.type == "table") {
       // Reaction
       let table = data.roll.table;
