@@ -202,6 +202,11 @@ export class AcksDice {
     const roll = new Roll(parts.join("+"), data).roll();
     const dmgRoll = new Roll(data.roll.dmg.join("+"), data).roll();
 
+    // Add minimal damage of 1
+    if (dmgRoll.total < 1) {
+      dmgRoll._total = 1;
+    }
+    
     // Convert the roll to a chat message and return the roll
     let rollMode = game.settings.get("core", "rollMode");
     rollMode = form ? form.rollMode.value : rollMode;
