@@ -1,7 +1,9 @@
 # **Adventurer Conqueror King System** for Foundry VTT
 This game system for Foundry Virtual Tabletop provides character sheet and game system support for the Adventurer Conqueror King System (ACKS).
 
-This system provides mechanics and character sheet support, and features a compendium for Monsters, Items, Spells, Abilities, and more, all to make the judge's job easier for running ACKS games on the Foundry VTT. ACKS, like most B/X clones, is also broadly compatible with thousands of modules and other OSR content and rulesets with a minimum of conversion necessary.
+This system provides mechanics and character sheet support, and features a compendium for Monsters, Items, Spells, Abilities, and more, all to make the judge's job easier for running ACKS games on the Foundry VTT. 
+
+ACKS, like most B/X clones, is also broadly compatible with thousands of modules and other OSR content and rulesets with a minimum of conversion necessary.
 
 ## ACKS for Foundry VTT Features
 #### **Core Rules**
@@ -37,4 +39,4 @@ This code is modified from a fork of the v1.0 code of the Old School Essentials 
 
 Autarch, Adventurer Conqueror King, Adventurer Conqueror King System, and ACKS are trademarks of Autarch LLC. You may find further information about the system at <http://autarch.co>.
 #### Artwork
-Weapon quality icons, and the Treasure chest are from Rexxard, and came with the Old School Essentials System for Foundry VTT (Unofficial) by U~man which can be found at <https://gitlab.com/mesfoliesludiques/foundryvtt-ose>. Other icons are distributed under the Creative Commons 3.0 BY license and are available on <https://game-icons.net>.
+Weapon quality icons, and the Treasure chest are from Rexxard, and came with the Old School Essentials System for Foundry VTT (Unofficial) by U~man which can be found at <https://gitlab.com/mesfoliesludiques/foundryvtt-ose>. Other icons used in the compendium are distributed under the Creative Commons 3.0 BY license and are available on <https://game-icons.net>. A list of icon authors and contributors for that project can be found on the website, or at <https://game-icons.net/about.html#authors>.
