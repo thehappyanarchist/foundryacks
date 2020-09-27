@@ -701,6 +701,19 @@
   /*  Item Controls                            */
   /* ----------------------------------------- */
 }
+.acks.sheet.actor.character .sheet-header .header-details .summary .check-field:hover .check {
+  display: inline;
+}
+.acks.sheet.actor.character .sheet-header .header-details .summary .check-field .check {
+  display: none;
+  line-height: 35px;
+  flex: 0 0 20px;
+  position: absolute;
+  font-size: 12px;
+}
+.acks.sheet.actor.character .sheet-header .header-details .summary .check-field .check:hover {
+  color: rgba(0, 0, 0, 0.9);
+}
 .acks.sheet.actor.character .sheet-header .xp-bonus {
   top: -15px;
   right: 3px;

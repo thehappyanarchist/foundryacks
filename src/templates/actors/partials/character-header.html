@@ -22,6 +22,21 @@
          />
       <label>{{localize 'ACKS.details.alignment'}}</label>
     </li>
+    {{#if data.retainer.enabled}}
+    <li class="flexrow check-field">
+      <div class="check morale-check" title="{{localize 'ACKS.roll.morale'}}"><a><i class="fas fa-dice"></i></a></div>
+      <div>
+        <input type="text" name="data.details.morale" value="{{data.details.morale}}" />
+        <label>{{localize 'ACKS.details.morale'}}</label>  
+      </div>
+    </li>
+    <li class="attribute ability-score" data-stat="lr">
+      <div class="attribute-value">
+        <input name="data.retainer.loyalty" type="text" value="{{data.retainer.loyalty}}" placeholder="Loyal" data-dtype="String" />
+        <label>{{localize 'ACKS.Loyalty'}}</label>  
+      </div>
+    </li>
+    {{/if}}
   </ul>
   <ul class="summary flexrow">
     <li class="flex3">

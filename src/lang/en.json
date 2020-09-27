@@ -69,8 +69,8 @@
   "ACKS.Retainer": "Retainer",
   "ACKS.RetainerWage": "Wage",
   "ACKS.RetainerUpkeep": "Upkeep",
-  "ACKS.Loyalty": "Henchmen Morale",
-  "ACKS.LoyaltyShort": "MOR",
+  "ACKS.Loyalty": "Loyalty",
+  "ACKS.LoyaltyShort": "LYL",
 
   "ACKS.scores.str.long": "Strength",
   "ACKS.scores.str.short": "STR",
