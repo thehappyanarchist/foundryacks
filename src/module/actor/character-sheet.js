@@ -144,6 +144,11 @@ export class AcksActorSheetCharacter extends AcksActorSheet {
       let actorObject = this.actor;
       actorObject.rollMorale({ event: event });
     });
+
+    html.find(".loyalty-check a").click((ev) => {
+      let actorObject = this.actor;
+      actorObject.rollLoyalty({ event: event });
+    });
     
     html.find(".ability-score .attribute-name a").click((ev) => {
       let actorObject = this.actor;

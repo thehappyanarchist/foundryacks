@@ -290,5 +290,18 @@
   "ACKS.reaction.Unfriendly": "{name} is Unfriendly and may attack",
   "ACKS.reaction.Neutral": "{name} is Neutral and uncertain",
   "ACKS.reaction.Indifferent": "{name} is Indifferent and uninterested",
-  "ACKS.reaction.Friendly": "{name} is Friendly and helpful"
+  "ACKS.reaction.Friendly": "{name} is Friendly and helpful",
+  
+  "ACKS.loyalty.check": "Henchman Loyalty Check",
+  "ACKS.loyalty.hostility": "Becomes Hostile",
+  "ACKS.loyalty.resignation": "Tenders Resignation",
+  "ACKS.loyalty.grudging": "Grudging Loyalty",
+  "ACKS.loyalty.loyal": "Loyal",
+  "ACKS.loyalty.fanatic": "Fanatic Loyalty",
+
+  "ACKS.morale.retreat": "Retreat",
+  "ACKS.morale.fightingWithdrawal": "Fighting Withdrawl",
+  "ACKS.morale.fight": "Fight On",
+  "ACKS.morale.advanceAndPursue": "Advance and Pursue",
+  "ACKS.morale.fightToTheDeath": "Victory or Death"
 }

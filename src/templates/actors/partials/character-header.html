@@ -30,7 +30,8 @@
         <label>{{localize 'ACKS.details.morale'}}</label>  
       </div>
     </li>
-    <li class="attribute ability-score" data-stat="lr">
+    <li class="flex2 check-field" data-stat="lr">
+      <div class="check loyalty-check" title="{{localize 'ACKS.loyalty.check'}}"><a><i class="fas fa-dice"></i></a></div>
       <div class="attribute-value">
         <input name="data.retainer.loyalty" type="text" value="{{data.retainer.loyalty}}" placeholder="Loyal" data-dtype="String" />
         <label>{{localize 'ACKS.Loyalty'}}</label>  
