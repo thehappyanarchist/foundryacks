@@ -16,7 +16,7 @@ export class AcksDice {
         result.isFailure = true;
       }
     } else if (data.roll.type == "below") {
-      // MORALE
+      // ?
       if (roll.total <= result.target) {
         result.isSuccess = true;
       } else {
@@ -35,7 +35,11 @@ export class AcksDice {
         roll._total = 1;
       }
     } else if (data.roll.type == "table") {
-      // Reaction
+      // Reaction, MORALE
+      // Roll cannot be less than 2 on a 2d6 roll
+      if (roll.total < 2) {
+        roll._total = 2
+      }
       let table = data.roll.table;
       let output = "";
       for (let i = 0; i <= roll.total; i++) {

@@ -162,21 +162,40 @@ export class AcksActor extends Actor {
 
   rollMorale(options = {}) {
     const rollParts = ["2d6"];
+    rollParts.push(this.data.data.details.morale);
 
     const data = {
       actor: this.data,
       roll: {
-        type: "below",
-        target: this.data.data.details.morale,
+        type: "table",
+        table: {
+          1: game.i18n.format("ACKS.morale.retreat", {
+            name: this.data.name,
+          }),
+          3: game.i18n.format("ACKS.morale.fightingWithdrawal", {
+            name: this.data.name,
+          }),
+          6: game.i18n.format("ACKS.morale.fight", {
+            name: this.data.name,
+          }),
+          9: game.i18n.format("ACKS.morale.advanceAndPursue", {
+            name: this.data.name,
+          }),
+          12: game.i18n.format("ACKS.morale.fightToTheDeath", {
+            name: this.data.name,
+          }),
+        },
       },
     };
+
+    let skip = options.event && options.event.ctrlKey;
 
     // Roll and return
     return AcksDice.Roll({
       event: options.event,
       parts: rollParts,
       data: data,
-      skipDialog: true,
+      skipDialog: skip,
       speaker: ChatMessage.getSpeaker({ actor: this }),
       flavor: game.i18n.localize("ACKS.roll.morale"),
       title: game.i18n.localize("ACKS.roll.morale"),
@@ -184,26 +203,44 @@ export class AcksActor extends Actor {
   }
 
   rollLoyalty(options = {}) {
-    const label = game.i18n.localize(`ACKS.roll.loyalty`);
     const rollParts = ["2d6"];
+    rollParts.push(this.data.data.details.morale);
 
     const data = {
       actor: this.data,
       roll: {
-        type: "below",
-        target: this.data.data.retainer.loyalty,
+        type: "table",
+        table: {
+          1: game.i18n.format("ACKS.loyalty.hostility", {
+            name: this.data.name,
+          }),
+          3: game.i18n.format("ACKS.loyalty.resignation", {
+            name: this.data.name,
+          }),
+          6: game.i18n.format("ACKS.loyalty.grudging", {
+            name: this.data.name,
+          }),
+          9: game.i18n.format("ACKS.loyalty.loyal", {
+            name: this.data.name,
+          }),
+          12: game.i18n.format("ACKS.loyalty.fanatic", {
+            name: this.data.name,
+          }),
+        },
       },
     };
+
+    let skip = options.event && options.event.ctrlKey;
 
     // Roll and return
     return AcksDice.Roll({
       event: options.event,
       parts: rollParts,
       data: data,
-      skipDialog: true,
+      skipDialog: skip,
       speaker: ChatMessage.getSpeaker({ actor: this }),
-      flavor: label,
-      title: label,
+      flavor: game.i18n.localize("ACKS.loyalty.check"),
+      title: game.i18n.localize("ACKS.loyalty.check"),
     });
   }
 
