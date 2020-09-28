@@ -40,3 +40,10 @@ Negative Str mod could make damage negative (now minimum 1)
 v0.5.2 Houserule: Wisdom bonus to all saves
 MINOR CHANGES:
 Added the popular wisdom bonus houserule to settings menu. Selecting it removes the prompt during rolling a save and declutters the Save vs Magic field from the sheet.
+
+v0.5.3 Morale and Loyalty systems
+MINOR CHANGES:
+On retainer sheets, Morale and Loyalty can now be rolled by clicking on their fields.
+Morale should be a number (typically between -6 and +4) and Loyalty is a text field, in which the Judge can write things to remind him of any bonuses or penalties that need to be applied to the Morale or Loyalty check.
+Morale rolls are made each time the henchman suffers a calamity. A calamity includes suffering an energy drain, a curse, a magical disease, or being nearly killed (Judge’s discretion).
+Loyalty rolls should make a morale roll for each henchman at the end of each adventure whenever the henchman has leveled up, to determine if the henchman strikes off on his own or remains with the adventurer.

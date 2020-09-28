@@ -17,9 +17,12 @@ ACKS, like most B/X clones, is also broadly compatible with thousands of modules
 - Encumbrance bar to reflect movement rates while encumbered
 - Pre-programmed saving throws for monsters based on HD
 - Auran setting languages in addition to standard tongues
+- Morale and Loyalty tracking for Henchmen.
 #### **Heroic Fantasy Handbook** (*optional*)
 - Added an option to use exploding 20s in combat from HFH optional rules  
 - Added an option to add Basic Healing Rate to the character sheet from HFH optional rules  
+#### **Houserules** (*optional*)
+- Added the popular wisdom bonus houserule to settings menu. Selecting it removes the prompt during rolling a save and declutters the Save vs Magic field from the sheet.
 
 ## Manual Installation
 To install and use this system, simply paste the following URL into the Install System dialog on the Setup menu of the application.
