@@ -1,7 +1,7 @@
 # **Adventurer Conqueror King System** for Foundry VTT
 This game system for Foundry Virtual Tabletop provides character sheet and game system support for the Adventurer Conqueror King System (ACKS).
 
-This system provides mechanics and character sheet support, and features a compendium for Monsters, Items, Spells, Abilities, and more, all to make the judge's job easier for running ACKS games on the Foundry VTT. 
+This system provides mechanics and character sheet support, and features a compendium with Items, Spells, Proficiencies and Abilities, and more, all to make the judge's job easier for running ACKS games on the Foundry VTT. Also included is a world map of the Auran Empire (the default setting of ACKS) - although the judge is free to ignore it. Every campaign is a law unto itself.
 
 ACKS, like most B/X clones, is also broadly compatible with thousands of modules and other OSR content and rulesets with a minimum of conversion necessary.
 
@@ -18,6 +18,7 @@ ACKS, like most B/X clones, is also broadly compatible with thousands of modules
 - Pre-programmed saving throws for monsters based on HD
 - Auran setting languages in addition to standard tongues
 - Morale and Loyalty tracking for Henchmen.
+- The ACKS Compendium has the majority of equipment, proficiencies, and spells from the Core Book. (Soon to have tables and core bestiary)
 #### **Heroic Fantasy Handbook** (*optional*)
 - Added an option to use exploding 20s in combat from HFH optional rules  
 - Added an option to add Basic Healing Rate to the character sheet from HFH optional rules  
@@ -34,6 +35,8 @@ If you wish to manually install the system, you must clone or extract it into th
 ## Community Contribution
 Code and content contributions are accepted. Please feel free to submit issues to the issue tracker or submit merge requests for code changes. Approval for such requests involves code and (if necessary) design review by The Happy Anarchist. Please reach out on the Autarch Discord ("vtt-collaboration" channel) with any questions.
 
+Big thank you to Bobloblah for laying the foundation of the ACKS compendium! He put in an enormous effort, all to save judges tons of work in getting their campaigns started.
+
 ## License
 #### System
 This system is offered and may be used under the terms of the Open Game License v1.0a and the Adventurer Conqueror King Product Identity License v1.0. Permission to develop and distribute the ACKS system for Foundry, and to create and distribute the content in the compendium have been granted by Autarch LLC.  
@@ -42,4 +45,4 @@ This code is modified from a fork of the v1.0 code of the Old School Essentials 
 
 Autarch, Adventurer Conqueror King, Adventurer Conqueror King System, and ACKS are trademarks of Autarch LLC. You may find further information about the system at <http://autarch.co>.
 #### Artwork
-Weapon quality icons, and the Treasure chest are from Rexxard, and came with the Old School Essentials System for Foundry VTT (Unofficial) by U~man which can be found at <https://gitlab.com/mesfoliesludiques/foundryvtt-ose>. Other icons used in the compendium are distributed under the Creative Commons 3.0 BY license and are available on <https://game-icons.net>. A list of icon authors and contributors for that project can be found on the website, or at <https://game-icons.net/about.html#authors>.
+Weapon quality icons, and the Treasure chest are from Rexxard, and came with the Old School Essentials System for Foundry VTT (Unofficial) by U~man which can be found at <https://gitlab.com/mesfoliesludiques/foundryvtt-ose>. Other icons used in the compendium are distributed under the Creative Commons 3.0 BY license and are available on <https://game-icons.net>. A list of icon authors and contributors for that project can be found on the website, or at <https://game-icons.net/about.html#authors>. Other icons in the compendium are by Bobloblah or The Happy Anarchist. Map of the Auran Empire (default setting of ACKS) by The Happy Anarchist.

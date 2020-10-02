@@ -107,7 +107,16 @@
       "path": "packs/acks-weapons.db",
       "entity": "Item",
       "module": "acks-packs"
-    }
+    },
+    
+    {
+      "name": "acks-maps",
+      "label": "ACKS Maps",
+      "system": "acks",
+      "path": "packs/acks-maps.db",
+      "entity": "Scene",
+      "module": "acks-packs"
+    }    
   ],
   "languages": [
     {

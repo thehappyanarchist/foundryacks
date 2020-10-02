@@ -47,3 +47,8 @@ On retainer sheets, Morale and Loyalty can now be rolled by clicking on their fi
 Morale should be a number (typically between -6 and +4) and Loyalty is a text field, in which the Judge can write things to remind him of any bonuses or penalties that need to be applied to the Morale or Loyalty check.
 Morale rolls are made each time the henchman suffers a calamity. A calamity includes suffering an energy drain, a curse, a magical disease, or being nearly killed (Judge’s discretion).
 Loyalty rolls should make a morale roll for each henchman at the end of each adventure whenever the henchman has leveled up, to determine if the henchman strikes off on his own or remains with the adventurer.
+
+v0.6.0 Now with more Compendium
+MAJOR CHANGES:
+Bobloblah's compendium was imported and folded in to the ACKS release. There is more to be done, but most of the core arcane, divine spells, basic equipment, and proficiencies are in place, with their associated art icons, weights, descriptions, stats and costs. 
+Added a world map of Cybele if a judge would like to use the default ACKS setting.
