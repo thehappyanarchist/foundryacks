@@ -2,14 +2,122 @@
   "name": "acks",
   "title": "Adventurer Conqueror King System",
   "description": "Play B/X or other OSR compatible content using the ACKS system",
-  "version": "0.5.3",
+  "version": "0.6.0",
   "minimumCoreVersion": "0.6.2",
   "compatibleCoreVersion": "0.6.6",
   "templateVersion": 2,
   "author": "The Happy Anarchist",
   "esmodules": ["acks.js"],
   "styles": ["acks.css"],
-  "packs": [],
+  "packs": [
+    {
+      "name": "acks-arcane-spells-1",
+      "label": "ACKS Arcane Spells 1",
+      "system": "acks",
+      "path": "packs/acks-arcane-spells-1.db",
+      "entity": "Item",
+      "module": "acks-packs"
+    },
+
+    {
+      "name": "acks-arcane-spells-2",
+      "label": "ACKS Arcane Spells 2",
+      "system": "acks",
+      "path": "packs/acks-arcane-spells-2.db",
+      "entity": "Item",
+      "module": "acks-packs"
+    },
+
+    {
+      "name": "acks-arcane-spells-3",
+      "label": "ACKS Arcane Spells 3",
+      "system": "acks",
+      "path": "packs/acks-arcane-spells-3.db",
+      "entity": "Item",
+      "module": "acks-packs"
+    },
+
+    {
+      "name": "acks-arcane-spells-4",
+      "label": "ACKS Arcane Spells 4",
+      "system": "acks",
+      "path": "packs/acks-arcane-spells-4.db",
+      "entity": "Item",
+      "module": "acks-packs"
+    },
+
+    {
+      "name": "acks-armor",
+      "label": "ACKS Armor",
+      "system": "acks",
+      "path": "packs/acks-armor.db",
+      "entity": "Item",
+      "module": "acks-packs"
+    },
+
+    {
+      "name": "acks-divine-spells-1",
+      "label": "ACKS Divine Spells 1",
+      "system": "acks",
+      "path": "packs/acks-divine-spells-1.db",
+      "entity": "Item",
+      "module": "acks-packs"
+    },
+
+    {
+      "name": "acks-divine-spells-2",
+      "label": "ACKS Divine Spells 2",
+      "system": "acks",
+      "path": "packs/acks-divine-spells-2.db",
+      "entity": "Item",
+      "module": "acks-packs"
+    },
+
+    {
+      "name": "acks-arcane-spells-1",
+      "label": "ACKS Arcane Spells 1",
+      "system": "acks",
+      "path": "packs/acks-arcane-spells-1.db",
+      "entity": "Item",
+      "module": "acks-packs"
+    },
+
+    { 
+      "name": "acks-equipment",
+      "label": "ACKS Equipment",
+      "system": "acks",
+      "path": "packs/acks-equipment.db",
+      "entity": "Item",
+      "module": "acks-packs"
+    },
+
+    {
+      "name": "acks-proficiencies",
+      "label": "ACKS Proficiencies",
+      "system": "acks",
+      "path": "packs/acks-proficiencies.db",
+      "entity": "Item",
+      "module": "acks-packs"
+    },
+
+    {
+      "name": "acks-weapons",
+      "label": "ACKS Weapons",
+      "system": "acks",
+      "path": "packs/acks-weapons.db",
+      "entity": "Item",
+      "module": "acks-packs"
+    },
+    
+    {
+      "name": "acks-maps",
+      "label": "ACKS Maps",
+      "system": "acks",
+      "path": "packs/acks-maps.db",
+      "entity": "Scene",
+      "module": "acks-packs"
+    }    
+  ],
   "languages": [
     {
       "lang": "en",
@@ -41,5 +149,5 @@
   "gridUnits": "ft",
   "url": "https://github.com/thehappyanarchist/foundryacks",
   "manifest": "https://github.com/thehappyanarchist/foundryacks/raw/master/src/system.json",
-  "download": "https://github.com/thehappyanarchist/foundryacks/raw/master/package/acks-v0.5.3.zip"
+  "download": "https://github.com/thehappyanarchist/foundryacks/raw/master/package/acks-v0.6.0.zip"
 }
