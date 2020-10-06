@@ -55,7 +55,7 @@ export class AcksActorSheet extends ActorSheet {
       let lvl = spells[i].data.lvl;
       if (!sortedSpells[lvl]) sortedSpells[lvl] = [];
       if (!slots[lvl]) slots[lvl] = 0;
-      slots[lvl] += spells[i].data.memorized;
+      slots[lvl] += spells[i].data.cast;
       sortedSpells[lvl].push(spells[i]);
     }
     data.slots = {
@@ -113,7 +113,8 @@ export class AcksActorSheet extends ActorSheet {
       const item = this.actor.getOwnedItem(itemId);
       item.update({
         _id: item.id,
-        "data.cast": item.data.data.memorized,
+        "data.cast": 0,
+        "item.data.data.memorized": 0
       });
     });
   }
