@@ -17,8 +17,9 @@ ACKS, like most B/X clones, is also broadly compatible with thousands of modules
 - Encumbrance bar to reflect movement rates while encumbered
 - Pre-programmed saving throws for monsters based on HD
 - Auran setting languages in addition to standard tongues
-- Morale and Loyalty tracking for Henchmen.
+- Morale and Loyalty tracking for Henchmen
 - The ACKS Compendium has the majority of equipment, proficiencies, and spells from the Core Book. (Soon to have tables and core bestiary)
+- ACKS Spellcasting, instead of Vancian
 #### **Heroic Fantasy Handbook** (*optional*)
 - Added an option to use exploding 20s in combat from HFH optional rules  
 - Added an option to add Basic Healing Rate to the character sheet from HFH optional rules  

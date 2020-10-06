@@ -146,7 +146,7 @@ export class AcksItem extends Item {
   spendSpell() {
     this.update({
       data: {
-        cast: this.data.data.cast - 1,
+        cast: this.data.data.cast + 1,
       },
     }).then(() => {
       this.show({ skipDialog: true });
