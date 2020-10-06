@@ -52,3 +52,9 @@ v0.6.0 Now with more Compendium
 MAJOR CHANGES:
 Bobloblah's compendium was imported and folded in to the ACKS release. There is more to be done, but most of the core arcane, divine spells, basic equipment, and proficiencies are in place, with their associated art icons, weights, descriptions, stats and costs. 
 Added a world map of Cybele if a judge would like to use the default ACKS setting.
+
+v0.6.1 Removed Vancian spellcasting
+MINOR CHANGES:
+When a spell is cast, it is incrememented (to remind the player what they cast already), and the total count of spells of that level cast also increment.
+When spells are reset, they now roll back to 0. 
+If converting a sheet from an earlier version, a one-time reset may be required to purge old values.
