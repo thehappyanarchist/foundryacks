@@ -58,3 +58,8 @@ MINOR CHANGES:
 When a spell is cast, it is incrememented (to remind the player what they cast already), and the total count of spells of that level cast also increment.
 When spells are reset, they now roll back to 0. 
 If converting a sheet from an earlier version, a one-time reset may be required to purge old values.
+
+v0.6.2 Further Compendium updates
+MINOR CHANGES:
+Added Class Abilities, Monster Abilities, Monsters, Treasure Tables, and tokens and icons for all.
+Swapped map with .webp format to save about 2MB from download package.

@@ -2,7 +2,7 @@
   "name": "acks",
   "title": "Adventurer Conqueror King System",
   "description": "Play B/X or other OSR compatible content using the ACKS system",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "minimumCoreVersion": "0.6.2",
   "compatibleCoreVersion": "0.6.6",
   "templateVersion": 2,
@@ -56,6 +56,15 @@
     },
 
     {
+      "name": "acks-class-abilities",
+      "label": "ACKS Class Abilities",
+      "system": "acks",
+      "path": "packs/acks-class-abilities.db",
+      "entity": "Item",
+      "module": "acks-packs"
+    },
+
+    {
       "name": "acks-divine-spells-1",
       "label": "ACKS Divine Spells 1",
       "system": "acks",
@@ -91,12 +100,39 @@
       "module": "acks-packs"
     },
 
+    { 
+      "name": "acks-monster-abilities",
+      "label": "ACKS Monster Abilities",
+      "system": "acks",
+      "path": "packs/acks-monster-abilities.db",
+      "entity": "Item",
+      "module": "acks-packs"
+    },
+
+    { 
+      "name": "acks-monsters",
+      "label": "ACKS Monsters",
+      "system": "acks",
+      "path": "packs/acks-monsters.db",
+      "entity": "Actor",
+      "module": "acks-packs"
+    },
+
     {
       "name": "acks-proficiencies",
       "label": "ACKS Proficiencies",
       "system": "acks",
       "path": "packs/acks-proficiencies.db",
       "entity": "Item",
+      "module": "acks-packs"
+    },
+
+    {
+      "name": "acks-treasure",
+      "label": "ACKS Treasure Tables",
+      "system": "acks",
+      "path": "packs/acks-treasure.db",
+      "entity": "RollTable",
       "module": "acks-packs"
     },
 
@@ -145,9 +181,16 @@
       "path": "lang/es.json"
     }
   ],
+  "dependencies": [
+    {
+      "name": "Compendium Folders",
+      "manifest": "https://raw.githubusercontent.com/earlSt1/vtt-compendium-folders/master/module.json",
+      "type": "module"
+    }
+  ],
   "gridDistance": 5,
   "gridUnits": "ft",
   "url": "https://github.com/thehappyanarchist/foundryacks",
   "manifest": "https://github.com/thehappyanarchist/foundryacks/raw/master/src/system.json",
-  "download": "https://github.com/thehappyanarchist/foundryacks/raw/master/package/acks-v0.6.1.zip"
+  "download": "https://github.com/thehappyanarchist/foundryacks/raw/master/package/acks-v0.6.2.zip"
 }
