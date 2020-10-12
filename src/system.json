@@ -181,13 +181,6 @@
       "path": "lang/es.json"
     }
   ],
-  "dependencies": [
-    {
-      "name": "Compendium Folders",
-      "manifest": "https://raw.githubusercontent.com/earlSt1/vtt-compendium-folders/master/module.json",
-      "type": "module"
-    }
-  ],
   "gridDistance": 5,
   "gridUnits": "ft",
   "url": "https://github.com/thehappyanarchist/foundryacks",
