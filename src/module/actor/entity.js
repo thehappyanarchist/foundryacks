@@ -568,7 +568,7 @@ export class AcksActor extends Actor {
     const hp = this.data.data.hp;
 
     // Remaining goes to health
-    const dh = Math.clamped(hp.value - amount, 0, hp.max);
+    const dh = Math.clamped(hp.value - amount, -99, hp.max);
 
     // Update the Actor
     return this.update({
