@@ -21,6 +21,18 @@ export const addChatMessageContextOptions = function(html, options) {
       icon: '<i class="fas fa-user-plus"></i>',
       condition: canApply,
       callback: li => applyChatCardDamage(li, -1)
+    },
+    {
+      name: game.i18n.localize("ACKS.messages.applyHalf"),
+      icon: '<i class="fas fa-user-times"></i>',
+      condition: canApply,
+      callback: li => applyChatCardDamage(li, 0.5)
+    },
+    {
+      name: game.i18n.localize("ACKS.messages.applyDouble"),
+      icon: '<i class="fas fa-bullseye"></i>',
+      condition: canApply,
+      callback: li => applyChatCardDamage(li, 2)
     }
   );
   return options;

@@ -564,7 +564,7 @@ export class AcksActor extends Actor {
   }
 
   async applyDamage(amount = 0, multiplier = 1) {
-    amount = Math.floor(parseInt(amount) * multiplier);
+    amount = Math.ceil(parseInt(amount) * multiplier);
     const hp = this.data.data.hp;
 
     // Remaining goes to health

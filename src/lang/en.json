@@ -282,6 +282,8 @@
   "ACKS.messages.InflictsDamage": "Inflicts damage!",
   "ACKS.messages.applyDamage": "Apply Damage",
   "ACKS.messages.applyHealing": "Apply Healing",
+  "ACKS.messages.applyHalf": "Apply Half Damage",
+  "ACKS.messages.applyDouble": "Apply 2x Damage",
   "ACKS.messages.Fumble": "<b>1! Automatic Miss!</b>",
   "ACKS.messages.Critical": "<b>20! Automatic Hit!</b>",
 
