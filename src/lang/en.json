@@ -97,6 +97,7 @@
   "ACKS.saves.spell.long": "Spells",
   "ACKS.saves.magic.long": "Bonus vs Magic",
   "ACKS.saves.magic.short": "vs Magic",									   
+  "ACKS.SaveBonus": "Saving Throw Bonus",
 
   "ACKS.Health": "Hit Points",
   "ACKS.HealthMax": "Maximum Hit Points",
