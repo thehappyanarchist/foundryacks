@@ -63,3 +63,15 @@ v0.6.2 Further Compendium updates
 MINOR CHANGES:
 Added Class Abilities, Monster Abilities, Monsters, Treasure Tables, and tokens and icons for all.
 Swapped map with .webp format to save about 2MB from download package.
+
+v0.7.0 Compatibility with new Foundry release
+MAJOR CHANGES:
+FoundryACKS is now compatible with release 7.5 of Foundry.
+
+MINOR CHANGES:
+Added support for ability scores above 18. It is assumed that every point above 18 adds a further +1 modifier. All dialogs adjusted accordingly.
+Added a saving throw modifier to the tweaks dialog. This allows for a bonus or penalty to be applied to all saving throws (ex. Divine Blessing or Ring/Cloak of Protection). Suggested by Bobloblah.
+Added support for applying half (resistant) or double (vulnerable) damage from chat cards. Suggested by Bobloblah.
+
+BUG FIXES:
+Added support for HP to dip into the negatives when auto-applied from chat cards. It was previously clamped to zero.

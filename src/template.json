@@ -53,6 +53,9 @@
             "value": 0
           }
         },
+        "save": {
+          "mod": 0
+        },
         "movement": {
           "base": 120
         },

@@ -97,6 +97,7 @@
   "ACKS.saves.spell.long": "Spells",
   "ACKS.saves.magic.long": "Bonus vs Magic",
   "ACKS.saves.magic.short": "vs Magic",									   
+  "ACKS.SaveBonus": "Saving Throw Bonus",
 
   "ACKS.Health": "Hit Points",
   "ACKS.HealthMax": "Maximum Hit Points",
@@ -152,6 +153,13 @@
   "ACKS.NativePlus1": "Native + 1",
   "ACKS.NativePlus2": "Native + 2",
   "ACKS.NativePlus3": "Native + 3",
+  "ACKS.NativePlus4": "Native + 4",
+  "ACKS.NativePlus5": "Native + 5",
+  "ACKS.NativePlus6": "Native + 6",
+  "ACKS.NativePlus7": "Native + 7",
+  "ACKS.NativePlus8": "Native + 8",
+  "ACKS.NativePlus9": "Native + 9",
+  "ACKS.NativePlus10": "Native + 10",
 
   "ACKS.NPCReaction": "NPC Reaction",
   "ACKS.RetainersMax": "#Retainers",
@@ -274,6 +282,8 @@
   "ACKS.messages.InflictsDamage": "Inflicts damage!",
   "ACKS.messages.applyDamage": "Apply Damage",
   "ACKS.messages.applyHealing": "Apply Healing",
+  "ACKS.messages.applyHalf": "Apply Half Damage",
+  "ACKS.messages.applyDouble": "Apply 2x Damage",
   "ACKS.messages.Fumble": "<b>1! Automatic Miss!</b>",
   "ACKS.messages.Critical": "<b>20! Automatic Hit!</b>",
 
