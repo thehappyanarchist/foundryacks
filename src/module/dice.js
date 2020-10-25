@@ -331,7 +331,7 @@ export class AcksDice {
     };
     
     let buttons = {}
-    if (skipDialog) { AcksDice.sendRoll(rollData); }
+    if (skipDialog) { return AcksDice.sendRoll(rollData); }
     if (game.settings.get("acks", "removeMagicBonus") == false) {
       buttons = {
         ok: {
@@ -339,7 +339,7 @@ export class AcksDice {
           icon: '<i class="fas fa-dice-d20"></i>',
           callback: (html) => {
             rolled = true;
-            rollData.form = html[0].children[0];
+            rollData.form = html[0].querySelector("form");
             roll = AcksDice.sendRoll(rollData);
           },
         },
@@ -348,7 +348,7 @@ export class AcksDice {
           icon: '<i class="fas fa-magic"></i>',
           callback: (html) => {
             rolled = true;
-            rollData.form = html[0].children[0];
+            rollData.form = html[0].querySelector("form");
             rollData.data.roll.target = parseInt(rollData.data.roll.target) + parseInt(rollData.data.roll.magic);
             rollData.title += ` ${game.i18n.localize("ACKS.saves.magic.short")} (${rollData.data.roll.magic})`;
             roll = AcksDice.sendRoll(rollData);
@@ -431,7 +431,7 @@ export class AcksDice {
         icon: '<i class="fas fa-dice-d20"></i>',
         callback: (html) => {
           rolled = true;
-          rollData.form = html[0].children[0];
+          rollData.form = html[0].querySelector("form");
           roll = ["melee", "missile", "attack"].includes(data.roll.type)
             ? AcksDice.sendAttackRoll(rollData)
             : AcksDice.sendRoll(rollData);
