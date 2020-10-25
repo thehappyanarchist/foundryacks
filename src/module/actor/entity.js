@@ -746,6 +746,13 @@ export class AcksActor extends Actor {
       13: 1,
       16: 2,
       18: 3,
+      19: 4,
+      20: 5,
+      21: 6,
+      22: 7,
+      23: 8,
+      24: 9,
+      25: 10
     };
     data.scores.str.mod = AcksActor._valueFromTable(
       standard,
