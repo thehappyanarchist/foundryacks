@@ -798,7 +798,7 @@ export class AcksActor extends Actor {
       data.scores.cha.value
     );
     data.scores.cha.retain = data.scores.cha.mod + 4;
-    data.scores.cha.loyalty = data.scores.cha.mod + 7;
+    data.scores.cha.loyalty = data.scores.cha.mod;
 
     const od = {
       0: 0,
@@ -809,6 +809,7 @@ export class AcksActor extends Actor {
       13: 14,
       16: 10,
       18: 6,
+      19: 2,
     };
     data.exploration.odMod = AcksActor._valueFromTable(
       od,
@@ -830,6 +831,13 @@ export class AcksActor extends Actor {
       13: "ACKS.NativePlus1",
       16: "ACKS.NativePlus2",
       18: "ACKS.NativePlus3",
+      19: "ACKS.NativePlus4",
+      20: "ACKS.NativePlus5",
+      21: "ACKS.NativePlus6",
+      22: "ACKS.NativePlus7",
+      23: "ACKS.NativePlus8",
+      24: "ACKS.NativePlus9",
+      25: "ACKS.NativePlus10",
     };
     data.languages.spoken = AcksActor._valueFromTable(
       spoken,
