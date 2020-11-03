@@ -121,8 +121,9 @@ export class AcksActor extends Actor {
   rollSave(save, options = {}) {
     const label = game.i18n.localize(`ACKS.saves.${save}.long`);
     const rollParts = ["1d20"];
-    rollParts.push(this.data.data.save.mod);
-
+    if (this.data.type == "character") {
+      rollParts.push(this.data.data.save.mod);
+    }
       let data = {};
 
     if (this.data.type == "character") {
