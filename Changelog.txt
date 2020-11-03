@@ -1,8 +1,72 @@
-This is a fork off of the original 1.0 release version of the OSE system for Foundry VTT by U~Man.
-I have kept it in sync with his newer changes through 1.0.8, incorporated several bugfixes, and instituted system changes which I will list here.
+**v0.7.2 Monster Save Fix**
+**MINOR CHANGES:**
+Changed the changlog to bold text.
 
-v0.5.0 Initial Release
-MAJOR FEATURES:
+**BUG FIXES:**
+Monster sheet was unable to roll saves for monsters pre-dating 0.7.0 release.
+
+**v0.7.1 Cosmetics**
+**MINOR CHANGES:**
+Fixed tab heights and cleaned up sheets for legibility.
+
+**BUG FIXES:**
+Die icon for rolling morale checks and number appearing was obscuring field values.
+Fixed a treasure bug where values were based off floats and not rounding properly to the nearest CP.
+
+**v0.7.0 Compatibility with new Foundry release**
+**MAJOR CHANGES:**
+FoundryACKS is now compatible with release 7.5 of Foundry.
+
+**MINOR CHANGES:**
+Added support for ability scores above 18. It is assumed that every point above 18 adds a further +1 modifier. All dialogs adjusted accordingly.
+Added a saving throw modifier to the tweaks dialog. This allows for a bonus or penalty to be applied to all saving throws (ex. Divine Blessing or Ring/Cloak of Protection). Suggested by Bobloblah.
+Added support for applying half (resistant) or double (vulnerable) damage from chat cards. Suggested by Bobloblah.
+
+**BUG FIXES:**
+Added support for HP to dip into the negatives when auto-applied from chat cards. It was previously clamped to zero.
+
+**IMPORTANT NOTE:**
+*If you are upgrading characters from an older world, you may have blank "Saving Throw Bonus" fields in your tweaks. Put a value here (0 is fine) or you will be unable to roll saves.*
+
+**v0.6.2 Further Compendium updates**
+**MINOR CHANGES:**
+Added Class Abilities, Monster Abilities, Monsters, Treasure Tables, and tokens and icons for all.
+Swapped map with .webp format to save about 2MB from download package.
+
+**v0.6.1 Removed Vancian spellcasting**
+**MINOR CHANGES:**
+When a spell is cast, it is incrememented (to remind the player what they cast already), and the total count of spells of that level cast also increment.
+When spells are reset, they now roll back to 0. 
+If converting a sheet from an earlier version, a one-time reset may be required to purge old values.
+
+**v0.6.0 Now with more Compendium**
+**MAJOR CHANGES:**
+Bobloblah's compendium was imported and folded in to the ACKS release. There is more to be done, but most of the core arcane, divine spells, basic equipment, and proficiencies are in place, with their associated art icons, weights, descriptions, stats and costs. 
+Added a world map of Cybele if a judge would like to use the default ACKS setting.
+
+**v0.5.3 Morale and Loyalty systems**
+**MINOR CHANGES:**
+On retainer sheets, Morale and Loyalty can now be rolled by clicking on their fields.
+Morale should be a number (typically between -6 and +4) and Loyalty is a text field, in which the Judge can write things to remind him of any bonuses or penalties that need to be applied to the Morale or Loyalty check.
+Morale rolls are made each time the henchman suffers a calamity. A calamity includes suffering an energy drain, a curse, a magical disease, or being nearly killed (Judge’s discretion).
+Loyalty rolls should make a morale roll for each henchman at the end of each adventure whenever the henchman has leveled up, to determine if the henchman strikes off on his own or remains with the adventurer.
+
+**v0.5.2 Houserule: Wisdom bonus to all saves**
+**MINOR CHANGES:**
+Added the popular wisdom bonus houserule to settings menu. Selecting it removes the prompt during rolling a save and declutters the Save vs Magic field from the sheet.
+
+**v0.5.1 HFH Options / Core Toggle**
+**MINOR CHANGES:**
+Added toggle for Exploding 20s and BHR
+Implemented auto-miss on 1 and auto-hit on 20 for Core Rules (non-HFH)
+
+**BUG FIXES:**
+Monster Saves pre-fill not present when monster is new
+Negative Con mod could make HD roll negative (now floored at 1)
+Negative Str mod could make damage negative (now minimum 1)
+
+**v0.5.0 Initial Release**
+**MAJOR FEATURES:**
 Defaulted to exploding 20s in combat from HFH optional rules
 Added BHR to the character sheet from HFH optional rules
 Changed Ascending Armor Class to ACKS AC
@@ -14,7 +78,7 @@ Changed "Slow weapon" to subtract 1 from initiative instead of making the charac
 Added a HOLD TURN icon to the Combat Tracker to remind the judge that a player has held their action.
 Modified the encumbrance bar to reflect ACKS standard movement penalties while encumbered, and to show that on the bar.
 
-MINOR CHANGES:
+**MINOR CHANGES:**
 Renamed saving throws to be in-line with ACKS standards and order
 Changed literacy to match ACKS standards
 Added Auran languages and removed alignment tongues
@@ -23,55 +87,6 @@ Changed monster reaction rolls to match ACKS language
 Changed default monster saves to match ACKS numbers (actually makes monsters a bit less resistant overall)
 Removed DAC field from armor items
 
-BUG FIXES:
+**BUG FIXES:**
 Fixed a rounding error present in the OSE code
 Fixed some areas where AC was not shown correctly in OSE code
-
-v0.5.1 HFH Options / Core Toggle
-MINOR CHANGES:
-Added toggle for Exploding 20s and BHR
-Implemented auto-miss on 1 and auto-hit on 20 for Core Rules (non-HFH)
-
-BUG FIXES:
-Monster Saves pre-fill not present when monster is new
-Negative Con mod could make HD roll negative (now floored at 1)
-Negative Str mod could make damage negative (now minimum 1)
-
-v0.5.2 Houserule: Wisdom bonus to all saves
-MINOR CHANGES:
-Added the popular wisdom bonus houserule to settings menu. Selecting it removes the prompt during rolling a save and declutters the Save vs Magic field from the sheet.
-
-v0.5.3 Morale and Loyalty systems
-MINOR CHANGES:
-On retainer sheets, Morale and Loyalty can now be rolled by clicking on their fields.
-Morale should be a number (typically between -6 and +4) and Loyalty is a text field, in which the Judge can write things to remind him of any bonuses or penalties that need to be applied to the Morale or Loyalty check.
-Morale rolls are made each time the henchman suffers a calamity. A calamity includes suffering an energy drain, a curse, a magical disease, or being nearly killed (Judge’s discretion).
-Loyalty rolls should make a morale roll for each henchman at the end of each adventure whenever the henchman has leveled up, to determine if the henchman strikes off on his own or remains with the adventurer.
-
-v0.6.0 Now with more Compendium
-MAJOR CHANGES:
-Bobloblah's compendium was imported and folded in to the ACKS release. There is more to be done, but most of the core arcane, divine spells, basic equipment, and proficiencies are in place, with their associated art icons, weights, descriptions, stats and costs. 
-Added a world map of Cybele if a judge would like to use the default ACKS setting.
-
-v0.6.1 Removed Vancian spellcasting
-MINOR CHANGES:
-When a spell is cast, it is incrememented (to remind the player what they cast already), and the total count of spells of that level cast also increment.
-When spells are reset, they now roll back to 0. 
-If converting a sheet from an earlier version, a one-time reset may be required to purge old values.
-
-v0.6.2 Further Compendium updates
-MINOR CHANGES:
-Added Class Abilities, Monster Abilities, Monsters, Treasure Tables, and tokens and icons for all.
-Swapped map with .webp format to save about 2MB from download package.
-
-v0.7.0 Compatibility with new Foundry release
-MAJOR CHANGES:
-FoundryACKS is now compatible with release 7.5 of Foundry.
-
-MINOR CHANGES:
-Added support for ability scores above 18. It is assumed that every point above 18 adds a further +1 modifier. All dialogs adjusted accordingly.
-Added a saving throw modifier to the tweaks dialog. This allows for a bonus or penalty to be applied to all saving throws (ex. Divine Blessing or Ring/Cloak of Protection). Suggested by Bobloblah.
-Added support for applying half (resistant) or double (vulnerable) damage from chat cards. Suggested by Bobloblah.
-
-BUG FIXES:
-Added support for HP to dip into the negatives when auto-applied from chat cards. It was previously clamped to zero.
