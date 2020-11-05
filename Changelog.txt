@@ -1,3 +1,7 @@
+**v0.7.3 Monster Ability Fix**
+**BUG FIXES:**
+Monster sheet was unable to add abilities.
+
 **v0.7.2 Monster Save Fix**
 **MINOR CHANGES:**
 Changed the changlog to bold text.
