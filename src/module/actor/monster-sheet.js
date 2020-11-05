@@ -105,15 +105,15 @@ export class AcksActorSheetMonster extends AcksActorSheet {
   /* -------------------------------------------- */
 
   async _chooseItemType(choices = ["weapon", "armor", "shield", "gear"]) {
-    let templateData = { upper: "", lower: "", types: choices },
+    let templateData = { types: choices },
       dlg = await renderTemplate(
-        "templates/sidebar/entity-create.html",
+        "systems/acks/templates/items/entity-create.html",
         templateData
       );
     //Create Dialog window
     return new Promise((resolve) => {
       new Dialog({
-        title: "",
+        title: game.i18n.localize("ACKS.dialog.createItem"),
         content: dlg,
         buttons: {
           ok: {

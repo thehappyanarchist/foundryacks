@@ -19,6 +19,9 @@
   "ACKS.dialog.generateSaves": "Generate Saves",
   "ACKS.dialog.generateScores": "Generate Scores",
   "ACKS.dialog.generateScore": "Rolling {score} ({count})",
+  "ACKS.dialog.createItem": "Create Item",
+  "ACKS.dialog.itemType": "Item type",
+  "ACKS.dialog.itemName": "Item name",
 
   "ACKS.Formula": "Formula",
   "ACKS.SitMod": "Situational Modifier",
