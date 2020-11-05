@@ -1,0 +1,62 @@
+**v0.6.2 Further Compendium updates**
+**MINOR CHANGES:**
+Added Class Abilities, Monster Abilities, Monsters, Treasure Tables, and tokens and icons for all.
+Swapped map with .webp format to save about 2MB from download package.
+
+**v0.6.1 Removed Vancian spellcasting**
+**MINOR CHANGES:**
+When a spell is cast, it is incrememented (to remind the player what they cast already), and the total count of spells of that level cast also increment.
+When spells are reset, they now roll back to 0. 
+If converting a sheet from an earlier version, a one-time reset may be required to purge old values.
+
+**v0.6.0 Now with more Compendium**
+**MAJOR CHANGES:**
+Bobloblah's compendium was imported and folded in to the ACKS release. There is more to be done, but most of the core arcane, divine spells, basic equipment, and proficiencies are in place, with their associated art icons, weights, descriptions, stats and costs. 
+Added a world map of Cybele if a judge would like to use the default ACKS setting.
+
+**v0.5.3 Morale and Loyalty systems**
+**MINOR CHANGES:**
+On retainer sheets, Morale and Loyalty can now be rolled by clicking on their fields.
+Morale should be a number (typically between -6 and +4) and Loyalty is a text field, in which the Judge can write things to remind him of any bonuses or penalties that need to be applied to the Morale or Loyalty check.
+Morale rolls are made each time the henchman suffers a calamity. A calamity includes suffering an energy drain, a curse, a magical disease, or being nearly killed (Judge’s discretion).
+Loyalty rolls should make a morale roll for each henchman at the end of each adventure whenever the henchman has leveled up, to determine if the henchman strikes off on his own or remains with the adventurer.
+
+**v0.5.2 Houserule: Wisdom bonus to all saves**
+**MINOR CHANGES:**
+Added the popular wisdom bonus houserule to settings menu. Selecting it removes the prompt during rolling a save and declutters the Save vs Magic field from the sheet.
+
+**v0.5.1 HFH Options / Core Toggle**
+**MINOR CHANGES:**
+Added toggle for Exploding 20s and BHR
+Implemented auto-miss on 1 and auto-hit on 20 for Core Rules (non-HFH)
+
+**BUG FIXES:**
+Monster Saves pre-fill not present when monster is new
+Negative Con mod could make HD roll negative (now floored at 1)
+Negative Str mod could make damage negative (now minimum 1)
+
+**v0.5.0 Initial Release**
+**MAJOR FEATURES:**
+Defaulted to exploding 20s in combat from HFH optional rules
+Added BHR to the character sheet from HFH optional rules
+Changed Ascending Armor Class to ACKS AC
+Uncapped the dexterity and charisma bonuses
+Implemented ACKS encumbrance rules (uses coin weight instead of stone - 1000 coins to a stone)
+Changed default exploration checks (hear noise, open door, etc) to ACKS style rolls instead of 1d6 checks
+Added more tweaks to the tweak section, to allow for ACKS proficiencies modifying throws, AC, and more.
+Changed "Slow weapon" to subtract 1 from initiative instead of making the character last in the order.
+Added a HOLD TURN icon to the Combat Tracker to remind the judge that a player has held their action.
+Modified the encumbrance bar to reflect ACKS standard movement penalties while encumbered, and to show that on the bar.
+
+**MINOR CHANGES:**
+Renamed saving throws to be in-line with ACKS standards and order
+Changed literacy to match ACKS standards
+Added Auran languages and removed alignment tongues
+Changed LR to Morale for Henchmen (To-do: Add roll table for Morale Checks instead of OSE roll-under)
+Changed monster reaction rolls to match ACKS language
+Changed default monster saves to match ACKS numbers (actually makes monsters a bit less resistant overall)
+Removed DAC field from armor items
+
+**BUG FIXES:**
+Fixed a rounding error present in the OSE code
+Fixed some areas where AC was not shown correctly in OSE code
