@@ -18,14 +18,13 @@ ACKS, like most B/X clones, is also broadly compatible with thousands of modules
 - Pre-programmed saving throws for monsters based on HD
 - Auran setting languages in addition to standard tongues
 - Morale and Loyalty tracking for Henchmen
-- The ACKS Compendium has the majority of equipment, proficiencies, and spells from the Core Book.
+- The ACKS Compendium has the majority of equipment, proficiencies, and spells from the Core Book
 - ACKS Spellcasting, instead of Vancian
 - ACKS Core Treasure Tables by Bobloblah
 #### **Heroic Fantasy Handbook** (*optional*)
 - Added an option to use exploding 20s in combat from HFH optional rules  
-- Added an option to add Basic Healing Rate to the character sheet from HFH optional rules  
-#### **Houserules** (*optional*)
-- Added the popular wisdom bonus houserule to settings menu. Selecting it removes the prompt during rolling a save and declutters the Save vs Magic field from the sheet.
+- Added an option to calculate Basic Healing Rate on the character sheet
+- Added an option to apply wisdom bonus to all saves
 
 ## Manual Installation
 To install and use this system, simply paste the following URL into the Install System dialog on the Setup menu of the application.
