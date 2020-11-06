@@ -1,3 +1,11 @@
+**v0.7.4 Saving Throw bonus**
+**MINOR CHANGES:**
+Changed wording in settings menu to reflect that the Wisdom bonus applies to all saves is not a houserule, but an HFH option.
+HFH Option for wisdom bonuses to apply to all saves was only removing the "magic" button, now it applies the mod as well.
+
+**BUG FIXES:**
+Fixed wisdom bonus and penalties being swapped when rolling saves.
+
 **v0.7.3 Monster Ability Fix**
 **BUG FIXES:**
 Monster sheet was unable to add abilities.

@@ -42,7 +42,7 @@ export const ACKS = {
     white: "ACKS.colors.white"
   },
   languages: [
-  "Northern",
+  "Common",
   "Jutlandic",
   "Auran",
   "Dwarvish",
