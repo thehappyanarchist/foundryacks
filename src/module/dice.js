@@ -349,7 +349,7 @@ export class AcksDice {
           callback: (html) => {
             rolled = true;
             rollData.form = html[0].querySelector("form");
-            rollData.data.roll.target = parseInt(rollData.data.roll.target) + parseInt(rollData.data.roll.magic);
+            rollData.data.roll.target = parseInt(rollData.data.roll.target) - parseInt(rollData.data.roll.magic);
             rollData.title += ` ${game.i18n.localize("ACKS.saves.magic.short")} (${rollData.data.roll.magic})`;
             roll = AcksDice.sendRoll(rollData);
           },
@@ -367,7 +367,8 @@ export class AcksDice {
           icon: '<i class="fas fa-dice-d20"></i>',
           callback: (html) => {
             rolled = true;
-            rollData.form = html[0].children[0];
+            rollData.form = html[0].querySelector("form");
+            rollData.data.roll.target = parseInt(rollData.data.roll.target) - parseInt(rollData.data.roll.magic);
             roll = AcksDice.sendRoll(rollData);
           },
         },
