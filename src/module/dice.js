@@ -349,7 +349,7 @@ export class AcksDice {
           callback: (html) => {
             rolled = true;
             rollData.form = html[0].querySelector("form");
-            rollData.data.roll.target = parseInt(rollData.data.roll.target) - parseInt(rollData.data.roll.magic);
+            rollData.parts.push(`${rollData.data.roll.magic}`);
             rollData.title += ` ${game.i18n.localize("ACKS.saves.magic.short")} (${rollData.data.roll.magic})`;
             roll = AcksDice.sendRoll(rollData);
           },
@@ -368,7 +368,7 @@ export class AcksDice {
           callback: (html) => {
             rolled = true;
             rollData.form = html[0].querySelector("form");
-            rollData.data.roll.target = parseInt(rollData.data.roll.target) - parseInt(rollData.data.roll.magic);
+            rollData.parts.push(`${rollData.data.roll.magic}`);
             roll = AcksDice.sendRoll(rollData);
           },
         },

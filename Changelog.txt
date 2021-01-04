@@ -1,3 +1,14 @@
+**v0.7.5 Saving Throw changes, Investments, and compatibility**
+
+**MINOR CHANGES:**
+Thank you to Olle Skogren for contributing the Investment Vagary tables from AXIOMS 3. You can find them in the ACKS Compendium.
+Clarified language for Saving Throw bonuses to more clearly indicate when the bonus was being given.
+Certified compatibility with Foundry 0.7.9.
+
+**BUG FIXES:**
+Fixed template preloading url error.
+Fixed character creation dialog box not closing properly.
+
 **v0.7.4 Saving Throw bonus**
 **MINOR CHANGES:**
 Changed wording in settings menu to reflect that the Wisdom bonus applies to all saves is not a houserule, but an HFH option.
@@ -12,7 +23,7 @@ Monster sheet was unable to add abilities.
 
 **v0.7.2 Monster Save Fix**
 **MINOR CHANGES:**
-Changed the changlog to bold text.
+Changed the changelog to bold text.
 
 **BUG FIXES:**
 Monster sheet was unable to roll saves for monsters pre-dating 0.7.0 release.

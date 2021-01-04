@@ -104,8 +104,7 @@ export class AcksCharacterCreator extends FormApplication {
     });
   }
 
-  async close() {
-    super.close();
+  async close(options) {
     // Gather scores
     let scores = {};
     $(this.form.children).find(".score-roll").each((_, d) => {
@@ -127,6 +126,7 @@ export class AcksCharacterCreator extends FormApplication {
       content: content,
       speaker,
     });
+    return super.close(options);
   }
 
   /** @override */
