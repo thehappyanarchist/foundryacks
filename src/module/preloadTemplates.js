@@ -1,8 +1,8 @@
 export const preloadHandlebarsTemplates = async function () {
     const templatePaths = [
         //Character Sheets
-        'systems/acks/templates/actors/character-html.html',
-        'systems/acks/templates/actors/monster-html.html',
+        'systems/acks/templates/actors/character-sheet.html',
+        'systems/acks/templates/actors/monster-sheet.html',
         //Actor partials
         //Sheet tabs
         'systems/acks/templates/actors/partials/character-header.html',
