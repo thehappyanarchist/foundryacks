@@ -283,5 +283,36 @@ export class AcksCombat {
     } else if (init === "individual") {
       AcksCombat.individualInitiative(combat, data, diff, id);
     }
+    AcksCombat.setSortCombatantsMethod(combat);
+  }
+
+  static setSortCombatantsMethod(combat, setting) {
+    setting = setting || game.settings.get("acks", "initiativeBreaker");
+
+    if (setting === 'random') {
+      combat._sortCombatants = AcksCombat.sortCombatantsRandom;
+    } else {
+      combat._sortCombatants = Combat.prototype._sortCombatants;
+    }
+  }
+
+
+  static sortCombatantsRandom(a, b) {
+    const ia = Number.isNumeric(a.initiative) ? a.initiative : -9999;
+    const ib = Number.isNumeric(b.initiative) ? b.initiative : -9999;
+
+    a.initiativeBreaker = ia === -9999 ? null : a.initiativeBreaker || Math.random();
+    b.initiativeBreaker = ib === -9999 ? null : b.initiativeBreaker || Math.random();
+
+    let ci = ib - ia;
+    if (ci !== 0) return ci;
+
+    ci = a.initiativeBreaker - b.initiativeBreaker;
+    if (ci !== 0) return ci;
+
+    let [an, bn] = [a.token?.name || "", b.token?.name || ""];
+    let cn = an.localeCompare(bn);
+    if (cn !== 0) return cn;
+    return a.tokenId - b.tokenId;
   }
 }
