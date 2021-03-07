@@ -1,3 +1,4 @@
+
 export const registerSettings = function () {
 
   game.settings.register("acks", "initiative", {
@@ -13,6 +14,19 @@ export const registerSettings = function () {
       reroll: "ACKS.Setting.InitiativeReroll",
     }
   });
+
+  game.settings.register("acks", "initiativeBreaker", {
+    name: game.i18n.localize("ACKS.Setting.InitiativeTiebreaker"),
+    hint: game.i18n.localize("ACKS.Setting.InitiativeTiebreakerHint"),
+    default: "Alphabetical",
+    scope: "world",
+    type: String,
+    config: true,
+    choices: {
+      alphabetical: "ACKS.Setting.InitiativeTiebreakerAlphabetical",
+      random: "ACKS.Setting.InitiativeTiebreakerRandom",
+    },
+  })
 
   game.settings.register("acks", "ascendingAC", {
     name: game.i18n.localize("ACKS.Setting.AscendingAC"),
