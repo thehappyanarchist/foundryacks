@@ -77,6 +77,10 @@ Hooks.once("ready", async () => {
   Hooks.on("hotbarDrop", (bar, data, slot) =>
     macros.createAcksMacro(data, slot)
   );
+
+  game.combats.combats.forEach(combat => {
+    AcksCombat.setSortCombatantsMethod(combat);
+  })
 });
 
 // License and KOFI infos
