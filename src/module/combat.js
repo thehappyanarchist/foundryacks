@@ -4,7 +4,7 @@ export class AcksCombat {
     data.combatants = [];
     let groups = {};
     combat.data.combatants.forEach((cbt) => {
-      groups[cbt.flags.acks.group] = { present: true };
+      groups[cbt.data.flags.acks.group] = { present: true };
       data.combatants.push(cbt);
     });
 
@@ -23,7 +23,7 @@ export class AcksCombat {
         return;
       }
       data.combatants[i].initiative =
-      groups[data.combatants[i].flags.acks.group].initiative;
+      groups[data.combatants[i].data.flags.acks.group].initiative;
       if (data.combatants[i].actor.data.data.isSlow) {
         data.combatants[i].initiative -= 1;
       }      
@@ -88,24 +88,25 @@ export class AcksCombat {
           ? '<i class="fas fa-dizzy"></i>'
           : span.innerHTML;
     });
-          
+
     html.find(".combatant").each((_, ct) => {
       // Append spellcast and retreat
       const controls = $(ct).find(".combatant-controls .combatant-control");
-      const cmbtant = object.combat.getCombatant(ct.dataset.combatantId);
-      const moveActive = cmbtant.flags.acks && cmbtant.flags.acks.moveInCombat ? "active" : "";
+      const cmbtant = game.combat.combatants.get(ct.dataset.combatantId);
+      const moveActive = cmbtant.data.flags.acks?.moveInCombat ? "active" : "";
       controls.eq(1).after(
         `<a class='combatant-control move-combat ${moveActive}'><i class='fas fa-running'></i></a>`
       );
-      const spellActive = cmbtant.flags.acks && cmbtant.flags.acks.prepareSpell ? "active" : "";
+      const spellActive = cmbtant.data.flags.acks?.prepareSpell ? "active" : "";
       controls.eq(1).after(
         `<a class='combatant-control prepare-spell ${spellActive}'><i class='fas fa-magic'></i></a>`
       );
-      const holdActive = cmbtant.flags.acks && cmbtant.flags.acks.holdTurn ? "active" : "";
+      const holdActive = cmbtant.data.flags.acks?.holdTurn ? "active" : "";
       controls.eq(1).after(
         `<a class='combatant-control hold-turn ${holdActive}'><i class='fas fa-pause-circle'></i></a>`
       );
     });
+
     AcksCombat.announceListener(html);
 
     let init = game.settings.get("acks", "initiative") === "group";
@@ -128,7 +129,7 @@ export class AcksCombat {
 
       // Get group color
       const cmbtant = object.combat.getCombatant(ct.dataset.combatantId);
-      let color = cmbtant.flags.acks.group;
+      let color = cmbtant.data.flags.acks.group;
 
       // Append colored flag
       let controls = $(ct).find(".combatant-controls");
@@ -155,7 +156,7 @@ export class AcksCombat {
           ct.initiative &&
           ct.initiative != "-789.00" &&
           ct._id != data._id &&
-          ct.flags.acks.group == combatant.flags.acks.group
+          ct.data.flags.acks.group == combatant.data.flags.acks.group
         ) {
           groupInit = ct.initiative;
           // Set init
@@ -166,32 +167,37 @@ export class AcksCombat {
   }
 
   static announceListener(html) {
-    html.find(".combatant-control.hold-turn").click((ev) => {
+    html.find(".combatant-control.hold-turn").click(async (ev) => {
       ev.preventDefault();
       // Toggle hold announcement
-      let id = $(ev.currentTarget).closest(".combatant")[0].dataset.combatantId;
-      let isActive = ev.currentTarget.classList.contains('active');
-      game.combat.updateCombatant({
+      const id = $(ev.currentTarget).closest(".combatant")[0].dataset.combatantId;
+      const isActive = ev.currentTarget.classList.contains('active');
+      const combatant = game.combat.combatants.get(id);
+      await combatant.update({
         _id: id,
         flags: { acks: { holdTurn: !isActive } },
       });
     })
-    html.find(".combatant-control.prepare-spell").click((ev) => {
+
+    html.find(".combatant-control.prepare-spell").click(async (ev) => {
       ev.preventDefault();
       // Toggle spell announcement
-      let id = $(ev.currentTarget).closest(".combatant")[0].dataset.combatantId;
-      let isActive = ev.currentTarget.classList.contains('active');
-      game.combat.updateCombatant({
+      const id = $(ev.currentTarget).closest(".combatant")[0].dataset.combatantId;
+      const isActive = ev.currentTarget.classList.contains('active');
+      const combatant = game.combat.combatants.get(id);
+      await combatant.update({
         _id: id,
         flags: { acks: { prepareSpell: !isActive } },
       });
     });
-    html.find(".combatant-control.move-combat").click((ev) => {
+
+    html.find(".combatant-control.move-combat").click(async (ev) => {
       ev.preventDefault();
       // Toggle retreat announcement
-      let id = $(ev.currentTarget).closest(".combatant")[0].dataset.combatantId;
-      let isActive = ev.currentTarget.classList.contains('active');
-      game.combat.updateCombatant({
+      const id = $(ev.currentTarget).closest(".combatant")[0].dataset.combatantId;
+      const isActive = ev.currentTarget.classList.contains('active');
+      const combatant = game.combat.combatants.get(id);
+      await combatant.update({
         _id: id,
         flags: { acks: { moveInCombat: !isActive } },
       });
@@ -200,20 +206,22 @@ export class AcksCombat {
 
   static addListeners(html) {
     // Cycle through colors
-    html.find(".combatant-control.flag").click((ev) => {
+    html.find(".combatant-control.flag").click(async (ev) => {
       if (!game.user.isGM) {
         return;
       }
-      let currentColor = ev.currentTarget.style.color;
-      let colors = Object.keys(CONFIG.ACKS.colors);
+      const currentColor = ev.currentTarget.style.color;
+      const colors = Object.keys(CONFIG.ACKS.colors);
       let index = colors.indexOf(currentColor);
       if (index + 1 == colors.length) {
         index = 0;
       } else {
         index++;
       }
-      let id = $(ev.currentTarget).closest(".combatant")[0].dataset.combatantId;
-      game.combat.updateCombatant({
+
+      const id = $(ev.currentTarget).closest(".combatant")[0].dataset.combatantId;
+      const combatant = game.combat.combatants.get(id);
+      await combatant.update({
         _id: id,
         flags: { acks: { group: colors[index] } },
       });
