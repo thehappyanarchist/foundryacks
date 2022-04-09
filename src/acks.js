@@ -86,10 +86,10 @@ Hooks.on("renderSidebarTab", async (object, html) => {
   }
 });
 
-Hooks.on("preCreateCombatant", (combat, data, options, id) => {
+Hooks.on("createCombatant", async (combatant, options, userId) => {
   let init = game.settings.get("acks", "initiative");
   if (init == "group") {
-    AcksCombat.addCombatant(combat, data, options, id);
+    await AcksCombat.addCombatant(combatant, options, userId);
   }
 });
 

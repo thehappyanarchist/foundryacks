@@ -1,79 +1,112 @@
 export class AcksCombat {
-  static rollInitiative(combat, data) {
-    // Check groups
+  static async rollInitiative(combat, data) {
+    // Initialize groups.
     data.combatants = [];
     let groups = {};
     combat.data.combatants.forEach((cbt) => {
-      groups[cbt.data.flags.acks.group] = { present: true };
+      groups[cbt.data.flags.acks.group] = {present: true};
       data.combatants.push(cbt);
     });
 
-    // Roll init
-    Object.keys(groups).forEach((group) => {
-      let roll = new Roll("1d6").roll();
-      roll.toMessage({
-        flavor: game.i18n.format('ACKS.roll.initiative', { group: CONFIG["ACKS"].colors[group] }),
+    // Roll initiative for each group.
+    for (const group in groups) {
+      const roll = new Roll("1d6");
+      await roll.evaluate({async: true});
+      await roll.toMessage({
+        flavor: game.i18n.format('ACKS.roll.initiative', {
+          group: CONFIG["ACKS"].colors[group],
+        }),
       });
-      groups[group].initiative = roll.total;
-    });
 
-    // Set init
-    for (let i = 0; i < data.combatants.length; ++i) {
-      if (!data.combatants[i].actor) {
+      groups[group].initiative = roll.total;
+    }
+
+    // Set the inititative for each group combatant.
+    for (const combatant of data.combatants) {
+      if (!combatant.actor) {
         return;
       }
-      data.combatants[i].initiative =
-      groups[data.combatants[i].data.flags.acks.group].initiative;
-      if (data.combatants[i].actor.data.data.isSlow) {
-        data.combatants[i].initiative -= 1;
-      }      
+
+      let initiative = groups[combatant.data.flags.acks.group].initiative;
+      if (combatant.actor.data.data.isSlow) {
+        initiative -= 1;
+      }
+
+      await combatant.update({
+        initiative: initiative,
+      });
     }
+
     combat.setupTurns();
   }
 
   static async resetInitiative(combat, data) {
-    let reroll = game.settings.get("acks", "initiative");
+    const reroll = game.settings.get("acks", "initiativePersistence");
     if (!["reset", "reroll"].includes(reroll)) {
       return;
     }
+
     combat.resetAll();
   }
 
   static async individualInitiative(combat, data) {
-    let updates = [];
-    let messages = [];
-    combat.data.combatants.forEach((c, i) => {
-      // This comes from foundry.js, had to remove the update turns thing
-      // Roll initiative
-      const cf = combat._getInitiativeFormula(c);
-      const roll = combat._getInitiativeRoll(c, cf);
+    const updates = [];
+    const messages = [];
+
+    let index = 0;
+
+    for (const [id, combatant] of combat.data.combatants.entries()) {
+      const roll = combatant.getInitiativeRoll();
+      await roll.evaluate({async: true});
       let value = roll.total;
-      if (combat.settings.skipDefeated && c.defeated) {
+
+      if (combat.settings.skipDefeated && combatant.defeated) {
         value = -790;
       }
-      updates.push({ _id: c._id, initiative: value });
+
+      updates.push({
+        _id: id,
+        initiative: value,
+      });
 
       // Determine the roll mode
       let rollMode = game.settings.get("core", "rollMode");
-      if ((c.token.hidden || c.hidden) && (rollMode === "roll")) rollMode = "gmroll";
+      if ((combatant.token.hidden || combatant.hidden)
+          && (rollMode === "roll")) {
+        rollMode = "gmroll";
+      }
 
       // Construct chat message data
-      let messageData = mergeObject({
+      const messageData = mergeObject({
         speaker: {
           scene: canvas.scene._id,
-          actor: c.actor ? c.actor._id : null,
-          token: c.token._id,
-          alias: c.token.name
+          actor: combatant.actor?.id || null,
+          token: combatant.token.id,
+          alias: combatant.token.name
         },
-        flavor: game.i18n.format('ACKS.roll.individualInit', { name: c.token.name })
+        flavor: game.i18n.format('ACKS.roll.individualInit', {
+          name: combatant.token.name,
+        }),
       }, {});
-      const chatData = roll.toMessage(messageData, { rollMode, create: false });
 
-      if (i > 0) chatData.sound = null;   // Only play 1 sound for the whole set
+      const chatData = await roll.toMessage(messageData, {
+        rollMode,
+        create: false,
+      });
+
+      // Only play one sound for the whole set.
+      if (index > 0) {
+        chatData.sound = null;
+      }
+
       messages.push(chatData);
-    });
-    await combat.updateEmbeddedEntity("Combatant", updates);
-    await CONFIG.ChatMessage.entityClass.create(messages);
+
+      ++index;
+    }
+
+    await combat.updateEmbeddedDocuments("Combatant", updates);
+    await CONFIG.ChatMessage.documentClass.create(messages);
+
     data.turn = 0;
   }
 
@@ -128,8 +161,8 @@ export class AcksCombat {
       $(ct).find(".roll").remove();
 
       // Get group color
-      const cmbtant = object.combat.getCombatant(ct.dataset.combatantId);
-      let color = cmbtant.data.flags.acks.group;
+      const combatant = object.viewed.combatants.get(ct.dataset.combatantId);
+      let color = combatant.data.flags.acks?.group;
 
       // Append colored flag
       let controls = $(ct).find(".combatant-controls");
@@ -137,6 +170,7 @@ export class AcksCombat {
         `<a class='combatant-control flag' style='color:${color}' title="${CONFIG.ACKS.colors[color]}"><i class='fas fa-flag'></i></a>`
       );
     });
+
     AcksCombat.addListeners(html);
   }
 
@@ -223,7 +257,11 @@ export class AcksCombat {
       const combatant = game.combat.combatants.get(id);
       await combatant.update({
         _id: id,
-        flags: { acks: { group: colors[index] } },
+        flags: {
+          acks: {
+            group: colors[index],
+          },
+        },
       });
     });
 
@@ -239,10 +277,9 @@ export class AcksCombat {
     });
   }
 
-  static addCombatant(combat, data, options, id) {
-    let token = canvas.tokens.get(data.tokenId);
+  static async addCombatant(combatant, options, userId) {
     let color = "black";
-    switch (token.data.disposition) {
+    switch (combatant.token.data.disposition) {
       case -1:
         color = "red";
         break;
@@ -253,12 +290,16 @@ export class AcksCombat {
         color = "green";
         break;
     }
-    data.flags = {
-      acks: {
-        group: color,
+
+    await combatant.update({
+      flags: {
+        acks: {
+          group: color,
+        },
       },
-    };
+    });
   }
+
   static activateCombatant(li) {
     const turn = game.combat.turns.findIndex(turn => turn._id === li.data('combatant-id'));
     game.combat.update({turn: turn})
@@ -274,7 +315,7 @@ export class AcksCombat {
 
   static async preUpdateCombat(combat, data, diff, id) {
     let init = game.settings.get("acks", "initiative");
-    let reroll = game.settings.get("acks", "initiative");
+    let reroll = game.settings.get("acks", "initiativePersistence");
     if (!data.round) {
       return;
     }
