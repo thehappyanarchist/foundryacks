@@ -55,15 +55,18 @@ export class AcksPartySheet extends FormApplication {
   _dealXP(ev) {
     // Grab experience
     const template = `
-          <form>
-           <div class="form-group">
-            <label>Amount</label> 
-            <input name="total" placeholder="0" type="text"/>
-           </div>
-        </form>`;
-    let pcs = this.object.entities.filter((e) => {
-      return e.getFlag('acks', 'party') && e.data.type == "character";
+      <form>
+        <div class="form-group">
+          <label>Amount</label>
+          <input name="total" placeholder="0" type="text"/>
+        </div>
+      </form>
+    `;
+
+    let pcs = this.object.documents.filter((actor) => {
+      return actor.getFlag('acks', 'party') && actor.data.type == "character";
     });
+
     new Dialog({
       title: "Deal Experience",
       content: template,
