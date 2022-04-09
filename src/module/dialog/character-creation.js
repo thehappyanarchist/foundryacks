@@ -169,7 +169,10 @@ export class AcksCharacterCreator extends FormApplication {
         }
       }
     };
-    this.object.createOwnedItem(itemData);
+
+    await this.object.createEmbeddedDocuments("Item", [
+      itemData,
+    ]);
   }
   /**
    * This method is called upon form submission after form data is validated

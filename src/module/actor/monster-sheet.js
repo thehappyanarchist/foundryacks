@@ -76,11 +76,10 @@ export class AcksActorSheetMonster extends AcksActorSheet {
 
     // Settings
     data.config.morale = game.settings.get("acks", "morale");
-    data.data.details.treasure.link = TextEditor.enrichHTML(data.data.details.treasure.table);
+    data.data.data.details.treasure.link = TextEditor.enrichHTML(data.data.data.details.treasure.table);
     data.isNew = this.actor.isNew();
     return data;
   }
-
 
   async _onDrop(event) {
     super._onDrop(event);
@@ -139,7 +138,7 @@ export class AcksActorSheetMonster extends AcksActorSheet {
   async _resetCounters(event) {
     const weapons = this.actor.data.items.filter(i => i.type === 'weapon');
     for (let wp of weapons) {
-      const item = this.actor.getOwnedItem(wp._id);
+      const item = this.actor.items.get(wp._id);
       await item.update({
         data: {
           counter: {
@@ -153,7 +152,7 @@ export class AcksActorSheetMonster extends AcksActorSheet {
   async _onCountChange(event) {
     event.preventDefault();
     const itemId = event.currentTarget.closest(".item").dataset.itemId;
-    const item = this.actor.getOwnedItem(itemId);
+    const item = this.actor.items.get(itemId);
     if (event.target.dataset.field == "value") {
       return item.update({
         "data.counter.value": parseInt(event.target.value),
@@ -194,18 +193,20 @@ export class AcksActorSheetMonster extends AcksActorSheet {
     // Update Inventory Item
     html.find(".item-edit").click((ev) => {
       const li = $(ev.currentTarget).parents(".item");
-      const item = this.actor.getOwnedItem(li.data("itemId"));
+      const item = this.actor.items.get(li.data("itemId"));
       item.sheet.render(true);
     });
 
     // Delete Inventory Item
     html.find(".item-delete").click((ev) => {
       const li = $(ev.currentTarget).parents(".item");
-      this.actor.deleteOwnedItem(li.data("itemId"));
+      this.actor.deleteEmbeddedDocuments("Item", [
+        li.data("itemId"),
+      ]);
       li.slideUp(200, () => this.render(false));
     });
 
-    html.find(".item-create").click((event) => {
+    html.find(".item-create").click(async (event) => {
       event.preventDefault();
       const header = event.currentTarget;
       const type = header.dataset.type;
@@ -224,14 +225,18 @@ export class AcksActorSheetMonster extends AcksActorSheet {
       // Getting back to main logic
       if (type == "choice") {
         const choices = header.dataset.choices.split(",");
-        this._chooseItemType(choices).then((dialogInput) => {
+        this._chooseItemType(choices).then(async (dialogInput) => {
           const itemData = createItem(dialogInput.type, dialogInput.name);
-          this.actor.createOwnedItem(itemData, {});
+          await this.actor.createEmbeddedDocuments("Item", [
+            itemData,
+          ]);
         });
         return;
       }
       const itemData = createItem(type);
-      return this.actor.createOwnedItem(itemData, {});
+      await this.actor.createEmbeddedDocuments("Item", [
+        itemData,
+      ]);
     });
 
     html.find(".item-reset").click((ev) => {
@@ -250,7 +255,7 @@ export class AcksActorSheetMonster extends AcksActorSheet {
 
     html.find(".item-pattern").click(ev => {
       const li = $(ev.currentTarget).parents(".item");
-      const item = this.actor.getOwnedItem(li.data("itemId"));
+      const item = this.actor.items.get(li.data("itemId"));
       let currentColor = item.data.data.pattern;
       let colors = Object.keys(CONFIG.ACKS.colors);
       let index = colors.indexOf(currentColor);

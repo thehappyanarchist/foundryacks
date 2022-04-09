@@ -12,7 +12,7 @@
                     </div>
                 </div>
                 <ol>
-                    {{#each data.languages.value as |lang|}}
+                    {{#each data.data.languages.value as |lang|}}
                     <li class="item flexrow" data-lang="{{lang}}">
                         <div class="item-name">
                             {{lang}}
@@ -28,7 +28,7 @@
             <div class="flex3 description">
                 <div class="item-titles">{{localize "ACKS.category.description"}}</div>
                 <div>
-                    {{editor content=data.details.description target="data.details.description"
+                    {{editor content=data.data.details.description target="data.details.description"
                 button=true owner=owner editable=editable}}
                 </div>
             </div>
@@ -37,7 +37,7 @@
     <div class="inventory notes">
         <div class="item-titles">{{localize "ACKS.category.notes"}}</div>
         <div class="resizable-editor" data-editor-size="140">
-            {{editor content=data.details.notes target="data.details.notes"
+            {{editor content=data.data.details.notes target="data.details.notes"
             button=true owner=owner editable=editable}}
         </div>
     </div>

@@ -35,24 +35,26 @@ export class AcksActor extends Actor {
   /* -------------------------------------------- */
   /*  Socket Listeners and Handlers
     /* -------------------------------------------- */
-  getExperience(value, options = {}) {
+  async getExperience(value, options = {}) {
     if (this.data.type != "character") {
       return;
     }
+
     let modified = Math.floor(
       value + (this.data.data.details.xp.bonus * value) / 100
     );
-    return this.update({
+
+    await this.update({
       "data.details.xp.value": modified + this.data.data.details.xp.value,
-    }).then(() => {
-      const speaker = ChatMessage.getSpeaker({ actor: this });
-      ChatMessage.create({
-        content: game.i18n.format("ACKS.messages.GetExperience", {
-          name: this.name,
-          value: modified,
-        }),
-        speaker,
-      });
+    });
+
+    const speaker = ChatMessage.getSpeaker({ actor: this });
+    await ChatMessage.create({
+      content: game.i18n.format("ACKS.messages.GetExperience", {
+        name: this.name,
+        value: modified,
+      }),
+      speaker,
     });
   }
 
@@ -73,7 +75,7 @@ export class AcksActor extends Actor {
     }
   }
 
-  generateSave(hd) {
+  async generateSave(hd) {
     let saves = {};
     for (let i = 0; i <= hd; i++) {
       let tmp = CONFIG.ACKS.monster_saves[i];
@@ -81,7 +83,8 @@ export class AcksActor extends Actor {
         saves = tmp;
       }
     }
-    this.update({
+
+    await this.update({
       "data.saves": {
         death: {
           value: saves.d,
@@ -106,9 +109,13 @@ export class AcksActor extends Actor {
   /*  Rolls                                       */
   /* -------------------------------------------- */
 
-  rollHP(options = {}) {
-    let roll = new Roll(this.data.data.hp.hd).roll();
-    return this.update({
+  async rollHP(options = {}) {
+    let roll = new Roll(this.data.data.hp.hd);
+    await roll.evaluate({
+      async: true,
+    });
+
+    await this.update({
       data: {
         hp: {
           max: roll.total,
@@ -572,7 +579,7 @@ export class AcksActor extends Actor {
     const dh = Math.clamped(hp.value - amount, -99, hp.max);
 
     // Update the Actor
-    return this.update({
+    await this.update({
       "data.hp.value": dh,
     });
   }

@@ -6,26 +6,26 @@
   <ul class="summary flexrow">
     <li class="flex2 flexrow check-field">
       <div>
-        <input type="text" name="data.details.alignment" value="{{data.details.alignment}}" />
+        <input type="text" name="data.details.alignment" value="{{data.data.details.alignment}}" />
         <label>{{localize 'ACKS.details.alignment'}}</label>
       </div>
       <div class="check reaction-check" title="{{localize 'ACKS.roll.reaction'}}"><a><i class="fas fa-dice"></i></a></div>
     </li>
     <li class="flexrow check-field" data-check="dungeon">
       <div>
-        <input type="text" name="data.details.appearing.d" value="{{data.details.appearing.d}}" />
+        <input type="text" name="data.details.appearing.d" value="{{data.data.details.appearing.d}}" />
         <label>{{localize 'ACKS.details.appearing'}}</label>
       </div>
       <div class="check appearing-check" title="{{localize 'ACKS.roll.appearing'}}"><a><i class="fas fa-dice"></i></a></div>
     </li>
     <li class="flexrow check-field" data-check="wilderness">
-        (<div><input type="text" name="data.details.appearing.w" value="{{data.details.appearing.w}}" /></div>)
+        (<div><input type="text" name="data.details.appearing.w" value="{{data.data.details.appearing.w}}" /></div>)
       <div class="check appearing-check" title="{{localize 'ACKS.roll.appearing'}}"><a><i class="fas fa-dice"></i></a></div>
     </li>
     {{#if config.morale}}
     <li class="flexrow check-field">
       <div>
-        <input type="text" name="data.details.morale" value="{{data.details.morale}}" />
+        <input type="text" name="data.details.morale" value="{{data.data.details.morale}}" />
         <label>{{localize 'ACKS.details.morale'}}</label>  
       </div>
       <div class="check morale-check" title="{{localize 'ACKS.roll.morale'}}"><a><i class="fas fa-dice"></i></a></div>
@@ -34,11 +34,11 @@
   </ul>
   <ul class="summary flexrow">
     <li>
-      <input type="text" name="data.details.xp" value="{{data.details.xp}}" />
+      <input type="text" name="data.details.xp" value="{{data.data.details.xp}}" />
       <label>{{localize 'ACKS.details.experience.award'}}</label>
     </li>
     <li class="treasure-table" title="{{localize 'ACKS.details.treasureTableHint'}}">
-      <div>{{{data.details.treasure.link}}}</div>
+      <div>{{{data.data.details.treasure.link}}}</div>
       <label>{{localize 'ACKS.details.treasure'}}</label>
     </li>
   </ul>

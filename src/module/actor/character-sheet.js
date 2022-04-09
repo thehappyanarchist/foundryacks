@@ -121,7 +121,7 @@ export class AcksActorSheetCharacter extends AcksActorSheet {
   async _onQtChange(event) {
     event.preventDefault();
     const itemId = event.currentTarget.closest(".item").dataset.itemId;
-    const item = this.actor.getOwnedItem(itemId);
+    const item = this.actor.items.get(itemId);
     return item.update({ "data.quantity.value": parseInt(event.target.value) });
   }
 
@@ -198,14 +198,16 @@ export class AcksActorSheetCharacter extends AcksActorSheet {
     // Update Inventory Item
     html.find(".item-edit").click((ev) => {
       const li = $(ev.currentTarget).parents(".item");
-      const item = this.actor.getOwnedItem(li.data("itemId"));
+      const item = this.actor.items.get(li.data("itemId"));
       item.sheet.render(true);
     });
 
     // Delete Inventory Item
     html.find(".item-delete").click((ev) => {
       const li = $(ev.currentTarget).parents(".item");
-      this.actor.deleteOwnedItem(li.data("itemId"));
+      this.actor.deleteEmbeddedDocuments("Item", [
+        li.data("itemId"),
+      ]);
       li.slideUp(200, () => this.render(false));
     });
 
@@ -226,7 +228,7 @@ export class AcksActorSheetCharacter extends AcksActorSheet {
       );
     });
 
-    html.find(".item-create").click((event) => {
+    html.find(".item-create").click(async (event) => {
       event.preventDefault();
       const header = event.currentTarget;
       const type = header.dataset.type;
@@ -236,14 +238,16 @@ export class AcksActorSheetCharacter extends AcksActorSheet {
         data: duplicate(header.dataset),
       };
       delete itemData.data["type"];
-      return this.actor.createOwnedItem(itemData);
+      await this.actor.createEmbeddedDocuments("Item", [
+        itemData,
+      ]);
     });
 
     //Toggle Equipment
     html.find(".item-toggle").click(async (ev) => {
       const li = $(ev.currentTarget).parents(".item");
-      const item = this.actor.getOwnedItem(li.data("itemId"));
-      await this.actor.updateOwnedItem({
+      const item = this.actor.items.get(li.data("itemId"));
+      await item.update({
         _id: li.data("itemId"),
         data: {
           equipped: !item.data.data.equipped,

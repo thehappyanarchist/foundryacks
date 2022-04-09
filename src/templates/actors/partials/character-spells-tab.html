@@ -15,7 +15,7 @@
       <div class="field-short">{{localize 'ACKS.spells.Slots'}}</div>
       <div class="field-long flexrow">
         <input type="text" value="{{lookup @root.slots.used @key}}" name="data.spells.{{id}}.value" data-dtype="Number"
-          placeholder="0" disabled>/<input type="text" value="{{lookup (lookup ../actor.data.spells @key) 'max'}}"
+          placeholder="0" disabled>/<input type="text" value="{{lookup (lookup ../actor.data.data.spells @key) 'max'}}"
           name="data.spells.{{id}}.max" data-dtype="Number" placeholder="0"></div>
       <div class="item-controls">
         <a class="item-control item-create" data-type="spell" data-lvl="{{id}}" title="{{localize 'ACKS.Add'}}"><i
@@ -35,7 +35,7 @@
             </a>
           </div>
           <div class="field-short memorize flexrow">
-            <input type="text" value="{{item.data.cast}}" data-dtype="Number" placeholder="0" data-field="cast"
+            <input type="text" value="{{item.data.data.cast}}" data-dtype="Number" placeholder="0" data-field="cast"
                    title="{{localize 'ACKS.spells.Cast'}}"></div>
           <div class="item-controls">
             {{#if ../../owner}}

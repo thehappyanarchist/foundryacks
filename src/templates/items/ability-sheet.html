@@ -13,20 +13,20 @@
         <div class="form-group block-input">
           <label>{{localize 'ACKS.abilities.Requirements'}}</label>
           <div class="form-fields">
-            <input type="text" name="data.requirements" value="{{data.requirements}}" data-dtype="String" />
+            <input type="text" name="data.requirements" value="{{data.data.requirements}}" data-dtype="String" />
           </div>
         </div>
         <div class="form-group block-input">
           <label>{{localize 'ACKS.items.Roll'}}</label>
           <div class="form-fields">
-            <input type="text" name="data.roll" value="{{data.roll}}" data-dtype="String" />
+            <input type="text" name="data.roll" value="{{data.data.roll}}" data-dtype="String" />
           </div>
         </div>
         <div class="form-group">
           <label>{{localize 'ACKS.items.RollType'}}</label>
           <div class="form-fields">
             <select name="data.rollType">
-              {{#select data.rollType}}
+              {{#select data.data.rollType}}
               {{#each config.roll_type as |t a|}}
               <option value="{{a}}">{{t}}</option>
               {{/each}}
@@ -37,20 +37,20 @@
         <div class="form-group">
           <label>{{localize 'ACKS.items.RollTarget'}}</label>
           <div class="form-fields">
-            <input type="text" name="data.rollTarget" value="{{data.rollTarget}}" data-dtype="Number" />
+            <input type="text" name="data.rollTarget" value="{{data.data.rollTarget}}" data-dtype="Number" />
           </div>
         </div>
         <div class="form-group">
           <label>{{localize 'ACKS.items.BlindRoll'}}</label>
           <div class="form-fields">
-            <input type="checkbox" name="data.blindroll" value="{{data.blindroll}}" {{checked data.blindroll}}  data-dtype="Number"/>
+            <input type="checkbox" name="data.blindroll" value="{{data.data.blindroll}}" {{checked data.data.blindroll}}  data-dtype="Number"/>
           </div>
         </div>
         <div class="form-group">
           <label>{{localize 'ACKS.spells.Save'}}</label>
           <div class="form-fields">
             <select name="data.save">
-              {{#select data.save}}
+              {{#select data.data.save}}
               <option value=""></option>
               {{#each config.saves_short as |save a|}}
               <option value="{{a}}">{{save}}</option>
@@ -61,7 +61,7 @@
         </div>
       </div>
       <div class="description">
-        {{editor content=data.description target="data.description" button=true
+        {{editor content=data.data.description target="data.description" button=true
         owner=owner editable=editable}}
       </div>
     </div>

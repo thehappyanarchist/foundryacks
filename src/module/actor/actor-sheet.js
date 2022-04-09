@@ -74,7 +74,7 @@ export class AcksActorSheet extends ActorSheet {
   _onItemSummary(event) {
     event.preventDefault();
     let li = $(event.currentTarget).parents(".item"),
-      item = this.actor.getOwnedItem(li.data("item-id")),
+      item = this.actor.items.get(li.data("item-id")),
       description = TextEditor.enrichHTML(item.data.data.description);
     // Toggle summary
     if (li.hasClass("expanded")) {
@@ -94,7 +94,7 @@ export class AcksActorSheet extends ActorSheet {
   async _onSpellChange(event) {
     event.preventDefault();
     const itemId = event.currentTarget.closest(".item").dataset.itemId;
-    const item = this.actor.getOwnedItem(itemId);
+    const item = this.actor.items.get(itemId);
     if (event.target.dataset.field == "cast") {
       return item.update({ "data.cast": parseInt(event.target.value) });
     } else if (event.target.dataset.field == "memorize") {
@@ -110,7 +110,7 @@ export class AcksActorSheet extends ActorSheet {
       .find(".item");
     spells.each((_, el) => {
       let itemId = el.dataset.itemId;
-      const item = this.actor.getOwnedItem(itemId);
+      const item = this.actor.items.get(itemId);
       item.update({
         _id: item.id,
         "data.cast": 0,
@@ -130,7 +130,7 @@ export class AcksActorSheet extends ActorSheet {
 
     html.find(".item .item-controls .item-show").click(async (ev) => {
       const li = $(ev.currentTarget).parents(".item");
-      const item = this.actor.getOwnedItem(li.data("itemId"));
+      const item = this.actor.items.get(li.data("itemId"));
       item.show();
     });
 
@@ -143,7 +143,7 @@ export class AcksActorSheet extends ActorSheet {
 
     html.find(".item .item-rollable .item-image").click(async (ev) => {
       const li = $(ev.currentTarget).parents(".item");
-      const item = this.actor.getOwnedItem(li.data("itemId"));
+      const item = this.actor.items.get(li.data("itemId"));
       if (item.type == "weapon") {
         if (this.actor.data.type === "monster") {
           item.update({

@@ -355,7 +355,7 @@ export class AcksItem extends Item {
     if (!actor) return;
 
     // Get the Item
-    const item = actor.getOwnedItem(card.dataset.itemId);
+    const item = actor.items.get(card.dataset.itemId);
     if (!item) {
       return ui.notifications.error(
         `The requested item ${card.dataset.itemId} no longer exists on Actor ${actor.name}`
