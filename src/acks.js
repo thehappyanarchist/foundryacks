@@ -54,7 +54,9 @@ Hooks.once("init", async function () {
     makeDefault: true,
   });
   Items.unregisterSheet("core", ItemSheet);
-  Items.registerSheet("acks", AcksItemSheet, { makeDefault: true });
+  Items.registerSheet("acks", AcksItemSheet, {
+    makeDefault: true,
+  });
 
   await preloadHandlebarsTemplates();
 });
@@ -87,8 +89,8 @@ Hooks.on("renderSidebarTab", async (object, html) => {
 });
 
 Hooks.on("createCombatant", async (combatant, options, userId) => {
-  let init = game.settings.get("acks", "initiative");
-  if (init == "group") {
+  const init = game.settings.get("acks", "initiative");
+  if (init === "group") {
     await AcksCombat.addCombatant(combatant, options, userId);
   }
 });

@@ -1,6 +1,4 @@
 // eslint-disable-next-line no-unused-vars
-import { AcksActor } from '../actor/entity.js';
-
 export class AcksEntityTweaks extends FormApplication {
   static get defaultOptions() {
     const options = super.defaultOptions;
@@ -28,12 +26,15 @@ export class AcksEntityTweaks extends FormApplication {
    * @return {Object}
    */
   getData() {
-    let data = this.object.data;
+    const data = this.object.data;
+
     if (this.object.data.type === 'character') {
       data.isCharacter = true;
     }
+
     data.user = game.user;
     data.config = CONFIG.ACKS;
+
     return data;
   }
 
@@ -52,9 +53,11 @@ export class AcksEntityTweaks extends FormApplication {
    */
   async _updateObject(event, formData) {
     event.preventDefault();
-    // Update the actor
+
+    // Update the actor.
     this.object.update(formData);
-    // Re-draw the updated sheet
+
+    // Render the updated sheet.
     this.object.sheet.render(true);
   }
 }

@@ -30,12 +30,14 @@ export class AcksPartySheet extends FormApplication {
     const settings = {
       ascending: game.settings.get('acks', 'ascendingAC')
     };
-    let data = {
+
+    const data = {
       data: this.object,
       config: CONFIG.ACKS,
       user: game.user,
       settings: settings
     };
+
     return data;
   }
 
@@ -64,7 +66,7 @@ export class AcksPartySheet extends FormApplication {
     `;
 
     let pcs = this.object.documents.filter((actor) => {
-      return actor.getFlag('acks', 'party') && actor.data.type == "character";
+      return actor.getFlag('acks', 'party') && actor.data.type === "character";
     });
 
     new Dialog({

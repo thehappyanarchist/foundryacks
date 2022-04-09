@@ -33,7 +33,7 @@ export const registerHelpers = async function () {
   Handlebars.registerHelper("mult", function (lh, rh) {
     return parseFloat(lh) * parseFloat(rh);
   });
-    
+
   Handlebars.registerHelper("multround", function (lh, rh) {
     return Math.round(parseFloat(lh) * parseFloat(rh) * 100) / 100;
   })
@@ -47,8 +47,8 @@ export const registerHelpers = async function () {
   });
 
   Handlebars.registerHelper("getTagIcon", function (tag) {
-    let idx = Object.keys(CONFIG.ACKS.tags).find(k => (CONFIG.ACKS.tags[k] == tag));
-    return CONFIG.ACKS.tag_images[idx];
+    const index = Object.keys(CONFIG.ACKS.tags).find(k => (CONFIG.ACKS.tags[k] == tag));
+    return CONFIG.ACKS.tag_images[index];
   });
 
   Handlebars.registerHelper("counter", function (status, value, max) {

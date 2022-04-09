@@ -280,7 +280,7 @@ export class AcksItem extends Item {
     const token = this.actor.token;
     const templateData = {
       actor: this.actor,
-      tokenId: token ? `${token.scene._id}.${token.id}` : null,
+      tokenId: token ? `${token.parent.id}.${token.id}` : null,
       item: this.data,
       data: this.getChatData(),
       labels: this.labels,
@@ -297,11 +297,11 @@ export class AcksItem extends Item {
 
     // Basic chat message data
     const chatData = {
-      user: game.user._id,
+      user: game.user.id,
       type: CONST.CHAT_MESSAGE_TYPES.OTHER,
       content: html,
       speaker: {
-        actor: this.actor._id,
+        actor: this.actor.id,
         token: this.actor.token,
         alias: this.actor.name,
       },
@@ -311,7 +311,7 @@ export class AcksItem extends Item {
     let rollMode = game.settings.get("core", "rollMode");
     if (["gmroll", "blindroll"].includes(rollMode))
       chatData["whisper"] = ChatMessage.getWhisperRecipients("GM");
-    if (rollMode === "selfroll") chatData["whisper"] = [game.user._id];
+    if (rollMode === "selfroll") chatData["whisper"] = [game.user.id];
     if (rollMode === "blindroll") chatData["blind"] = true;
 
     // Create the chat message
@@ -395,7 +395,7 @@ export class AcksItem extends Item {
       const [sceneId, tokenId] = tokenKey.split(".");
       const scene = game.scenes.get(sceneId);
       if (!scene) return null;
-      const tokenData = scene.getEmbeddedEntity("Token", tokenId);
+      const tokenData = scene.tokens.get(tokenId);
       if (!tokenData) return null;
       const token = new Token(tokenData);
       return token.actor;
