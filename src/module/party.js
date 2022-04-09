@@ -9,7 +9,6 @@ export const addControl = (object, html) => {
 }
 
 export const showPartySheet = (object) => {
-    event.preventDefault();
     new AcksPartySheet(object, {
       top: window.screen.height / 2 - 180,
       left:window.screen.width / 2 - 140,

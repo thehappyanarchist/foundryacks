@@ -89,11 +89,13 @@ export class AcksPartySheet extends FormApplication {
     }).render(true);
   }
 
-  async _selectActors(ev) {
+  async _selectActors(event) {
+    event.preventDefault();
+
     const template = "/systems/acks/templates/apps/party-select.html";
     const templateData = {
-      actors: this.object.entities
-    }
+      actors: this.object.documents,
+    };
     const content = await renderTemplate(template, templateData);
     new Dialog({
       title: "Select Party Characters",
@@ -106,7 +108,7 @@ export class AcksPartySheet extends FormApplication {
             let checks = html.find("input[data-action='select-actor']");
             checks.each(async (_, c) => {
               let key = c.getAttribute('name');
-              await this.object.entities[key].setFlag('acks', 'party', c.checked);
+              await this.object.documents[key].setFlag('acks', 'party', c.checked);
             });
           },
         },
@@ -117,12 +119,13 @@ export class AcksPartySheet extends FormApplication {
   /** @override */
   activateListeners(html) {
     super.activateListeners(html);
+
     html
       .find(".item-controls .item-control .select-actors")
       .click(this._selectActors.bind(this));
-    
-      html.find(".item-controls .item-control .deal-xp").click(this._dealXP.bind(this));
-    
+
+    html.find(".item-controls .item-control .deal-xp").click(this._dealXP.bind(this));
+
     html.find("a.resync").click(() => this.render(true));
 
     html.find(".field-img button[data-action='open-sheet']").click((ev) => {
