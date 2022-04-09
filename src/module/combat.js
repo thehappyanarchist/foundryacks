@@ -201,50 +201,68 @@ export class AcksCombat {
   }
 
   static announceListener(html) {
-    html.find(".combatant-control.hold-turn").click(async (ev) => {
-      ev.preventDefault();
+    html.find(".combatant-control.hold-turn").click(async (event) => {
+      event.preventDefault();
+
       // Toggle hold announcement
-      const id = $(ev.currentTarget).closest(".combatant")[0].dataset.combatantId;
-      const isActive = ev.currentTarget.classList.contains('active');
+      const id = $(event.currentTarget).closest(".combatant")[0].dataset.combatantId;
+      const isActive = event.currentTarget.classList.contains('active');
       const combatant = game.combat.combatants.get(id);
       await combatant.update({
         _id: id,
-        flags: { acks: { holdTurn: !isActive } },
+        flags: {
+          acks: {
+            holdTurn: !isActive,
+          },
+        },
       });
     })
 
-    html.find(".combatant-control.prepare-spell").click(async (ev) => {
-      ev.preventDefault();
+    html.find(".combatant-control.prepare-spell").click(async (event) => {
+      event.preventDefault();
+
       // Toggle spell announcement
-      const id = $(ev.currentTarget).closest(".combatant")[0].dataset.combatantId;
-      const isActive = ev.currentTarget.classList.contains('active');
+      const id = $(event.currentTarget).closest(".combatant")[0].dataset.combatantId;
+      const isActive = event.currentTarget.classList.contains('active');
       const combatant = game.combat.combatants.get(id);
       await combatant.update({
         _id: id,
-        flags: { acks: { prepareSpell: !isActive } },
+        flags: {
+          acks: {
+            prepareSpell: !isActive,
+          },
+        },
       });
     });
 
-    html.find(".combatant-control.move-combat").click(async (ev) => {
-      ev.preventDefault();
+    html.find(".combatant-control.move-combat").click(async (event) => {
+      event.preventDefault();
+
       // Toggle retreat announcement
-      const id = $(ev.currentTarget).closest(".combatant")[0].dataset.combatantId;
-      const isActive = ev.currentTarget.classList.contains('active');
+      const id = $(event.currentTarget).closest(".combatant")[0].dataset.combatantId;
+      const isActive = event.currentTarget.classList.contains('active');
       const combatant = game.combat.combatants.get(id);
       await combatant.update({
         _id: id,
-        flags: { acks: { moveInCombat: !isActive } },
+        flags: {
+          acks: {
+            moveInCombat: !isActive,
+          },
+        },
       });
     });
   }
 
   static addListeners(html) {
     // Cycle through colors
-    html.find(".combatant-control.flag").click(async (ev) => {
+    html.find(".combatant-control.flag").click(async (event) => {
+      event.preventDefault();
+
       if (!game.user.isGM) {
         return;
       }
-      const currentColor = ev.currentTarget.style.color;
+
+      const currentColor = event.currentTarget.style.color;
       const colors = Object.keys(CONFIG.ACKS.colors);
       let index = colors.indexOf(currentColor);
       if (index + 1 == colors.length) {
@@ -253,7 +271,7 @@ export class AcksCombat {
         index++;
       }
 
-      const id = $(ev.currentTarget).closest(".combatant")[0].dataset.combatantId;
+      const id = $(event.currentTarget).closest(".combatant")[0].dataset.combatantId;
       const combatant = game.combat.combatants.get(id);
       await combatant.update({
         _id: id,
@@ -265,15 +283,21 @@ export class AcksCombat {
       });
     });
 
-    html.find('.combat-control[data-control="reroll"]').click((ev) => {
+    html.find('.combat-control[data-control="reroll"]').click(async (event) => {
+      event.preventDefault();
+
       if (!game.combat) {
         return;
       }
-      let data = {};
+
+      const data = {};
       AcksCombat.rollInitiative(game.combat, data);
-      game.combat.update({ data: data }).then(() => {
-        game.combat.setupTurns();
-      });
+
+      await game.combat.update({
+        data: data,
+      })
+
+      game.combat.setupTurns();
     });
   }
 
@@ -314,12 +338,13 @@ export class AcksCombat {
   }
 
   static async preUpdateCombat(combat, data, diff, id) {
-    let init = game.settings.get("acks", "initiative");
-    let reroll = game.settings.get("acks", "initiativePersistence");
     if (!data.round) {
       return;
     }
+
     if (data.round !== 1) {
+      const reroll = game.settings.get("acks", "initiativePersistence");
+
       if (reroll === "reset") {
         AcksCombat.resetInitiative(combat, data, diff, id);
         return;
@@ -327,6 +352,9 @@ export class AcksCombat {
         return;
       }
     }
+
+    const init = game.settings.get("acks", "initiative");
+
     if (init === "group") {
       AcksCombat.rollInitiative(combat, data, diff, id);
     } else if (init === "individual") {
