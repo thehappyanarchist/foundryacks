@@ -705,10 +705,10 @@ export class AcksActor extends Actor {
     // Compute treasure
     let total = 0;
     let treasure = this.data.items.filter(
-      (i) => i.type == "item" && i.data.treasure
+      (i) => i.data.type == "item" && i.data.data.treasure
     );
     treasure.forEach((item) => {
-      total += item.data.quantity.value * item.data.cost
+      total += item.data.data.quantity.value * item.data.data.cost
     });
     data.treasure = total;
   }
