@@ -129,10 +129,10 @@
                             </div>
                             {{#if (eq item.type 'weapon')}}
                             <div class="field-long counter flexrow">
-                                <input type="text" value="{{item.data.data.counter.value}}" data-dtype="Number"
+                                <input type="text" value="{{item.data.counter.value}}" data-dtype="Number"
                                     placeholder="0" data-field="value" title="{{localize 'ACKS.items.roundAttacks'}}">
                                 /
-                                <input type="text" value="{{item.data.data.counter.max}}" data-field="max"
+                                <input type="text" value="{{item.data.counter.max}}" data-field="max"
                                     data-dtype="Number" placeholder="0"
                                     title="{{localize 'ACKS.items.roundAttacksMax'}}"></div>
                             {{/if}}

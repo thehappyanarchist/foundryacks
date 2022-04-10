@@ -136,13 +136,11 @@ export class AcksActorSheetMonster extends AcksActorSheet {
   }
 
   async _resetCounters(event) {
-    const weapons = this.actor.data.items.filter(i => i.type === 'weapon');
-    for (let wp of weapons) {
-      const item = this.actor.items.get(wp._id);
-      await item.update({
+    for (const weapon of this.actor.itemTypes["weapon"]) {
+      await weapon.update({
         data: {
           counter: {
-            value: parseInt(wp.data.counter.max),
+            value: parseInt(weapon.data.data.counter.max, 10),
           },
         },
       });
