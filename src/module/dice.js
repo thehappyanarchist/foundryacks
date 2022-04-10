@@ -63,7 +63,7 @@ export class AcksDice {
     const template = "systems/acks/templates/chat/roll-result.html";
 
     let chatData = {
-      user: game.user._id,
+      user: game.user.id,
       speaker: speaker,
     };
 
@@ -92,10 +92,13 @@ export class AcksDice {
       rollMode = game.user.isGM ? "selfroll" : "blindroll";
     }
 
-    if (["gmroll", "blindroll"].includes(rollMode))
+    if (["gmroll", "blindroll"].includes(rollMode)) {
       chatData["whisper"] = ChatMessage.getWhisperRecipients("GM");
-    if (rollMode === "selfroll") chatData["whisper"] = [game.user._id];
-    if (rollMode === "blindroll") {
+    }
+
+    if (rollMode === "selfroll") {
+      chatData["whisper"] = [game.user.id];
+    } else if (rollMode === "blindroll") {
       chatData["blind"] = true;
       data.roll.blindroll = true;
     }
