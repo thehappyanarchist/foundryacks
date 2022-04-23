@@ -25,52 +25,54 @@ export const augmentTable = (table, html, data) => {
     html.find(".sheet-footer .roll").replaceWith(roll);
   }
 
-  html.find(".roll-treasure").click((ev) => {
-    rollTreasure(table.object, { event: ev });
+  html.find(".roll-treasure").click(async (event) => {
+    await rollTreasure(table.object, { event: event });
   });
 };
 
-function drawTreasure(table, data) {
-  const percent = (chance) => {
-    const roll = new Roll("1d100").roll();
-    return roll.total <= chance;
-  };
+async function drawTreasure(table, data) {
   data.treasure = {};
   if (table.getFlag('acks', 'treasure')) {
-    table.results.forEach((r) => {
-      if (percent(r.weight)) {
-        const text = table._getResultChatText(r);
-        data.treasure[r._id] = ({
-          img: r.img,
+    for (const result of table.results) {
+      const roll = new Roll("1d100");
+      await roll.evaluate({async: true});
+
+      if (roll.total <= result.data.weight) {
+        const text = result.getChatText();
+        data.treasure[result.id] = ({
+          img: result.img,
           text: TextEditor.enrichHTML(text),
         });
-        if ((r.type === CONST.TABLE_RESULT_TYPES.ENTITY) && (r.collection === "RollTable")) {
-          const embeddedTable = game.tables.get(r.resultId);
-          drawTreasure(embeddedTable, data.treasure[r._id]);
+
+        if ((result.data.type === CONST.TABLE_RESULT_TYPES.DOCUMENT)
+            && (result.collection === "RollTable")) {
+          const embeddedTable = game.tables.get(result.resultId);
+          drawTreasure(embeddedTable, data.treasure[result.id]);
         }
       }
-    });
+    }
   } else {
-    const results = table.roll().results;
-    results.forEach((s) => { 
-      const text = TextEditor.enrichHTML(table._getResultChatText(s));
-      data.treasure[s._id] = {img: s.img, text: text}; 
+    const results = await table.roll().results;
+    results.forEach((result) => {
+      const text = TextEditor.enrichHTML(result.getChatText());
+      data.treasure[result.id] = {img: result.img, text: text};
     });
   }
+
   return data;
 }
 
 async function rollTreasure(table, options = {}) {
   // Draw treasure
-  const data = drawTreasure(table, {});
+  const data = await drawTreasure(table, {});
   let templateData = {
     treasure: data.treasure,
     table: table,
   };
-  
+
   // Animation
   if (options.event) {
-    let results = $(event.currentTarget.parentElement)
+    let results = $(options.event.currentTarget.parentElement)
       .prev()
       .find(".table-result");
     results.each((_, item) => {
@@ -83,7 +85,7 @@ async function rollTreasure(table, options = {}) {
 
   let html = await renderTemplate(
     "systems/acks/templates/chat/roll-treasure.html",
-    templateData
+    templateData,
   );
 
   let chatData = {
@@ -93,7 +95,7 @@ async function rollTreasure(table, options = {}) {
 
   let rollMode = game.settings.get("core", "rollMode");
   if (["gmroll", "blindroll"].includes(rollMode)) chatData["whisper"] = ChatMessage.getWhisperRecipients("GM");
-  if (rollMode === "selfroll") chatData["whisper"] = [game.user._id];
+  if (rollMode === "selfroll") chatData["whisper"] = [game.user.id];
   if (rollMode === "blindroll") chatData["blind"] = true;
 
   ChatMessage.create(chatData);

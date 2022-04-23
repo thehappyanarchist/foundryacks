@@ -5,10 +5,10 @@
                 <h4 class="attribute-name box-title" title="{{localize 'ACKS.Health'}}">{{ localize "ACKS.HealthShort" }}
                     <a class="hp-roll"><i class="fas fa-dice"></i></a></h4>
                 <div class="attribute-value flexrow">
-                    <input name="data.hp.value" type="text" value="{{data.hp.value}}" data-dtype="Number"
+                    <input name="data.hp.value" type="text" value="{{data.data.hp.value}}" data-dtype="Number"
                         placeholder="0" />
                     <span class="sep"> / </span>
-                    <input name="data.hp.max" type="text" value="{{data.hp.max}}" data-dtype="Number" placeholder="0" />
+                    <input name="data.hp.max" type="text" value="{{data.data.hp.max}}" data-dtype="Number" placeholder="0" />
                 </div>
             </li>
             <li class="attribute hit-dice">
@@ -16,7 +16,7 @@
                     <a>{{ localize "ACKS.HitDiceShort" }}</a>
                 </h4>
                 <div class="attribute-value">
-                    <input name="data.hp.hd" type="text" value="{{data.hp.hd}}" data-dtype="String" />
+                    <input name="data.hp.hd" type="text" value="{{data.data.hp.hd}}" data-dtype="String" />
                 </div>
             </li>
             <li class="attribute">
@@ -24,14 +24,14 @@
                 <h4 class="attribute-name box-title" title="{{ localize 'ACKS.ArmorClass' }}">
                     {{ localize "ACKS.AscArmorClassShort" }}</h4>
                 <div class="attribute-value">
-                    <input name="data.aac.value" type="text" value="{{data.aac.value}}" data-dtype="Number"
+                    <input name="data.aac.value" type="text" value="{{data.data.aac.value}}" data-dtype="Number"
                         placeholder="10" data-dtype="Number" />
                 </div>
                 {{else}}
                 <h4 class="attribute-name box-title" title="{{ localize 'ACKS.ArmorClass' }}">
                     {{ localize "ACKS.ArmorClassShort" }}</h4>
                 <div class="attribute-value">
-                    <input name="data.ac.value" type="text" value="{{data.ac.value}}" data-dtype="Number"
+                    <input name="data.ac.value" type="text" value="{{data.data.ac.value}}" data-dtype="Number"
                         placeholder="9" data-dtype="Number" />
                 </div>
                 {{/if}}
@@ -41,25 +41,25 @@
                 <h4 class="attribute-name box-title" title="{{localize 'ACKS.AB'}}"><a>{{ localize "ACKS.ABShort" }}</a>
                 </h4>
                 <div class="attribute-value">
-                    <input name="data.thac0.throw" type="text" value="{{data.thac0.throw}}" placeholder=""
+                    <input name="data.thac0.throw" type="text" value="{{data.data.thac0.throw}}" placeholder=""
                         data-dtype="Number" />
                 </div>
                 {{else}}
                 <h4 class="attribute-name box-title" title="{{localize 'ACKS.Thac0'}}"><a>{{ localize "ACKS.Thac0" }}</a>
                 </h4>
                 <div class="attribute-value">
-                    <input name="data.thac0.value" type="text" value="{{data.thac0.value}}" placeholder="0"
+                    <input name="data.thac0.value" type="text" value="{{data.data.thac0.value}}" placeholder="0"
                         data-dtype="Number" />
                 </div>
                 {{/if}}
             </li>
-            {{#if data.retainer.enabled}}
+            {{#if data.data.retainer.enabled}}
             <li class="attribute">
                 <h4 class="attribute-name box-title" title="{{ localize 'ACKS.Loyalty' }}">
                     {{ localize "ACKS.LoyaltyShort" }}
                 </h4>
                 <div class="attribute-value">
-                    <input name="data.retainer.loyalty" type="text" value="{{data.retainer.loyalty}}" placeholder="0"
+                    <input name="data.retainer.loyalty" type="text" value="{{data.data.retainer.loyalty}}" placeholder="0"
                         data-dtype="Number" />
                 </div>
             </li>
@@ -69,7 +69,7 @@
                     {{ localize "ACKS.movement.short" }}
                 </h4>
                 <div class="attribute-value">
-                    <input name="data.movement.base" type="text" value="{{data.movement.base}}" placeholder="0"
+                    <input name="data.movement.base" type="text" value="{{data.data.movement.base}}" placeholder="0"
                         data-dtype="Number" />
                 </div>
             </li>
@@ -95,7 +95,7 @@
                     <li class="item-entry">
                         <div class="item flexrow" data-item-id="{{item._id}}">
                             <div class="item-pattern" title="{{localize 'ACKS.items.pattern'}}" style="background:linear-gradient(0.25turn, {{item.data.pattern}}, transparent)"></div>
-                            <div class="item-name {{#if item.data.roll}}item-rollable{{/if}} flexrow">
+                            <div class="item-name {{#if item.data.data.roll}}item-rollable{{/if}} flexrow">
                                 <div class="item-image" style="background-image: url({{item.img}})"></div>
                                 <h4 title="{{item.name}}">
                                     {{item.name~}}
@@ -157,7 +157,7 @@
                 <li class="attacks-description">
                     {{#unless isNew}}
                     <label>{{ localize "ACKS.movement.details" }}</label>
-                    <input name="data.movement.value" type="text" value="{{data.movement.value}}" data-dtype="String" />
+                    <input name="data.movement.value" type="text" value="{{data.data.movement.value}}" data-dtype="String" />
                     {{else}}
                     <button data-action="generate-saves">{{localize "ACKS.dialog.generateSaves"}}</button>
                     {{/unless}}
@@ -166,35 +166,35 @@
                     <h4 class="attribute-name box-title">
                         <a>{{ localize "ACKS.saves.death.long" }}</a></h4>
                     <div class="attribute-value">
-                        <input name="data.saves.death.value" type="text" value="{{data.saves.death.value}}"
+                        <input name="data.saves.death.value" type="text" value="{{data.data.saves.death.value}}"
                             placeholder="0" data-dtype="Number" />
                 </li>
                 <li class="attribute saving-throw" data-save="wand">
                     <h4 class="attribute-name box-title">
                         <a>{{ localize "ACKS.saves.wand.long" }}</a></h4>
                     <div class="attribute-value">
-                        <input name="data.saves.wand.value" type="text" value="{{data.saves.wand.value}}"
+                        <input name="data.saves.wand.value" type="text" value="{{data.data.saves.wand.value}}"
                             placeholder="0" data-dtype="Number" />
                 </li>
                 <li class="attribute saving-throw" data-save="paralysis">
                     <h4 class="attribute-name box-title">
                         <a>{{ localize "ACKS.saves.paralysis.long" }}</a></h4>
                     <div class="attribute-value">
-                        <input name="data.saves.paralysis.value" type="text" value="{{data.saves.paralysis.value}}"
+                        <input name="data.saves.paralysis.value" type="text" value="{{data.data.saves.paralysis.value}}"
                             placeholder="0" data-dtype="Number" />
                 </li>
                 <li class="attribute saving-throw" data-save="breath">
                     <h4 class="attribute-name box-title">
                         <a>{{ localize "ACKS.saves.breath.long" }}</a></h4>
                     <div class="attribute-value">
-                        <input name="data.saves.breath.value" type="text" value="{{data.saves.breath.value}}"
+                        <input name="data.saves.breath.value" type="text" value="{{data.data.saves.breath.value}}"
                             placeholder="0" data-dtype="Number" />
                 </li>
                 <li class="attribute saving-throw" data-save="spell">
                     <h4 class="attribute-name box-title">
                         <a>{{ localize "ACKS.saves.spell.long" }}</a></h4>
                     <div class="attribute-value">
-                        <input name="data.saves.spell.value" type="text" value="{{data.saves.spell.value}}"
+                        <input name="data.saves.spell.value" type="text" value="{{data.data.saves.spell.value}}"
                             placeholder="0" />
                 </li>
             </ul>

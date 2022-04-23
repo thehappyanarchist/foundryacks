@@ -78,13 +78,14 @@
   animation: 0.8s ease-in 1s infinite alternate notify;
 }
 .acks.sheet.actor .sheet-tabs {
+  border-bottom: none;
+  justify-content: flex-end;
   position: absolute;
   transform: rotate(90deg);
   top: 365px;
   right: -169px;
   width: 320px;
   border-top: none;
-  height: 18px;
   z-index: -1;
 }
 .acks.sheet.actor .sheet-tabs .item {
@@ -95,7 +96,6 @@
   background: url("/ui/parchment.jpg");
   border-top-right-radius: 4px;
   border-top-left-radius: 80px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
   box-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.9);
   font-size: 12px;
   filter: brightness(0.9);
@@ -106,6 +106,9 @@
   font-weight: bold;
   text-shadow: none;
   margin-bottom: -1px;
+}
+.acks.sheet.actor .sheet-tabs .item:not(.active) {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
 }
 .acks.sheet.actor .sheet-body {
   height: calc(100% - 140px);
@@ -491,7 +494,7 @@
   border-radius: 8px;
   background: url("/systems/acks/assets/treasure.png") no-repeat center;
   background-size: cover;
-  padding: 5px 8px;
+  padding: 16px 8px;
   cursor: pointer;
   filter: grayscale(1) opacity(0.5);
 }
@@ -633,7 +636,6 @@
   border: none;
 }
 .acks.chat-card .card-content .treasure-list .treasure div {
-  text-indent: 10px;
   font-size: 14px;
   font-weight: bold;
 }

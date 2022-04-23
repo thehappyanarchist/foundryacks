@@ -1,13 +1,11 @@
-import { AcksActor } from '../actor/entity.js';
 import { AcksDice } from "../dice.js";
 
 export class AcksCharacterCreator extends FormApplication {
   static get defaultOptions() {
     const options = super.defaultOptions;
     options.classes = ["acks", "dialog", "creator"],
-      options.id = 'character-creator';
-    options.template =
-      'systems/acks/templates/actors/dialogs/character-creation.html';
+    options.id = 'character-creator';
+    options.template = 'systems/acks/templates/actors/dialogs/character-creation.html';
     options.width = 235;
     return options;
   }
@@ -169,7 +167,10 @@ export class AcksCharacterCreator extends FormApplication {
         }
       }
     };
-    this.object.createOwnedItem(itemData);
+
+    await this.object.createEmbeddedDocuments("Item", [
+      itemData,
+    ]);
   }
   /**
    * This method is called upon form submission after form data is validated

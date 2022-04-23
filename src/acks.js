@@ -40,8 +40,8 @@ Hooks.once("init", async function () {
   // Register custom system settings
   registerSettings();
 
-  CONFIG.Actor.entityClass = AcksActor;
-  CONFIG.Item.entityClass = AcksItem;
+  CONFIG.Actor.documentClass = AcksActor;
+  CONFIG.Item.documentClass = AcksItem;
 
   // Register sheet application classes
   Actors.unregisterSheet("core", ActorSheet);
@@ -54,7 +54,9 @@ Hooks.once("init", async function () {
     makeDefault: true,
   });
   Items.unregisterSheet("core", ItemSheet);
-  Items.registerSheet("acks", AcksItemSheet, { makeDefault: true });
+  Items.registerSheet("acks", AcksItemSheet, {
+    makeDefault: true,
+  });
 
   await preloadHandlebarsTemplates();
 });
@@ -86,10 +88,10 @@ Hooks.on("renderSidebarTab", async (object, html) => {
   }
 });
 
-Hooks.on("preCreateCombatant", (combat, data, options, id) => {
-  let init = game.settings.get("acks", "initiative");
-  if (init == "group") {
-    AcksCombat.addCombatant(combat, data, options, id);
+Hooks.on("createCombatant", async (combatant, options, userId) => {
+  const init = game.settings.get("acks", "initiative");
+  if (init === "group") {
+    await AcksCombat.addCombatant(combatant, options, userId);
   }
 });
 

@@ -35,24 +35,26 @@ export class AcksActor extends Actor {
   /* -------------------------------------------- */
   /*  Socket Listeners and Handlers
     /* -------------------------------------------- */
-  getExperience(value, options = {}) {
+  async getExperience(value, options = {}) {
     if (this.data.type != "character") {
       return;
     }
+
     let modified = Math.floor(
       value + (this.data.data.details.xp.bonus * value) / 100
     );
-    return this.update({
+
+    await this.update({
       "data.details.xp.value": modified + this.data.data.details.xp.value,
-    }).then(() => {
-      const speaker = ChatMessage.getSpeaker({ actor: this });
-      ChatMessage.create({
-        content: game.i18n.format("ACKS.messages.GetExperience", {
-          name: this.name,
-          value: modified,
-        }),
-        speaker,
-      });
+    });
+
+    const speaker = ChatMessage.getSpeaker({ actor: this });
+    await ChatMessage.create({
+      content: game.i18n.format("ACKS.messages.GetExperience", {
+        name: this.name,
+        value: modified,
+      }),
+      speaker,
     });
   }
 
@@ -73,7 +75,7 @@ export class AcksActor extends Actor {
     }
   }
 
-  generateSave(hd) {
+  async generateSave(hd) {
     let saves = {};
     for (let i = 0; i <= hd; i++) {
       let tmp = CONFIG.ACKS.monster_saves[i];
@@ -81,7 +83,8 @@ export class AcksActor extends Actor {
         saves = tmp;
       }
     }
-    this.update({
+
+    await this.update({
       "data.saves": {
         death: {
           value: saves.d,
@@ -106,9 +109,13 @@ export class AcksActor extends Actor {
   /*  Rolls                                       */
   /* -------------------------------------------- */
 
-  rollHP(options = {}) {
-    let roll = new Roll(this.data.data.hp.hd).roll();
-    return this.update({
+  async rollHP(options = {}) {
+    let roll = new Roll(this.data.data.hp.hd);
+    await roll.evaluate({
+      async: true,
+    });
+
+    await this.update({
       data: {
         hp: {
           max: roll.total,
@@ -572,7 +579,7 @@ export class AcksActor extends Actor {
     const dh = Math.clamped(hp.value - amount, -99, hp.max);
 
     // Update the Actor
-    return this.update({
+    await this.update({
       "data.hp.value": dh,
     });
   }
@@ -698,10 +705,10 @@ export class AcksActor extends Actor {
     // Compute treasure
     let total = 0;
     let treasure = this.data.items.filter(
-      (i) => i.type == "item" && i.data.treasure
+      (i) => i.data.type == "item" && i.data.data.treasure
     );
     treasure.forEach((item) => {
-      total += item.data.quantity.value * item.data.cost
+      total += item.data.data.quantity.value * item.data.data.cost
     });
     data.treasure = total;
   }
@@ -718,14 +725,14 @@ export class AcksActor extends Actor {
     const data = this.data.data;
     data.aac.naked = baseAac + data.scores.dex.mod;
     data.ac.naked = baseAc - data.scores.dex.mod;
-    const armors = this.data.items.filter((i) => i.type == "armor");
+    const armors = this.data.items.filter((i) => i.data.type == "armor");
     armors.forEach((a) => {
-      if (a.data.equipped && a.data.type != "shield") {
-        baseAc = a.data.ac.value;
-        baseAac = a.data.aac.value;
-      } else if (a.data.equipped && a.data.type == "shield") {
-        AcShield = a.data.ac.value;
-        AacShield = a.data.aac.value;
+      if (a.data.data.equipped && a.data.type != "shield") {
+        baseAc = a.data.data.ac;
+        baseAac = a.data.data.aac.value;
+      } else if (a.data.data.equipped && a.data.type == "shield") {
+        AcShield = a.data.data.ac;
+        AacShield = a.data.data.aac.value;
       }
     });
     data.aac.value = baseAac + data.scores.dex.mod + AacShield + data.aac.mod;

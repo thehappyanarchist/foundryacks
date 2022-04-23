@@ -1,6 +1,18 @@
-export const registerSettings = function () {
-
+export const registerSettings = () => {
   game.settings.register("acks", "initiative", {
+    name: game.i18n.localize("ACKS.Setting.Initiative"),
+    hint: game.i18n.localize("ACKS.Setting.InitiativeHint"),
+    default: "individual",
+    scope: "world",
+    type: String,
+    config: true,
+    choices: {
+      individual: "ACKS.Setting.InitiativeIndividual",
+      group: "ACKS.Setting.InitiativeGroup",
+    },
+  });
+
+  game.settings.register("acks", "initiativePersistence", {
     name: game.i18n.localize("ACKS.Setting.RerollInitiative"),
     hint: game.i18n.localize("ACKS.Setting.RerollInitiativeHint"),
     default: "reset",

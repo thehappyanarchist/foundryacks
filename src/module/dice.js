@@ -63,7 +63,7 @@ export class AcksDice {
     const template = "systems/acks/templates/chat/roll-result.html";
 
     let chatData = {
-      user: game.user._id,
+      user: game.user.id,
       speaker: speaker,
     };
 
@@ -78,7 +78,10 @@ export class AcksDice {
       parts.push(form.bonus.value);
     }
 
-    const roll = new Roll(parts.join("+"), data).roll();
+    const roll = new Roll(parts.join("+"), data);
+    await roll.evaluate({
+      async: true,
+    });
 
     // Convert the roll to a chat message and return the roll
     let rollMode = game.settings.get("core", "rollMode");
@@ -89,10 +92,13 @@ export class AcksDice {
       rollMode = game.user.isGM ? "selfroll" : "blindroll";
     }
 
-    if (["gmroll", "blindroll"].includes(rollMode))
+    if (["gmroll", "blindroll"].includes(rollMode)) {
       chatData["whisper"] = ChatMessage.getWhisperRecipients("GM");
-    if (rollMode === "selfroll") chatData["whisper"] = [game.user._id];
-    if (rollMode === "blindroll") {
+    }
+
+    if (rollMode === "selfroll") {
+      chatData["whisper"] = [game.user.id];
+    } else if (rollMode === "blindroll") {
       chatData["blind"] = true;
       data.roll.blindroll = true;
     }
@@ -230,14 +236,21 @@ export class AcksDice {
     // Optionally include a situational bonus
     if (form !== null && form.bonus.value) parts.push(form.bonus.value);
 
-    const roll = new Roll(parts.join("+"), data).roll();
-    const dmgRoll = new Roll(data.roll.dmg.join("+"), data).roll();
+    const roll = new Roll(parts.join("+"), data);
+    await roll.evaluate({
+      async: true,
+    });
+
+    const dmgRoll = new Roll(data.roll.dmg.join("+"), data);
+    await dmgRoll.evaluate({
+      async: true,
+    });
 
     // Add minimal damage of 1
     if (dmgRoll.total < 1) {
       dmgRoll._total = 1;
     }
-    
+
     // Convert the roll to a chat message and return the roll
     let rollMode = game.settings.get("core", "rollMode");
     rollMode = form ? form.rollMode.value : rollMode;

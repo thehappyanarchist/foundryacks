@@ -24,7 +24,7 @@
               <input
                 type="text"
                 name="data.cost"
-                value="{{data.cost}}"
+                value="{{data.data.cost}}"
                 data-dtype="Number"
                 />
             </div>
@@ -36,7 +36,7 @@
               <input
                 type="text"
                 name="data.weight"
-                value="{{data.weight}}"
+                value="{{data.data.weight}}"
                 data-dtype="Number"
                 />
             </div>
@@ -44,7 +44,7 @@
         </div>
       </div>
       <ol class="tag-list">
-        {{#each data.tags as |tag|}}
+        {{#each data.data.tags as |tag|}}
         <li class="tag" title="{{tag.title}}" data-tag="{{tag.value}}">
           <span>{{tag.value}}</span>
           <a class="tag-delete"><i class="fas fa-times"></i></a>
@@ -72,7 +72,7 @@
             <input
               type="text"
               name="data.damage"
-              value="{{data.damage}}"
+              value="{{data.data.damage}}"
               data-dtype="String"
               />
           </div>
@@ -84,39 +84,39 @@
             <input
               type="text"
               name="data.bonus"
-              value="{{data.bonus}}"
+              value="{{data.data.bonus}}"
               data-dtype="Number"
               />
           </div>
         </div>
         <div class="form-group attack-type">
           <a title="{{localize 'ACKS.items.Melee'}}" class="melee-toggle {{#if
-            data.melee}}active{{/if}}"><i class="fas fa-fist-raised"></i></a>
+            data.data.melee}}active{{/if}}"><i class="fas fa-fist-raised"></i></a>
           <a title="{{localize 'ACKS.items.Missile'}}" class="missile-toggle
-            {{#if data.missile}}active{{/if}}"><i class="fas fa-bullseye"></i></a>
+            {{#if data.data.missile}}active{{/if}}"><i class="fas fa-bullseye"></i></a>
         </div>
-        {{#if data.missile}}
+        {{#if data.data.missile}}
         <div class="form-group block-input">
           <label>{{localize 'ACKS.items.Range'}}</label>
           <div class="form-fields range">
             <input
               type="text"
               name="data.range.short"
-              value="{{data.range.short}}"
+              value="{{data.data.range.short}}"
               data-dtype="Number"
               />
               <div class="sep"></div>
               <input
               type="text"
               name="data.range.medium"
-              value="{{data.range.medium}}"
+              value="{{data.data.range.medium}}"
               data-dtype="Number"
               />
               <div class="sep"></div>
               <input
               type="text"
               name="data.range.long"
-              value="{{data.range.long}}"
+              value="{{data.data.range.long}}"
               data-dtype="Number"
               />
           </div>
@@ -126,7 +126,7 @@
           <label>{{localize 'ACKS.spells.Save'}}</label>
           <div class="form-fields">
             <select name="data.save">
-              {{#select data.save}}
+              {{#select data.data.save}}
               <option value=""></option>
               {{#each config.saves_short as |save a|}}
               <option value="{{a}}">{{save}}</option>
@@ -141,16 +141,16 @@
             <input
               type="checkbox"
               name="data.slow"
-              value="{{data.slow}}"
+              value="{{data.data.slow}}"
               {{checked
-              data.slow}}
+              data.data.slow}}
               data-dtype="Number"
               />
           </div>
         </div>
       </div>
       <div class="description weapon-editor">
-        {{editor content=data.description target="data.description" button=true
+        {{editor content=data.data.description target="data.description" button=true
         owner=owner editable=editable}}
       </div>
     </div>
