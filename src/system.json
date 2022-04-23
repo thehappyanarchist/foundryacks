@@ -101,15 +101,6 @@
     },
 
     { 
-      "name": "acks-investment-vagaries.db",
-      "label": "ACKS Investment Vagaries",
-      "system": "acks",
-      "path": "packs/acks-investment-vagaries.db",
-      "entity": "RollTable",
-      "module": "acks-packs"
-    },
-
-    { 
       "name": "acks-monster-abilities",
       "label": "ACKS Monster Abilities",
       "system": "acks",
