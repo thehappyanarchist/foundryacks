@@ -40,6 +40,8 @@ Big thank you to Bobloblah for laying the foundation of the ACKS compendium! He 
 
 Thank you to Olle Skogren for contributing the Investment Vagary tables from AXIOMS 3.
 
+HUGE Mega-Thank you to Azarvel for his exhaustive work updating to Foundry v9.
+
 ## License
 #### System
 This system is offered and may be used under the terms of the Open Game License v1.0a and the Adventurer Conqueror King Product Identity License v1.0. Permission to develop and distribute the ACKS system for Foundry, and to create and distribute the content in the compendium have been granted by Autarch LLC.  
