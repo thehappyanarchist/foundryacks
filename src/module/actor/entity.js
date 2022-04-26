@@ -727,10 +727,10 @@ export class AcksActor extends Actor {
     data.ac.naked = baseAc - data.scores.dex.mod;
     const armors = this.data.items.filter((i) => i.data.type == "armor");
     armors.forEach((a) => {
-      if (a.data.data.equipped && a.data.type != "shield") {
+      if (a.data.data.equipped && a.data.data.type != "shield") {
         baseAc = a.data.data.ac;
         baseAac = a.data.data.aac.value;
-      } else if (a.data.data.equipped && a.data.type == "shield") {
+      } else if (a.data.data.equipped && a.data.data.type == "shield") {
         AcShield = a.data.data.ac;
         AacShield = a.data.data.aac.value;
       }
