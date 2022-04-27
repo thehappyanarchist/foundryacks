@@ -608,92 +608,67 @@ export class AcksActor extends Actor {
   }
 
   computeEncumbrance() {
-    if (this.data.type != "character") {
+    if (this.data.type !== "character") {
       return;
     }
-    const data = this.data.data;
-    let option = game.settings.get("acks", "encumbranceOption");
 
-    // Compute encumbrance
-    let totalWeight = 0;
-    let hasItems = false;
-    Object.values(this.data.items).forEach((item) => {
-      if (item.type == "item" && !item.data.treasure) {
-        if (option === "detailed") totalWeight += 166.6;
-																   
-//        hasItems = true;
-      }
-      if (
-        item.type == "item" &&
-        (["complete", "disabled"].includes(option) || item.data.treasure)
-      ) {
-        totalWeight += item.data.quantity.value * item.data.weight;
-      } else if (option != "basic" && ["weapon", "armor"].includes(item.type)) {
-        totalWeight += item.data.weight;
+    const option = game.settings.get("acks", "encumbranceOption");
+
+    let totalEncumbrance = 0;
+
+    this.data.items.forEach((item) => {
+      if (item.type === "item") {
+        if (option === "detailed") {
+          if (item.data.data.treasure) {
+            totalEncumbrance += item.data.data.weight * item.data.data.quantity.value;
+          } else {
+            totalEncumbrance += item.data.data.weight;
+          }
+        } else {
+          if (item.data.data.treasure) {
+            totalEncumbrance += 1000 * item.data.data.quantity.value;
+          } else {
+            totalEncumbrance += 1000;
+          }
+        }
+      } else if (["weapon", "armor"].includes(item.type)) {
+        if (option === "detailed") {
+          totalEncumbrance += item.data.data.weight;
+        } else {
+          totalEncumbrance += 1000;
+        }
       }
     });
-//    if (option === "detailed" && hasItems) totalWeight += 166.6;
 
-    data.encumbrance = {
+    const maxEncumbrance = 20000 + (this.data.data.scores.str.mod * 1000);
+
+    this.data.data.encumbrance = {
       pct: Math.clamped(
-//    To correct for percentage bar not lining up with movement rates.
-//        (100 * parseFloat(totalWeight)) / data.encumbrance.max,
-        (100 * parseFloat(totalWeight)) / 20000,
+        (totalEncumbrance / maxEncumbrance) * 100,
         0,
         100
       ),
-      max: data.encumbrance.max,
-      encumbered: totalWeight > data.encumbrance.max,
-      value: Math.round(totalWeight),
+      max: maxEncumbrance,
+      encumbered: totalEncumbrance > maxEncumbrance,
+      value: Math.round(totalEncumbrance),
     };
 
-    if (data.config.movementAuto && option != "disabled") {
+    if (this.data.data.config.movementAuto) {
       this._calculateMovement();
     }
   }
 
   _calculateMovement() {
-    const data = this.data.data;
-    let option = game.settings.get("acks", "encumbranceOption");
-    let weight = data.encumbrance.value;
-    if (["detailed", "complete"].includes(option)) {
-      if (weight > data.encumbrance.max) {
-        data.movement.base = 0;
-      } else if (weight > 10000) {
-        data.movement.base = 30;
-      } else if (weight > 7000) {
-        data.movement.base = 60;
-      } else if (weight > 5000) {
-        data.movement.base = 90;
-      } else {
-        data.movement.base = 120;
-      }
-    } else if (option == "basic") {
-      const armors = this.data.items.filter((i) => i.type == "armor");
-      let heaviest = 0;
-      armors.forEach((a) => {
-        if (a.data.equipped) {
-          if (a.data.type == "light" && heaviest == 0) {
-            heaviest = 1;
-          } else if (a.data.type == "heavy") {
-            heaviest = 2;
-          }
-        }
-      });
-      switch (heaviest) {
-        case 0:
-          data.movement.base = 120;
-          break;
-        case 1:
-          data.movement.base = 90;
-          break;
-        case 2:
-          data.movement.base = 60;
-          break;
-      }
-      if (weight > game.settings.get("acks", "significantTreasure")) {
-        data.movement.base -= 30;
-      }
+    if (this.data.data.encumbrance.value > this.data.data.encumbrance.max) {
+      this.data.data.movement.base = 0;
+    } else if (this.data.data.encumbrance.value > 10000) {
+      this.data.data.movement.base = 30;
+    } else if (this.data.data.encumbrance.value > 7000) {
+      this.data.data.movement.base = 60;
+    } else if (this.data.data.encumbrance.value > 5000) {
+      this.data.data.movement.base = 90;
+    } else {
+      this.data.data.movement.base = 120;
     }
   }
 

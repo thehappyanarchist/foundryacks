@@ -23,11 +23,19 @@ export const registerHelpers = async function () {
   });
 
   Handlebars.registerHelper("subtract", function (lh, rh) {
-    return parseInt(rh) - parseInt(lh);
+    return parseInt(lh) - parseInt(rh);
   });
+
+  Handlebars.registerHelper("fsubtract", (lh, rh) => {
+    return parseFloat(lh) - parseFloat(rh);
+  })
 
   Handlebars.registerHelper("divide", function (lh, rh) {
     return Math.floor(parseFloat(lh) / parseFloat(rh));
+  });
+
+  Handlebars.registerHelper("fdivide", (lh, rh) => {
+    return parseFloat(lh) / parseFloat(rh);
   });
 
   Handlebars.registerHelper("mult", function (lh, rh) {
