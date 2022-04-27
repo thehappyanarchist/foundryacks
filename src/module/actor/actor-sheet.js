@@ -264,7 +264,7 @@ export class AcksActorSheet extends ActorSheet {
     let buttons = super._getHeaderButtons();
 
     // Token Configuration
-    const canConfigure = game.user.isGM || this.actor.owner;
+    const canConfigure = game.user.isGM || this.actor.isOwner;
     if (this.options.editable && canConfigure) {
       buttons = [
         {
