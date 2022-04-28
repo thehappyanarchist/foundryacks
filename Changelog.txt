@@ -1,3 +1,10 @@
+**v0.9.2 Encumbrance fix**
+**MINOR CHANGES:**
+Made encumbrance bar more efficient. (Azarvel)
+
+**BUG FIXES:**
+Encumbrance was not calculating properly. (Azarvel and THA)
+
 **v0.9.1 A few bugs**
 **BUG FIXES:**
 Fixed Shield overriding AC. (Azarvel)
