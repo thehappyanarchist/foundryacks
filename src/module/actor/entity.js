@@ -622,7 +622,7 @@ export class AcksActor extends Actor {
           if (item.data.data.treasure) {
             totalEncumbrance += item.data.data.weight * item.data.data.quantity.value;
           } else {
-            totalEncumbrance += item.data.data.weight;
+            totalEncumbrance += 166.6;
           }
         } else {
           if (item.data.data.treasure) {
