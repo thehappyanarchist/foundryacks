@@ -640,7 +640,7 @@ export class AcksActor extends Actor {
       }
     });
 
-    const maxEncumbrance = 20000 + (this.data.data.scores.str.mod * 1000);
+    const maxEncumbrance = this.data.data.encumbrance.max;
 
     this.data.data.encumbrance = {
       pct: Math.clamped(
