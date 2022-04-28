@@ -110,7 +110,7 @@
       <div class="item-caret"><i class="fas fa-caret-down"></i></div>
       <div class="item-name">{{localize "ACKS.items.Misc"}}</div>
       <div class="field-short"><i class="fas fa-hashtag"></i></div>
-      <div class="field-short"><i class="fas fa-weight-hanging"></i></div>
+      <div class="field-short"></div>
       <div class="item-controls">
         <a class="item-control item-create" data-type="item" title="{{localize 'ACKS.Add'}}"><i
             class="fa fa-plus"></i></a>
@@ -133,9 +133,7 @@
             <input value="{{item.data.quantity.value}}" type="text"
               placeholder="0" />{{#if item.data.quantity.max}}<span>/{{item.data.quantity.max}}</span>{{/if}}
           </div>
-          <div class="field-short">
-            {{#if (eq @root.config.encumbrance "detailed")}}{{item.data.weight}}{{else}}_{{/if}}
-          </div>
+          <div class="field-short"></div>
           <div class="item-controls">
             {{#if ../owner}}
             <a class="item-control item-edit" title='{{localize "ACKS.Edit"}}'><i class="fas fa-edit"></i></a>
