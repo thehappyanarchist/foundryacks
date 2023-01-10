@@ -75,7 +75,7 @@ export class AcksActorSheet extends ActorSheet {
     event.preventDefault();
     let li = $(event.currentTarget).parents(".item"),
       item = this.actor.items.get(li.data("item-id")),
-      description = TextEditor.enrichHTML(item.data.data.description);
+      description = TextEditor.enrichHTML(item.system.description);
     // Toggle summary
     if (li.hasClass("expanded")) {
       let summary = li.parents(".item-entry").children(".item-summary");
@@ -114,7 +114,7 @@ export class AcksActorSheet extends ActorSheet {
       item.update({
         _id: item.id,
         "data.cast": 0,
-        "item.data.data.memorized": 0
+        "item.system.memorized": 0
       });
     });
   }
@@ -145,9 +145,9 @@ export class AcksActorSheet extends ActorSheet {
       const li = $(ev.currentTarget).parents(".item");
       const item = this.actor.items.get(li.data("itemId"));
       if (item.type == "weapon") {
-        if (this.actor.data.type === "monster") {
+        if (this.actor.type === "monster") {
           item.update({
-            data: { counter: { value: item.data.data.counter.value - 1 } },
+            data: { counter: { value: item.system.counter.value - 1 } },
           });
         }
           item.rollWeapon({ skipDialog: ev.ctrlKey });
